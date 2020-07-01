@@ -97,7 +97,7 @@ int main(void)
   MX_TIM2_Init();
   MX_CRC_Init();
   /* USER CODE BEGIN 2 */
-
+  __asm volatile ("wfi");
   /* USER CODE END 2 */
 
   /* Infinite loop */
