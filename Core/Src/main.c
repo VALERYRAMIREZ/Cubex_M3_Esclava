@@ -97,7 +97,10 @@ int main(void)
   MX_TIM2_Init();
   MX_CRC_Init();
   /* USER CODE BEGIN 2 */
-  __asm volatile ("wfi");			/* Se pone a domrir al microcontrolador. */
+
+  __WFE();
+  //__asm volatile ("wfi");			/* Se pone a domrir al microcontrolador. */
+  HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE3_AMA_Pin | FASE3_ROJO_Pin,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
