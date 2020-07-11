@@ -28,6 +28,12 @@
 
 /* USER CODE BEGIN Includes */
 
+ /***********Direcciones de los dispositivos esclavo y maestro******************/
+
+ #define dMaestro		0x11
+ #define dEsclavo   	0x10
+ #define	mLong		30
+
 /* USER CODE END Includes */
 
 extern I2C_HandleTypeDef hi2c1;

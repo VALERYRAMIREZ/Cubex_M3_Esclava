@@ -49,7 +49,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+ uint8_t mensaje[] = "Hola mundo!";
 
+ uint32_t cError;
+
+ extern I2C_HandleTypeDef hi2c1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,7 +90,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  HAL_I2C_MspInit(&hi2c1);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -98,9 +102,99 @@ int main(void)
   MX_CRC_Init();
   /* USER CODE BEGIN 2 */
 
-  __WFE();
-  //__asm volatile ("wfi");			/* Se pone a domrir al microcontrolador. */
-  HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE3_AMA_Pin | FASE3_ROJO_Pin,GPIO_PIN_SET);
+
+
+  if(HAL_I2C_Slave_Receive(&hi2c1, mensaje, 11, HAL_MAX_DELAY) != HAL_OK)/* Si el mmanejador del */
+  		  {							/* la interfaz i2c está listo, enciende  */
+  	  	  	  	  	  	  	  	  	/* el indicador respectivo.              */
+
+  		  }
+  HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_SET);
+
+  if(HAL_I2C_Slave_Transmit(&hi2c1, mensaje, sizeof(mensaje), HAL_MAX_DELAY) != HAL_OK)/* Si el mmanejador del */
+  		  {							/* la interfaz i2c está listo, enciende  */
+  	  	  	  	  	  	  	  	  	/* el indicador respectivo.              */
+
+  		  }
+  	  HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_RESET);
+
+  switch(HAL_I2C_GetError(&hi2c1))  /* Para determinar por qué es el error en*/
+  {									/* el caso de que el Slave_Transmit se   */
+  	  case HAL_I2C_ERROR_BERR:		/* salga por timout.                     */
+  	  {
+  		  HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  case HAL_I2C_ERROR_ARLO:
+  	  {
+  		  HAL_GPIO_WritePin(GPIOA,FASE1_ROJO_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  case HAL_I2C_ERROR_AF:
+  	  {
+  		  HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  case HAL_I2C_ERROR_OVR:
+  	  {
+  		  HAL_GPIO_WritePin(GPIOA,FASE2_AMA_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  case HAL_I2C_ERROR_DMA:
+  	  {
+  		  HAL_GPIO_WritePin(GPIOA,FASE2_ROJO_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  case HAL_I2C_ERROR_TIMEOUT:
+  	  {
+  		  HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  case HAL_I2C_ERROR_SIZE:
+  	  {
+  		  HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  case HAL_I2C_ERROR_DMA_PARAM:
+  	  {
+  		  HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin,GPIO_PIN_SET);
+  	  }break;
+ 	  default:
+ 	  {
+ 		  HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin,GPIO_PIN_SET);
+  	  }break;
+
+  };
+
+  switch(HAL_I2C_GetState(&hi2c1))	/* Para ver el estado del periférico I2C */
+    {								/* en cuando sale de las condiciones.    */
+    	  case HAL_I2C_STATE_RESET:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin,GPIO_PIN_SET);
+    	  } break;
+    	  case HAL_I2C_STATE_READY:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin,GPIO_PIN_SET);
+    	  } break;
+    	  case HAL_I2C_STATE_BUSY:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE5_AMA_Pin,GPIO_PIN_SET);
+    	  } break;
+    	  case HAL_I2C_STATE_BUSY_TX:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE5_ROJO_Pin,GPIO_PIN_SET);
+    	  } break;
+    	  case HAL_I2C_STATE_BUSY_RX:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin,GPIO_PIN_SET);
+    	  } break;
+    	  case HAL_I2C_STATE_LISTEN:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin,GPIO_PIN_SET);
+    	  } break;
+    	  case HAL_I2C_STATE_BUSY_TX_LISTEN:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin,GPIO_PIN_SET);
+    	  } break;
+    	  default:
+    	  {
+    		HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin,GPIO_PIN_SET);
+    	  } break;
+    }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
