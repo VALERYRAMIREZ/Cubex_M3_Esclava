@@ -27,45 +27,16 @@
 #include "tim.h"
 #include "gpio.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
- uint8_t mensaje[] = "Hola mundo!";
+ uint8_t mensaje[11];
 
  uint32_t cError;
 
  extern I2C_HandleTypeDef hi2c1;
-/* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
@@ -73,24 +44,15 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  HAL_I2C_MspInit(&hi2c1);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -100,112 +62,133 @@ int main(void)
   MX_RTC_Init();
   MX_TIM2_Init();
   MX_CRC_Init();
-  /* USER CODE BEGIN 2 */
 
+  HAL_I2C_MspInit(&hi2c1);
 
+  HAL_GPIO_WritePin(GPIOA, FASE1_AMA_Pin, GPIO_PIN_SET);
+    HAL_Delay(33000);
+    HAL_GPIO_WritePin(GPIOA, FASE1_AMA_Pin, GPIO_PIN_RESET);
 
-  if(HAL_I2C_Slave_Receive(&hi2c1, mensaje, 11, HAL_MAX_DELAY) != HAL_OK)/* Si el mmanejador del */
-  		  {							/* la interfaz i2c está listo, enciende  */
-  	  	  	  	  	  	  	  	  	/* el indicador respectivo.              */
+  	if(HAL_I2C_Slave_Receive_IT(&hi2c1, mensaje, 11) != HAL_OK)
+  	{
+  		HAL_GPIO_WritePin(GPIOA, FASE6_ROJO_Pin, GPIO_PIN_SET);
+  	}
 
-  		  }
-  HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_SET);
+  	HAL_GPIO_WritePin(GPIOA, FASE1_ROJO_Pin, GPIO_PIN_SET);
+  	HAL_Delay(5000);
 
-  if(HAL_I2C_Slave_Transmit(&hi2c1, mensaje, sizeof(mensaje), HAL_MAX_DELAY) != HAL_OK)/* Si el mmanejador del */
-  		  {							/* la interfaz i2c está listo, enciende  */
-  	  	  	  	  	  	  	  	  	/* el indicador respectivo.              */
+  	switch(HAL_I2C_GetError(&hi2c1))
+  	{
+  		case HAL_I2C_ERROR_NONE:
+  		{
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin | FASE4_AMA_Pin | FASE4_ROJO_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_BERR:
+  		{
+  			HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_AMA_Pin | FASE4_ROJO_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_ARLO:
+  		{
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_VERDE_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin | FASE4_ROJO_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_AF:
+  		{
+  			HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_VERDE_Pin | FASE4_ROJO_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_OVR:
+  		{
+  			HAL_GPIO_WritePin(GPIOB, FASE3_VERDE_Pin | FASE4_AMA_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin | FASE4_ROJO_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_DMA:
+  		{
+  			HAL_GPIO_WritePin(GPIOB, FASE4_VERDE_Pin | FASE4_AMA_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_ROJO_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_TIMEOUT:
+  		{
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_VERDE_Pin | FASE4_AMA_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_SIZE:
+  		{
+  			HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_VERDE_Pin | FASE4_AMA_Pin, GPIO_PIN_RESET);
+  		} break;
+  		case HAL_I2C_ERROR_DMA_PARAM:
+  		{
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_ROJO_Pin, GPIO_PIN_SET);
+  			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE4_AMA_Pin, GPIO_PIN_RESET);
+  		} break;
+  	}
 
-  		  }
-  	  HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_RESET);
-
-  switch(HAL_I2C_GetError(&hi2c1))  /* Para determinar por qué es el error en*/
-  {									/* el caso de que el Slave_Transmit se   */
-  	  case HAL_I2C_ERROR_BERR:		/* salga por timout.                     */
-  	  {
-  		  HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  case HAL_I2C_ERROR_ARLO:
-  	  {
-  		  HAL_GPIO_WritePin(GPIOA,FASE1_ROJO_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  case HAL_I2C_ERROR_AF:
-  	  {
-  		  HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  case HAL_I2C_ERROR_OVR:
-  	  {
-  		  HAL_GPIO_WritePin(GPIOA,FASE2_AMA_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  case HAL_I2C_ERROR_DMA:
-  	  {
-  		  HAL_GPIO_WritePin(GPIOA,FASE2_ROJO_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  case HAL_I2C_ERROR_TIMEOUT:
-  	  {
-  		  HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  case HAL_I2C_ERROR_SIZE:
-  	  {
-  		  HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  case HAL_I2C_ERROR_DMA_PARAM:
-  	  {
-  		  HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin,GPIO_PIN_SET);
-  	  }break;
- 	  default:
- 	  {
- 		  HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin,GPIO_PIN_SET);
-  	  }break;
-
-  };
-
-  switch(HAL_I2C_GetState(&hi2c1))	/* Para ver el estado del periférico I2C */
+  	switch(HAL_I2C_GetState(&hi2c1))	/* Para ver el estado del periférico I2C */
     {								/* en cuando sale de las condiciones.    */
     	  case HAL_I2C_STATE_RESET:
     	  {
-    		  HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_AMA_Pin | FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
     	  case HAL_I2C_STATE_READY:
     	  {
-    		  HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_AMA_Pin | FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
     	  case HAL_I2C_STATE_BUSY:
     	  {
-    		  HAL_GPIO_WritePin(GPIOB,FASE5_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin | FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
     	  case HAL_I2C_STATE_BUSY_TX:
     	  {
-    		  HAL_GPIO_WritePin(GPIOB,FASE5_ROJO_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_VERDE_Pin | FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
     	  case HAL_I2C_STATE_BUSY_RX:
     	  {
-    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
     	  case HAL_I2C_STATE_LISTEN:
     	  {
-    		  HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
     	  case HAL_I2C_STATE_BUSY_TX_LISTEN:
     	  {
-    		  HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_VERDE_Pin | FASE6_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
-    	  default:
+    	  case HAL_I2C_STATE_BUSY_RX_LISTEN:
     	  {
-    		HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_VERDE_Pin | FASE6_AMA_Pin, GPIO_PIN_RESET);
+    	  } break;
+    	  case HAL_I2C_STATE_ABORT:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE1_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_AMA_Pin, GPIO_PIN_RESET);
+    	  } break;
+    	  case HAL_I2C_STATE_TIMEOUT:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_VERDE_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin | FASE1_AMA_Pin, GPIO_PIN_RESET);
+    	  } break;
+    	  case HAL_I2C_STATE_ERROR:
+    	  {
+    		  HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE6_VERDE_Pin | FASE6_AMA_Pin,GPIO_PIN_SET);
+    		  HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin, GPIO_PIN_RESET);
     	  } break;
     }
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
 }
 
 /**
@@ -251,20 +234,13 @@ void SystemClock_Config(void)
   }
 }
 
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
-
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None
   */
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
 
-  /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT
