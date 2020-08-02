@@ -33,7 +33,10 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 uint8_t mensaje[2];
-uint8_t result;
+RTC_TimeTypeDef horaLeida;
+RTC_DateTypeDef fechaLeida;
+RTC_AlarmTypeDef intAlarma;
+RTC_AlarmTypeDef alarmaLeida;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -48,13 +51,25 @@ uint8_t result;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+//volatile unsigned long _CFSR;
+//volatile unsigned long _HFSR;
+//volatile unsigned long _DFSR;
+//volatile unsigned long _AFSR;
+//volatile unsigned long _MMAR;
+//volatile unsigned long _BFAR;
+//volatile unsigned long _IPSR;
+//volatile unsigned long _BASEPRI;
+//volatile unsigned long _PRIMASK;
+//volatile unsigned long _FAULTMASK;
+//volatile unsigned long _ISPR0;
+
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+//void reg_Esp(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -69,7 +84,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+//	reg_Esp();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -90,25 +105,25 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+	HAL_GPIO_WritePin(GPIOB,LED_FALLA_Pin,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB,LED_STATUS_Pin,GPIO_PIN_SET);
   MX_ADC1_Init();
-  MX_I2C1_Init();
+  //MX_I2C1_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_I2C_MspInit(&hi2c1);
+  //HAL_I2C_MspInit(&hi2c1);
+  //HAL_RTC_MspInit(&hrtc);
 
-  HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_SET);
-  if(HAL_I2C_Slave_Receive_IT(&hi2c1,mensaje,1) != HAL_OK)
-  {
-	  HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_SET);
-  }
-  HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_RESET);
-
+  //__HAL_RTC_ALARM_ENABLE_IT(&hrtc,RTC_IT_SEC);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  HAL_RTC_GetTime(&hrtc,&horaLeida, RTC_FORMAT_BIN);
+	  HAL_RTC_GetDate(&hrtc,&fechaLeida, RTC_FORMAT_BCD);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -160,7 +175,20 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+//void reg_Esp(void)
+//{
+//	_CFSR = (*((volatile unsigned long *)(0xE000ED28)));
+//	_HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
+//	_DFSR = (*((volatile unsigned long *)(0xE000ED30)));
+//	_AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
+//	_MMAR = (*((volatile unsigned long *)(0xE000ED34)));
+//	_BFAR = (*((volatile unsigned long *)(0xE000ED38)));
+//	_IPSR = __get_IPSR();
+//	_BASEPRI = __get_BASEPRI();
+//	_PRIMASK = __get_PRIMASK();
+//	_FAULTMASK = __get_FAULTMASK();
+//	_ISPR0 = __get_IPSR();
+//}
 /* USER CODE END 4 */
 
 /**
@@ -171,7 +199,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+	HAL_GPIO_WritePin(GPIOB,LED_FALLA_Pin,GPIO_PIN_RESET);
   /* USER CODE END Error_Handler_Debug */
 }
 
