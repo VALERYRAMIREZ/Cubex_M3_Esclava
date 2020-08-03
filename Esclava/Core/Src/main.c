@@ -70,6 +70,7 @@ RTC_AlarmTypeDef alarmaLeida;
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 //void reg_Esp(void);
+void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -122,10 +123,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  CLEAR_BIT(RTC->CRL,RTC_CRL_CNF);
-	  HAL_RTC_GetTime(&hrtc,&horaLeida, RTC_FORMAT_BIN);
-	  HAL_RTC_GetDate(&hrtc,&fechaLeida, RTC_FORMAT_BCD);
-	  HAL_Delay(1000);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -191,6 +189,13 @@ void SystemClock_Config(void)
 //	_FAULTMASK = __get_FAULTMASK();
 //	_ISPR0 = __get_IPSR();
 //}
+void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
+{
+	HAL_RTC_WaitForSynchro(hrtc);
+	HAL_RTC_GetTime(hrtc,&horaLeida, RTC_FORMAT_BCD);
+	HAL_RTC_GetDate(hrtc,&fechaLeida, RTC_FORMAT_BCD);
+	CLEAR_BIT(RTC->CRL,RTC_CRL_CNF);
+}
 /* USER CODE END 4 */
 
 /**
