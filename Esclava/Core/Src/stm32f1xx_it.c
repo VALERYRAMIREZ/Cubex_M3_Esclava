@@ -224,10 +224,8 @@ void RTC_IRQHandler(void)
   /* USER CODE END RTC_IRQn 0 */
   HAL_RTCEx_RTCIRQHandler(&hrtc);
   /* USER CODE BEGIN RTC_IRQn 1 */
-  CLEAR_BIT(RTC->CRL,RTC_CRL_CNF);
-//  HAL_RTC_WaitForSynchro(&hrtc);
-//  HAL_RTC_GetTime(&hrtc,&horaLeida, RTC_FORMAT_BCD);
-//  HAL_RTC_GetDate(&hrtc,&fechaLeida, RTC_FORMAT_BCD);
+  CLEAR_BIT(RTC->CRL,RTC_CRL_CNF);	/* Para salir del modo de configuración  */
+  	  	  	  	  	  	  	  	  	/* del RTC.								 */
   /* USER CODE END RTC_IRQn 1 */
 }
 

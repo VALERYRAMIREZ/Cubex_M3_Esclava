@@ -52,7 +52,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, FASE6_ROJO_Pin|FASE1_AMA_Pin|FASE1_ROJO_Pin|FASE2_VERDE_Pin 
-                          |FASE2_AMA_Pin|FASE2_ROJO_Pin, GPIO_PIN_RESET);
+                          |FASE2_AMA_Pin|FASE2_ROJO_Pin|FASE3_ROJO_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED_STATUS_Pin|LED_FALLA_Pin|FASE3_VERDE_Pin|FASE5_ROJO_Pin 
@@ -70,15 +70,15 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA6 PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_15;
+  /*Configure GPIO pin : PA6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin 
-                           PAPin PAPin */
+                           PAPin PAPin PAPin */
   GPIO_InitStruct.Pin = FASE6_ROJO_Pin|FASE1_AMA_Pin|FASE1_ROJO_Pin|FASE2_VERDE_Pin 
-                          |FASE2_AMA_Pin|FASE2_ROJO_Pin;
+                          |FASE2_AMA_Pin|FASE2_ROJO_Pin|FASE3_ROJO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

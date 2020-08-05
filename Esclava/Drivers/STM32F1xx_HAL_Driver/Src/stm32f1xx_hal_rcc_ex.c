@@ -581,7 +581,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       break;
     }
   }
-  return (uint32_t) frequency;
+  return (frequency);
 }
 
 /**

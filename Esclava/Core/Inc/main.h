@@ -102,6 +102,8 @@ void Error_Handler(void);
 #define FASE2_AMA_GPIO_Port GPIOA
 #define FASE2_ROJO_Pin GPIO_PIN_12
 #define FASE2_ROJO_GPIO_Port GPIOA
+#define FASE3_ROJO_Pin GPIO_PIN_15
+#define FASE3_ROJO_GPIO_Port GPIOA
 #define FASE4_VERDE_Pin GPIO_PIN_3
 #define FASE4_VERDE_GPIO_Port GPIOB
 #define FASE4_AMA_Pin GPIO_PIN_4
