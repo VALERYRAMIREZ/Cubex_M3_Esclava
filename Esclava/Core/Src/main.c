@@ -21,13 +21,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "i2c.h"
 #include "rtc.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "fases.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +42,12 @@ RTC_AlarmTypeDef alarmaLeida;
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define 	FREC_RED	60			/* Frecuencia de la red eléctrica.        */
+#define		BUFFER_ADC	14          /* Tamaño del arreglo de mediciones por
+									 * canal ADC. Se utiliza un buffer de 5
+									 * veces la cantidad necesaria de muestras
+									 * necesarias según indica el teorema de
+									 * Nyquist.                               */
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -62,26 +69,9 @@ RTC_AlarmTypeDef alarmaLeida;
 //volatile unsigned long _PRIMASK;
 //volatile unsigned long _FAULTMASK;
 //volatile unsigned long _ISPR0;
-
-volatile uint8_t fasesTiempo [18] = {0}; /* Vector para almacenar los tiempos */
-									/* de encendido de las lámparas de fase. */
-volatile uint8_t c1Fase = 0;
-volatile uint8_t f1Actual = 1;
-
-volatile uint8_t c2Fase = 0;
-volatile uint8_t f2Actual = 1;
-
-volatile uint8_t c3Fase = 0;
-volatile uint8_t f3Actual = 1;
-
-volatile uint8_t c4Fase = 0;
-volatile uint8_t f4Actual = 1;
-
-volatile uint8_t c5Fase = 0;
-volatile uint8_t f5Actual = 1;
-
-volatile uint8_t c6Fase = 0;
-volatile uint8_t f6Actual = 1;
+extern uint8_t fasesTiempo[18];
+uint32_t sensorLeido[BUFFER_ADC];
+uint8_t iniciaDMA = 0;
 
 /* USER CODE END PV */
 
@@ -157,22 +147,34 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_I2C1_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-  //HAL_I2C_MspInit(&hi2c1);
-  //HAL_RTC_MspInit(&hrtc);
+  HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin | FASE1_AMA_Pin | FASE1_ROJO_Pin |
+		  FASE2_VERDE_Pin | FASE2_AMA_Pin | FASE2_ROJO_Pin | FASE3_ROJO_Pin,
+		  GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB,LED_STATUS_Pin | LED_FALLA_Pin | FASE3_VERDE_Pin |
+		  FASE4_VERDE_Pin | FASE4_AMA_Pin | FASE4_ROJO_Pin | FASE5_VERDE_Pin |
+		  FASE5_ROJO_Pin | FASE3_AMA_Pin | FASE6_VERDE_Pin | FASE6_AMA_Pin |
+		  FASE1_VERDE_Pin,GPIO_PIN_SET);
+  //HAL_I2C_MspInit(&hi2c1);			/* Inicializando el modo I2C.            */
+  HAL_RTC_MspInit(&hrtc);			/* Inicializando el RTC.                 */
+  HAL_ADC_MspInit(&hadc1);			/* Inicializando el ADC1.                */
+//    if(HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK)/*Intenta calibrar el ADC */
+//    {									/* y en caso de haber un error de        */
+//  	  Error_Handler();				/* calibración, llama a la función de    */
+//    }									/* manejo de errores.                    */
+  __HAL_RTC_ALARM_ENABLE_IT(&hrtc,RTC_IT_SEC);/* Se habilita la interrupción */
+  CLEAR_BIT(RTC->CRL,RTC_CRL_CNF);	/* del RTC cada segundo y luego se       */
+  	  	  	  	  	  	  	  	  	/* realiza la salida forzada del modo de */
+  	  	  	  	  	  	  	  	    /* configuración.                        */
 
-	HAL_GPIO_WritePin(GPIOA, FASE6_ROJO_Pin | FASE1_AMA_Pin | FASE1_ROJO_Pin |
-			FASE2_VERDE_Pin | FASE2_AMA_Pin | FASE2_ROJO_Pin | FASE3_ROJO_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOB, LED_STATUS_Pin | LED_FALLA_Pin | FASE3_VERDE_Pin |
-			FASE4_VERDE_Pin | FASE4_AMA_Pin |FASE4_ROJO_Pin | FASE5_VERDE_Pin |
-			FASE5_AMA_Pin | FASE5_ROJO_Pin | FASE3_AMA_Pin | FASE6_VERDE_Pin |
-			FASE6_AMA_Pin | FASE1_VERDE_Pin, GPIO_PIN_SET);
-
-  __HAL_RTC_ALARM_ENABLE_IT(&hrtc,RTC_IT_SEC);
-  CLEAR_BIT(RTC->CRL,RTC_CRL_CNF);
+//	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,BUFFER_ADC) != HAL_OK)
+//	{								/*Se inicia la conversión de los sensores*/
+//		Error_Handler();	  	    /*por DMA para poder almacenar los       */
+//	}								/* valores convertidos.                  */
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -215,7 +217,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV8;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
@@ -223,7 +225,7 @@ void SystemClock_Config(void)
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_ADC;
   PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV8;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -245,311 +247,27 @@ void SystemClock_Config(void)
 //	_FAULTMASK = __get_FAULTMASK();
 //	_ISPR0 = __get_IPSR();
 //}
+
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 {									/* una interrupción por evento de segundo*/
 	HAL_RTC_WaitForSynchro(hrtc);	/* lee la hora y la fecha.               */
 	HAL_RTC_GetTime(hrtc,&horaLeida, RTC_FORMAT_BCD);
 	HAL_RTC_GetDate(hrtc,&fechaLeida, RTC_FORMAT_BCD);
 
-/********************************* FASE 1*************************************/
-	switch(f1Actual)
+	//HAL_ADC_Stop_DMA(&hadc1);		/* Se asegura que el ADC no esté midiendo*/
+									/* los sensores antes de hacer un cambio */
+									/* de estados de fase.					 */
+	Fases_Auto(fasesTiempo);		/* Manejo de fases en automático, usará  */
+									/* el tiempo enviado por mensaje para    */
+									/* iniciar el manejo de las fases.       */
+	if(!iniciaDMA)
 	{
-	case 1:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin | FASE1_ROJO_Pin,GPIO_PIN_SET);
-		if(c1Fase == fasesTiempo[0])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin,GPIO_PIN_SET);
-			f1Actual = 2;
-			c1Fase = 0;
-			break;
-		}
+  		if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,BUFFER_ADC) != HAL_OK)
+  		{								/*Se inicia la conversión de los sensores*/
+  			Error_Handler();	  	    /*por DMA para poder almacenar los       */
+  		}								/* valores convertidos.                  */
+		iniciaDMA = 1;
 	}
-	break;
-	case 2:
-	{
-		HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin | FASE1_ROJO_Pin,GPIO_PIN_SET);
-		if(c1Fase == fasesTiempo[1])
-		{
-			HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_SET);
-			f1Actual = 3;
-			c1Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 3:
-	{
-		HAL_GPIO_WritePin(GPIOA,FASE1_ROJO_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin | FASE1_AMA_Pin,GPIO_PIN_SET);
-		if(c1Fase == fasesTiempo[2])
-		{
-			HAL_GPIO_WritePin(GPIOA,FASE1_ROJO_Pin,GPIO_PIN_SET);
-			f1Actual = 1;
-			c1Fase = 0;
-			break;
-		}
-	}
-	break;
-	default:
-	{
-		Error_Handler();
-	}
-	break;
-	}
-	c1Fase++;
-
-/********************************* FASE 2*************************************/
-	switch(f2Actual)
-	{
-	case 1:
-	{
-		HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOA,FASE2_AMA_Pin | FASE2_ROJO_Pin,GPIO_PIN_SET);
-		if(c2Fase == fasesTiempo[3])
-		{
-			HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin,GPIO_PIN_SET);
-			f2Actual = 2;
-			c2Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 2:
-	{
-		HAL_GPIO_WritePin(GPIOA,FASE2_AMA_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin | FASE2_ROJO_Pin,GPIO_PIN_SET);
-		if(c2Fase == fasesTiempo[4])
-		{
-			HAL_GPIO_WritePin(GPIOA,FASE2_AMA_Pin,GPIO_PIN_SET);
-			f2Actual = 3;
-			c2Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 3:
-	{
-		HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin | FASE2_AMA_Pin,GPIO_PIN_SET);
-		if(c2Fase == fasesTiempo[5])
-		{
-			HAL_GPIO_WritePin(GPIOA,FASE2_ROJO_Pin,GPIO_PIN_SET);
-			f2Actual = 1;
-			c2Fase = 0;
-			break;
-		}
-	}
-	break;
-	default:
-	{
-		Error_Handler();
-	}
-	break;
-	}
-	c2Fase++;
-
-/********************************* FASE 3*************************************/
-	switch(f3Actual)
-	{
-	case 1:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin | FASE3_ROJO_Pin,GPIO_PIN_SET);
-		if(c3Fase == fasesTiempo[6])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin,GPIO_PIN_SET);
-			f3Actual = 2;
-			c3Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 2:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE3_ROJO_Pin,GPIO_PIN_SET);
-		if(c3Fase == fasesTiempo[7])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin,GPIO_PIN_SET);
-			f3Actual = 3;
-			c3Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 3:
-	{
-		HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE3_AMA_Pin,GPIO_PIN_SET);
-		if(c3Fase == fasesTiempo[8])
-		{
-			HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin,GPIO_PIN_SET);
-			f3Actual = 1;
-			c3Fase = 0;
-			break;
-		}
-	}
-	break;
-	default:
-	{
-		Error_Handler();
-	}
-	break;
-	}
-	c3Fase++;
-
-/********************************* FASE 4*************************************/
-	switch(f4Actual)
-	{
-	case 1:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin | FASE4_ROJO_Pin,GPIO_PIN_SET);
-		if(c4Fase == fasesTiempo[9])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin,GPIO_PIN_SET);
-			f4Actual = 2;
-			c4Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 2:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin | FASE4_ROJO_Pin,GPIO_PIN_SET);
-		if(c4Fase == fasesTiempo[10])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin,GPIO_PIN_SET);
-			f4Actual = 3;
-			c4Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 3:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin | FASE4_AMA_Pin,GPIO_PIN_SET);
-		if(c4Fase == fasesTiempo[11])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin,GPIO_PIN_SET);
-			f4Actual = 1;
-			c4Fase = 0;
-			break;
-		}
-	}
-	break;
-	default:
-	{
-		Error_Handler();
-	}
-	break;
-	}
-	c4Fase++;
-
-/********************************* FASE 5*************************************/
-	switch(f5Actual)
-	{
-	case 1:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE5_AMA_Pin | FASE5_ROJO_Pin,GPIO_PIN_SET);
-		if(c5Fase == fasesTiempo[12])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin,GPIO_PIN_SET);
-			f5Actual = 2;
-			c5Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 2:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE5_AMA_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin | FASE5_ROJO_Pin,GPIO_PIN_SET);
-		if(c5Fase == fasesTiempo[13])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE5_AMA_Pin,GPIO_PIN_SET);
-			f5Actual = 3;
-			c5Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 3:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE5_ROJO_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin | FASE5_AMA_Pin,GPIO_PIN_SET);
-		if(c5Fase == fasesTiempo[14])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE5_ROJO_Pin,GPIO_PIN_SET);
-			f5Actual = 1;
-			c5Fase = 0;
-			break;
-		}
-	}
-	break;
-	default:
-	{
-		Error_Handler();
-	}
-	break;
-	}
-	c5Fase++;
-
-/********************************* FASE 6*************************************/
-	switch(f6Actual)
-	{
-	case 1:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin | FASE6_ROJO_Pin,GPIO_PIN_SET);
-		if(c6Fase == fasesTiempo[15])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin,GPIO_PIN_SET);
-			f6Actual = 2;
-			c6Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 2:
-	{
-		HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_ROJO_Pin,GPIO_PIN_SET);
-		if(c6Fase == fasesTiempo[16])
-		{
-			HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin,GPIO_PIN_SET);
-			f6Actual = 3;
-			c6Fase = 0;
-			break;
-		}
-	}
-	break;
-	case 3:
-	{
-		HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_AMA_Pin,GPIO_PIN_SET);
-		if(c6Fase == fasesTiempo[17])
-		{
-			HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_SET);
-			f6Actual = 1;
-			c6Fase = 0;
-			break;
-		}
-	}
-	break;
-	default:
-	{
-		Error_Handler();
-	}
-	break;
-	}
-	c6Fase++;
 }
 /* USER CODE END 4 */
 
