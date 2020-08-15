@@ -42,12 +42,7 @@ RTC_AlarmTypeDef alarmaLeida;
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define 	FREC_RED	60			/* Frecuencia de la red eléctrica.        */
-#define		BUFFER_ADC	14          /* Tamaño del arreglo de mediciones por
-									 * canal ADC. Se utiliza un buffer de 5
-									 * veces la cantidad necesaria de muestras
-									 * necesarias según indica el teorema de
-									 * Nyquist.                               */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -80,6 +75,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 //void reg_Esp(void);
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -171,10 +167,6 @@ int main(void)
   	  	  	  	  	  	  	  	  	/* realiza la salida forzada del modo de */
   	  	  	  	  	  	  	  	    /* configuración.                        */
 
-//	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,BUFFER_ADC) != HAL_OK)
-//	{								/*Se inicia la conversión de los sensores*/
-//		Error_Handler();	  	    /*por DMA para poder almacenar los       */
-//	}								/* valores convertidos.                  */
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -217,7 +209,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV8;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV16;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
@@ -260,15 +252,138 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 	Fases_Auto(fasesTiempo);		/* Manejo de fases en automático, usará  */
 									/* el tiempo enviado por mensaje para    */
 									/* iniciar el manejo de las fases.       */
-	if(!iniciaDMA)
-	{
-  		if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,BUFFER_ADC) != HAL_OK)
-  		{								/*Se inicia la conversión de los sensores*/
-  			Error_Handler();	  	    /*por DMA para poder almacenar los       */
-  		}								/* valores convertidos.                  */
-		iniciaDMA = 1;
-	}
+  	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
+  	{								/* Se inicia la conversión de los sensores*/
+  		Error_Handler();	  		/* por DMA para poder almacenar los       */
+  	}						 		/* valores convertidos. La cantidad de    */
+	iniciaDMA = 1;					/* veces que se van a enviar datos es     */
+									/* igual al doble del tamaño del buffer   */
+									/* debido a que como el ADC no soporta la
+									 * lectura/escritura de 32 bits, entonces
+									 * el DMA duplica el dato enviado en la
+									 * parte alta del registro de destino y lo
+									 * cuenta.                                */
 }
+/**
+* @brief Rutina de transferencia completa por del ACD por DMA
+*
+* La primera vez que entra en esta rutin lo hace con el sensor de la fase 1 el
+* cual está inicializado en en el archivo adc.c, las veces siguientes que entra
+* en la rutina activa la lectura del ADC y transferencia por DMA para el sensor
+* siguiente de fase hasta completar los 6 sensores, cada vez que termina el
+* llenado del buffer correspondiente a un sensor se calcula si la fase tiene
+* una falla por circuito abierto o corto circuito, en caso afirmativo se va a
+* al Error_Handler(), de lo contrario sigue con el funcionamiento normal.
+
+* @param hadc: adc handle
+* @retval None */
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+	ADC_ChannelConfTypeDef sConfig;
+	uint8_t tam = sizeof(sensorLeido)/sizeof(sensorLeido[0]);
+	Corrige_Med16(sensorLeido, tam);
+	if(Verif_Med(sensorLeido, tam) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+//	sConfig.Channel = ADC_CHANNEL_1;/* Se realizará la conversión y          */
+//	sConfig.Rank = ADC_REGULAR_RANK_1;/* transferencia de datos desde el     */
+//	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;/* sensor de fase 2.	 */
+//
+//	  sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+//	if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	Corrige_Med16(sensorLeido, tam);
+	if(Verif_Med(sensorLeido, tam) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+//	sConfig.Channel = ADC_CHANNEL_2;/* Se realizará la conversión y          */
+//	sConfig.Rank = ADC_REGULAR_RANK_1;/* transferencia de datos desde el     */
+//	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;/* sensor de fase 3.	 */
+//	if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	Corrige_Med16(sensorLeido, tam);
+	if(Verif_Med(sensorLeido, tam) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+//	sConfig.Channel = ADC_CHANNEL_3;/* Se realizará la conversión y          */
+//	sConfig.Rank = ADC_REGULAR_RANK_1;/* transferencia de datos desde el     */
+//	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;/* sensor de fase 4.	 */
+//	if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	Corrige_Med16(sensorLeido, tam);
+	if(Verif_Med(sensorLeido, tam) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+//	sConfig.Channel = ADC_CHANNEL_4;/* Se realizará la conversión y          */
+//	sConfig.Rank = ADC_REGULAR_RANK_1;/* transferencia de datos desde el     */
+//	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;/* sensor de fase 5.	 */
+//	if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	Corrige_Med16(sensorLeido, tam);
+	if(Verif_Med(sensorLeido, tam) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+//	sConfig.Channel = ADC_CHANNEL_5;/* Se realizará la conversión y          */
+//	sConfig.Rank = ADC_REGULAR_RANK_1;/* transferencia de datos desde el     */
+//	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;/* sensor de fase 6.	 */
+//	if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
+	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	Corrige_Med16(sensorLeido, tam);
+	if(Verif_Med(sensorLeido, tam) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+//	HAL_ADC_Stop_DMA(&hadc1);		/* Deshabilito la conversión del ADC y la
+//									   transferencia por DMA al terminar todas
+//									   las conversiones y transferencia para
+//									   disminuir el consumo de energía. Se
+//									   vuelve a activa en la función callback
+//									   de evento de RTC.                     */
+}
+
+
 /* USER CODE END 4 */
 
 /**
