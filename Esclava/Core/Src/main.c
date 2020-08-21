@@ -280,18 +280,18 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 									 * automático, usará el tiempo enviado por
 									 * mensaje para iniciar el manejo de las
 									 * fases.       						 */
-//  	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC-1) != HAL_OK)
-//  	{
-//  	    codigoError = 1;			/* Se inicia la conversión de los sensores*/
-//  		Error_Handler();	  		/* por DMA para poder almacenar los       */
-//  	}						 		/* valores convertidos. La cantidad de    */
-//	canalADC = 0;   				/* veces que se van a enviar datos es     */
-//									/* igual al doble del tamaño del buffer   */
-//									/* debido a que como el ADC no soporta la
-//									 * lectura/escritura de 32 bits, entonces
-//									 * el DMA duplica el dato enviado en la
-//									 * parte alta del registro de destino y lo
-//									 * cuenta.                                */
+  	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
+  	{
+  	    codigoError = 1;			/* Se inicia la conversión de los sensores*/
+  		Error_Handler();	  		/* por DMA para poder almacenar los       */
+  	}						 		/* valores convertidos. La cantidad de    */
+	canalADC = 0;   				/* veces que se van a enviar datos es     */
+									/* igual al doble del tamaño del buffer   */
+									/* debido a que como el ADC no soporta la
+									 * lectura/escritura de 32 bits, entonces
+									 * el DMA duplica el dato enviado en la
+									 * parte alta del registro de destino y lo
+									 * cuenta.                                */
 }
 /**
 * @brief Rutina de transferencia completa por del ACD por DMA
