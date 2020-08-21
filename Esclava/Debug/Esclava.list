@@ -21,31 +21,31 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   8 .data         00000014  20000000  080073c0  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000184  20000014  080073d4  00020014  2**2
+  9 .bss          00000188  20000014  080073d4  00020014  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20000198  080073d4  00020198  2**0
+ 10 ._user_heap_stack 00000604  2000019c  080073d4  0002019c  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020014  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000dc3d  00000000  00000000  0002003d  2**0
+ 12 .debug_info   0000dc59  00000000  00000000  0002003d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 000026cf  00000000  00000000  0002dc7a  2**0
+ 13 .debug_abbrev 000026cf  00000000  00000000  0002dc96  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_loc    000061c8  00000000  00000000  00030349  2**0
+ 14 .debug_loc    000061c8  00000000  00000000  00030365  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_aranges 00000c28  00000000  00000000  00036518  2**3
+ 15 .debug_aranges 00000c28  00000000  00000000  00036530  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_ranges 00000ae0  00000000  00000000  00037140  2**3
+ 16 .debug_ranges 00000ae0  00000000  00000000  00037158  2**3
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_macro  0001479f  00000000  00000000  00037c20  2**0
+ 17 .debug_macro  0001479f  00000000  00000000  00037c38  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_line   0000d3df  00000000  00000000  0004c3bf  2**0
+ 18 .debug_line   0000d3df  00000000  00000000  0004c3d7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .debug_str    0006c528  00000000  00000000  0005979e  2**0
+ 19 .debug_str    0006c531  00000000  00000000  000597b6  2**0
                   CONTENTS, READONLY, DEBUGGING
- 20 .comment      0000007b  00000000  00000000  000c5cc6  2**0
+ 20 .comment      0000007b  00000000  00000000  000c5ce7  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00003034  00000000  00000000  000c5d44  2**2
+ 21 .debug_frame  00003034  00000000  00000000  000c5d64  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -792,1387 +792,1387 @@ void Fases_Auto(uint8_t *tiempos, RTC_TimeTypeDef *aHora, Fases *iHora)
 
 	if(Verif_Tiempo(aHora, &iHora->tFase1) == HAL_OK)
  8000780:	687b      	ldr	r3, [r7, #4]
- 8000782:	4619      	mov	r1, r3
- 8000784:	68b8      	ldr	r0, [r7, #8]
- 8000786:	f000 fca0 	bl	80010ca <Verif_Tiempo>
- 800078a:	4603      	mov	r3, r0
- 800078c:	2b00      	cmp	r3, #0
- 800078e:	d108      	bne.n	80007a2 <Fases_Auto+0x2e>
+ 8000782:	3303      	adds	r3, #3
+ 8000784:	4619      	mov	r1, r3
+ 8000786:	68b8      	ldr	r0, [r7, #8]
+ 8000788:	f000 fc9f 	bl	80010ca <Verif_Tiempo>
+ 800078c:	4603      	mov	r3, r0
+ 800078e:	2b00      	cmp	r3, #0
+ 8000790:	d108      	bne.n	80007a4 <Fases_Auto+0x30>
 	{
 		c1Fase = 0;
- 8000790:	4bb3      	ldr	r3, [pc, #716]	; (8000a60 <Fases_Auto+0x2ec>)
- 8000792:	2200      	movs	r2, #0
- 8000794:	701a      	strb	r2, [r3, #0]
+ 8000792:	4bb4      	ldr	r3, [pc, #720]	; (8000a64 <Fases_Auto+0x2f0>)
+ 8000794:	2200      	movs	r2, #0
+ 8000796:	701a      	strb	r2, [r3, #0]
 		BF.band1 = 1;
- 8000796:	4ab3      	ldr	r2, [pc, #716]	; (8000a64 <Fases_Auto+0x2f0>)
- 8000798:	7813      	ldrb	r3, [r2, #0]
- 800079a:	f043 0320 	orr.w	r3, r3, #32
- 800079e:	7013      	strb	r3, [r2, #0]
- 80007a0:	e00f      	b.n	80007c2 <Fases_Auto+0x4e>
+ 8000798:	4ab3      	ldr	r2, [pc, #716]	; (8000a68 <Fases_Auto+0x2f4>)
+ 800079a:	7813      	ldrb	r3, [r2, #0]
+ 800079c:	f043 0320 	orr.w	r3, r3, #32
+ 80007a0:	7013      	strb	r3, [r2, #0]
+ 80007a2:	e010      	b.n	80007c6 <Fases_Auto+0x52>
 	}
 	else if(Verif_Tiempo(aHora, &iHora->tFase1) == HAL_TIMEOUT)
- 80007a2:	687b      	ldr	r3, [r7, #4]
- 80007a4:	4619      	mov	r1, r3
- 80007a6:	68b8      	ldr	r0, [r7, #8]
- 80007a8:	f000 fc8f 	bl	80010ca <Verif_Tiempo>
- 80007ac:	4603      	mov	r3, r0
- 80007ae:	2b03      	cmp	r3, #3
- 80007b0:	d107      	bne.n	80007c2 <Fases_Auto+0x4e>
+ 80007a4:	687b      	ldr	r3, [r7, #4]
+ 80007a6:	3303      	adds	r3, #3
+ 80007a8:	4619      	mov	r1, r3
+ 80007aa:	68b8      	ldr	r0, [r7, #8]
+ 80007ac:	f000 fc8d 	bl	80010ca <Verif_Tiempo>
+ 80007b0:	4603      	mov	r3, r0
+ 80007b2:	2b03      	cmp	r3, #3
+ 80007b4:	d107      	bne.n	80007c6 <Fases_Auto+0x52>
 	{
 		BF.band1 = 0;
- 80007b2:	4aac      	ldr	r2, [pc, #688]	; (8000a64 <Fases_Auto+0x2f0>)
- 80007b4:	7813      	ldrb	r3, [r2, #0]
- 80007b6:	f36f 1345 	bfc	r3, #5, #1
- 80007ba:	7013      	strb	r3, [r2, #0]
+ 80007b6:	4aac      	ldr	r2, [pc, #688]	; (8000a68 <Fases_Auto+0x2f4>)
+ 80007b8:	7813      	ldrb	r3, [r2, #0]
+ 80007ba:	f36f 1345 	bfc	r3, #5, #1
+ 80007be:	7013      	strb	r3, [r2, #0]
 		Apaga_Fase(1);
- 80007bc:	2001      	movs	r0, #1
- 80007be:	f000 fd5d 	bl	800127c <Apaga_Fase>
+ 80007c0:	2001      	movs	r0, #1
+ 80007c2:	f000 fd5b 	bl	800127c <Apaga_Fase>
 		/* Se debe apagar completamente esta fase.*/
 	}
 	if(BF.band1 == 1)
- 80007c2:	4ba8      	ldr	r3, [pc, #672]	; (8000a64 <Fases_Auto+0x2f0>)
- 80007c4:	781b      	ldrb	r3, [r3, #0]
- 80007c6:	f003 0320 	and.w	r3, r3, #32
- 80007ca:	b2db      	uxtb	r3, r3
- 80007cc:	2b00      	cmp	r3, #0
- 80007ce:	d067      	beq.n	80008a0 <Fases_Auto+0x12c>
+ 80007c6:	4ba8      	ldr	r3, [pc, #672]	; (8000a68 <Fases_Auto+0x2f4>)
+ 80007c8:	781b      	ldrb	r3, [r3, #0]
+ 80007ca:	f003 0320 	and.w	r3, r3, #32
+ 80007ce:	b2db      	uxtb	r3, r3
+ 80007d0:	2b00      	cmp	r3, #0
+ 80007d2:	d067      	beq.n	80008a4 <Fases_Auto+0x130>
 	{
 		switch(f1Actual)
- 80007d0:	4ba5      	ldr	r3, [pc, #660]	; (8000a68 <Fases_Auto+0x2f4>)
- 80007d2:	781b      	ldrb	r3, [r3, #0]
- 80007d4:	b2db      	uxtb	r3, r3
- 80007d6:	2b02      	cmp	r3, #2
- 80007d8:	d01d      	beq.n	8000816 <Fases_Auto+0xa2>
- 80007da:	2b03      	cmp	r3, #3
- 80007dc:	d036      	beq.n	800084c <Fases_Auto+0xd8>
- 80007de:	2b01      	cmp	r3, #1
- 80007e0:	d14f      	bne.n	8000882 <Fases_Auto+0x10e>
+ 80007d4:	4ba5      	ldr	r3, [pc, #660]	; (8000a6c <Fases_Auto+0x2f8>)
+ 80007d6:	781b      	ldrb	r3, [r3, #0]
+ 80007d8:	b2db      	uxtb	r3, r3
+ 80007da:	2b02      	cmp	r3, #2
+ 80007dc:	d01d      	beq.n	800081a <Fases_Auto+0xa6>
+ 80007de:	2b03      	cmp	r3, #3
+ 80007e0:	d036      	beq.n	8000850 <Fases_Auto+0xdc>
+ 80007e2:	2b01      	cmp	r3, #1
+ 80007e4:	d14f      	bne.n	8000886 <Fases_Auto+0x112>
 		{
 		case 1:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin,GPIO_PIN_RESET);
- 80007e2:	2200      	movs	r2, #0
- 80007e4:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 80007e8:	48a0      	ldr	r0, [pc, #640]	; (8000a6c <Fases_Auto+0x2f8>)
- 80007ea:	f002 ff0d 	bl	8003608 <HAL_GPIO_WritePin>
+ 80007e6:	2200      	movs	r2, #0
+ 80007e8:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 80007ec:	48a0      	ldr	r0, [pc, #640]	; (8000a70 <Fases_Auto+0x2fc>)
+ 80007ee:	f002 ff0b 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c1Fase == tiempos[0])
- 80007ee:	68fb      	ldr	r3, [r7, #12]
- 80007f0:	781a      	ldrb	r2, [r3, #0]
- 80007f2:	4b9b      	ldr	r3, [pc, #620]	; (8000a60 <Fases_Auto+0x2ec>)
- 80007f4:	781b      	ldrb	r3, [r3, #0]
- 80007f6:	b2db      	uxtb	r3, r3
- 80007f8:	429a      	cmp	r2, r3
- 80007fa:	d145      	bne.n	8000888 <Fases_Auto+0x114>
+ 80007f2:	68fb      	ldr	r3, [r7, #12]
+ 80007f4:	781a      	ldrb	r2, [r3, #0]
+ 80007f6:	4b9b      	ldr	r3, [pc, #620]	; (8000a64 <Fases_Auto+0x2f0>)
+ 80007f8:	781b      	ldrb	r3, [r3, #0]
+ 80007fa:	b2db      	uxtb	r3, r3
+ 80007fc:	429a      	cmp	r2, r3
+ 80007fe:	d145      	bne.n	800088c <Fases_Auto+0x118>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin,GPIO_PIN_SET);
- 80007fc:	2201      	movs	r2, #1
- 80007fe:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 8000802:	489a      	ldr	r0, [pc, #616]	; (8000a6c <Fases_Auto+0x2f8>)
- 8000804:	f002 ff00 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000800:	2201      	movs	r2, #1
+ 8000802:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8000806:	489a      	ldr	r0, [pc, #616]	; (8000a70 <Fases_Auto+0x2fc>)
+ 8000808:	f002 fefe 	bl	8003608 <HAL_GPIO_WritePin>
 				f1Actual = 2;
- 8000808:	4b97      	ldr	r3, [pc, #604]	; (8000a68 <Fases_Auto+0x2f4>)
- 800080a:	2202      	movs	r2, #2
- 800080c:	701a      	strb	r2, [r3, #0]
+ 800080c:	4b97      	ldr	r3, [pc, #604]	; (8000a6c <Fases_Auto+0x2f8>)
+ 800080e:	2202      	movs	r2, #2
+ 8000810:	701a      	strb	r2, [r3, #0]
 				c1Fase = 0;
- 800080e:	4b94      	ldr	r3, [pc, #592]	; (8000a60 <Fases_Auto+0x2ec>)
- 8000810:	2200      	movs	r2, #0
- 8000812:	701a      	strb	r2, [r3, #0]
+ 8000812:	4b94      	ldr	r3, [pc, #592]	; (8000a64 <Fases_Auto+0x2f0>)
+ 8000814:	2200      	movs	r2, #0
+ 8000816:	701a      	strb	r2, [r3, #0]
 				break;
- 8000814:	e03d      	b.n	8000892 <Fases_Auto+0x11e>
+ 8000818:	e03d      	b.n	8000896 <Fases_Auto+0x122>
 			}
 		}
 		break;
 		case 2:
 		{
 			HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_RESET);
- 8000816:	2200      	movs	r2, #0
- 8000818:	f44f 7180 	mov.w	r1, #256	; 0x100
- 800081c:	4894      	ldr	r0, [pc, #592]	; (8000a70 <Fases_Auto+0x2fc>)
- 800081e:	f002 fef3 	bl	8003608 <HAL_GPIO_WritePin>
+ 800081a:	2200      	movs	r2, #0
+ 800081c:	f44f 7180 	mov.w	r1, #256	; 0x100
+ 8000820:	4894      	ldr	r0, [pc, #592]	; (8000a74 <Fases_Auto+0x300>)
+ 8000822:	f002 fef1 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c1Fase == tiempos[1])
- 8000822:	68fb      	ldr	r3, [r7, #12]
- 8000824:	3301      	adds	r3, #1
- 8000826:	781a      	ldrb	r2, [r3, #0]
- 8000828:	4b8d      	ldr	r3, [pc, #564]	; (8000a60 <Fases_Auto+0x2ec>)
- 800082a:	781b      	ldrb	r3, [r3, #0]
- 800082c:	b2db      	uxtb	r3, r3
- 800082e:	429a      	cmp	r2, r3
- 8000830:	d12c      	bne.n	800088c <Fases_Auto+0x118>
+ 8000826:	68fb      	ldr	r3, [r7, #12]
+ 8000828:	3301      	adds	r3, #1
+ 800082a:	781a      	ldrb	r2, [r3, #0]
+ 800082c:	4b8d      	ldr	r3, [pc, #564]	; (8000a64 <Fases_Auto+0x2f0>)
+ 800082e:	781b      	ldrb	r3, [r3, #0]
+ 8000830:	b2db      	uxtb	r3, r3
+ 8000832:	429a      	cmp	r2, r3
+ 8000834:	d12c      	bne.n	8000890 <Fases_Auto+0x11c>
 			{
 				HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin,GPIO_PIN_SET);
- 8000832:	2201      	movs	r2, #1
- 8000834:	f44f 7180 	mov.w	r1, #256	; 0x100
- 8000838:	488d      	ldr	r0, [pc, #564]	; (8000a70 <Fases_Auto+0x2fc>)
- 800083a:	f002 fee5 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000836:	2201      	movs	r2, #1
+ 8000838:	f44f 7180 	mov.w	r1, #256	; 0x100
+ 800083c:	488d      	ldr	r0, [pc, #564]	; (8000a74 <Fases_Auto+0x300>)
+ 800083e:	f002 fee3 	bl	8003608 <HAL_GPIO_WritePin>
 				f1Actual = 3;
- 800083e:	4b8a      	ldr	r3, [pc, #552]	; (8000a68 <Fases_Auto+0x2f4>)
- 8000840:	2203      	movs	r2, #3
- 8000842:	701a      	strb	r2, [r3, #0]
+ 8000842:	4b8a      	ldr	r3, [pc, #552]	; (8000a6c <Fases_Auto+0x2f8>)
+ 8000844:	2203      	movs	r2, #3
+ 8000846:	701a      	strb	r2, [r3, #0]
 				c1Fase = 0;
- 8000844:	4b86      	ldr	r3, [pc, #536]	; (8000a60 <Fases_Auto+0x2ec>)
- 8000846:	2200      	movs	r2, #0
- 8000848:	701a      	strb	r2, [r3, #0]
+ 8000848:	4b86      	ldr	r3, [pc, #536]	; (8000a64 <Fases_Auto+0x2f0>)
+ 800084a:	2200      	movs	r2, #0
+ 800084c:	701a      	strb	r2, [r3, #0]
 				break;
- 800084a:	e022      	b.n	8000892 <Fases_Auto+0x11e>
+ 800084e:	e022      	b.n	8000896 <Fases_Auto+0x122>
 			}
 		}
 		break;
 		case 3:
 		{
 			HAL_GPIO_WritePin(GPIOA,FASE1_ROJO_Pin,GPIO_PIN_RESET);
- 800084c:	2200      	movs	r2, #0
- 800084e:	f44f 7100 	mov.w	r1, #512	; 0x200
- 8000852:	4887      	ldr	r0, [pc, #540]	; (8000a70 <Fases_Auto+0x2fc>)
- 8000854:	f002 fed8 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000850:	2200      	movs	r2, #0
+ 8000852:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 8000856:	4887      	ldr	r0, [pc, #540]	; (8000a74 <Fases_Auto+0x300>)
+ 8000858:	f002 fed6 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c1Fase == tiempos[2])
- 8000858:	68fb      	ldr	r3, [r7, #12]
- 800085a:	3302      	adds	r3, #2
- 800085c:	781a      	ldrb	r2, [r3, #0]
- 800085e:	4b80      	ldr	r3, [pc, #512]	; (8000a60 <Fases_Auto+0x2ec>)
- 8000860:	781b      	ldrb	r3, [r3, #0]
- 8000862:	b2db      	uxtb	r3, r3
- 8000864:	429a      	cmp	r2, r3
- 8000866:	d113      	bne.n	8000890 <Fases_Auto+0x11c>
+ 800085c:	68fb      	ldr	r3, [r7, #12]
+ 800085e:	3302      	adds	r3, #2
+ 8000860:	781a      	ldrb	r2, [r3, #0]
+ 8000862:	4b80      	ldr	r3, [pc, #512]	; (8000a64 <Fases_Auto+0x2f0>)
+ 8000864:	781b      	ldrb	r3, [r3, #0]
+ 8000866:	b2db      	uxtb	r3, r3
+ 8000868:	429a      	cmp	r2, r3
+ 800086a:	d113      	bne.n	8000894 <Fases_Auto+0x120>
 			{
 				HAL_GPIO_WritePin(GPIOA,FASE1_ROJO_Pin,GPIO_PIN_SET);
- 8000868:	2201      	movs	r2, #1
- 800086a:	f44f 7100 	mov.w	r1, #512	; 0x200
- 800086e:	4880      	ldr	r0, [pc, #512]	; (8000a70 <Fases_Auto+0x2fc>)
- 8000870:	f002 feca 	bl	8003608 <HAL_GPIO_WritePin>
+ 800086c:	2201      	movs	r2, #1
+ 800086e:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 8000872:	4880      	ldr	r0, [pc, #512]	; (8000a74 <Fases_Auto+0x300>)
+ 8000874:	f002 fec8 	bl	8003608 <HAL_GPIO_WritePin>
 				f1Actual = 1;
- 8000874:	4b7c      	ldr	r3, [pc, #496]	; (8000a68 <Fases_Auto+0x2f4>)
- 8000876:	2201      	movs	r2, #1
- 8000878:	701a      	strb	r2, [r3, #0]
+ 8000878:	4b7c      	ldr	r3, [pc, #496]	; (8000a6c <Fases_Auto+0x2f8>)
+ 800087a:	2201      	movs	r2, #1
+ 800087c:	701a      	strb	r2, [r3, #0]
 				c1Fase = 0;
- 800087a:	4b79      	ldr	r3, [pc, #484]	; (8000a60 <Fases_Auto+0x2ec>)
- 800087c:	2200      	movs	r2, #0
- 800087e:	701a      	strb	r2, [r3, #0]
+ 800087e:	4b79      	ldr	r3, [pc, #484]	; (8000a64 <Fases_Auto+0x2f0>)
+ 8000880:	2200      	movs	r2, #0
+ 8000882:	701a      	strb	r2, [r3, #0]
 				break;
- 8000880:	e007      	b.n	8000892 <Fases_Auto+0x11e>
+ 8000884:	e007      	b.n	8000896 <Fases_Auto+0x122>
 			}
 		}
 		break;
 		default:
 		{
 			Error_Handler();
- 8000882:	f000 ffc3 	bl	800180c <Error_Handler>
+ 8000886:	f000 ffc1 	bl	800180c <Error_Handler>
 		}
 		break;
- 8000886:	e004      	b.n	8000892 <Fases_Auto+0x11e>
-		break;
- 8000888:	bf00      	nop
- 800088a:	e002      	b.n	8000892 <Fases_Auto+0x11e>
+ 800088a:	e004      	b.n	8000896 <Fases_Auto+0x122>
 		break;
  800088c:	bf00      	nop
- 800088e:	e000      	b.n	8000892 <Fases_Auto+0x11e>
+ 800088e:	e002      	b.n	8000896 <Fases_Auto+0x122>
 		break;
  8000890:	bf00      	nop
+ 8000892:	e000      	b.n	8000896 <Fases_Auto+0x122>
+		break;
+ 8000894:	bf00      	nop
 		}
 		c1Fase++;
- 8000892:	4b73      	ldr	r3, [pc, #460]	; (8000a60 <Fases_Auto+0x2ec>)
- 8000894:	781b      	ldrb	r3, [r3, #0]
- 8000896:	b2db      	uxtb	r3, r3
- 8000898:	3301      	adds	r3, #1
- 800089a:	b2da      	uxtb	r2, r3
- 800089c:	4b70      	ldr	r3, [pc, #448]	; (8000a60 <Fases_Auto+0x2ec>)
- 800089e:	701a      	strb	r2, [r3, #0]
+ 8000896:	4b73      	ldr	r3, [pc, #460]	; (8000a64 <Fases_Auto+0x2f0>)
+ 8000898:	781b      	ldrb	r3, [r3, #0]
+ 800089a:	b2db      	uxtb	r3, r3
+ 800089c:	3301      	adds	r3, #1
+ 800089e:	b2da      	uxtb	r2, r3
+ 80008a0:	4b70      	ldr	r3, [pc, #448]	; (8000a64 <Fases_Auto+0x2f0>)
+ 80008a2:	701a      	strb	r2, [r3, #0]
 	}
 
 /********************************* FASE 2*************************************/
 	if(Verif_Tiempo(aHora, &iHora->tFase2) == HAL_OK)
- 80008a0:	687b      	ldr	r3, [r7, #4]
- 80008a2:	3303      	adds	r3, #3
- 80008a4:	4619      	mov	r1, r3
- 80008a6:	68b8      	ldr	r0, [r7, #8]
- 80008a8:	f000 fc0f 	bl	80010ca <Verif_Tiempo>
- 80008ac:	4603      	mov	r3, r0
- 80008ae:	2b00      	cmp	r3, #0
- 80008b0:	d108      	bne.n	80008c4 <Fases_Auto+0x150>
+ 80008a4:	687b      	ldr	r3, [r7, #4]
+ 80008a6:	3306      	adds	r3, #6
+ 80008a8:	4619      	mov	r1, r3
+ 80008aa:	68b8      	ldr	r0, [r7, #8]
+ 80008ac:	f000 fc0d 	bl	80010ca <Verif_Tiempo>
+ 80008b0:	4603      	mov	r3, r0
+ 80008b2:	2b00      	cmp	r3, #0
+ 80008b4:	d108      	bne.n	80008c8 <Fases_Auto+0x154>
 	{
 		c2Fase = 0;
- 80008b2:	4b70      	ldr	r3, [pc, #448]	; (8000a74 <Fases_Auto+0x300>)
- 80008b4:	2200      	movs	r2, #0
- 80008b6:	701a      	strb	r2, [r3, #0]
+ 80008b6:	4b70      	ldr	r3, [pc, #448]	; (8000a78 <Fases_Auto+0x304>)
+ 80008b8:	2200      	movs	r2, #0
+ 80008ba:	701a      	strb	r2, [r3, #0]
 		BF.band2 = 1;
- 80008b8:	4a6a      	ldr	r2, [pc, #424]	; (8000a64 <Fases_Auto+0x2f0>)
- 80008ba:	7813      	ldrb	r3, [r2, #0]
- 80008bc:	f043 0310 	orr.w	r3, r3, #16
- 80008c0:	7013      	strb	r3, [r2, #0]
- 80008c2:	e010      	b.n	80008e6 <Fases_Auto+0x172>
+ 80008bc:	4a6a      	ldr	r2, [pc, #424]	; (8000a68 <Fases_Auto+0x2f4>)
+ 80008be:	7813      	ldrb	r3, [r2, #0]
+ 80008c0:	f043 0310 	orr.w	r3, r3, #16
+ 80008c4:	7013      	strb	r3, [r2, #0]
+ 80008c6:	e010      	b.n	80008ea <Fases_Auto+0x176>
 	}
 	else if(Verif_Tiempo(aHora, &iHora->tFase2) == HAL_TIMEOUT)
- 80008c4:	687b      	ldr	r3, [r7, #4]
- 80008c6:	3303      	adds	r3, #3
- 80008c8:	4619      	mov	r1, r3
- 80008ca:	68b8      	ldr	r0, [r7, #8]
- 80008cc:	f000 fbfd 	bl	80010ca <Verif_Tiempo>
- 80008d0:	4603      	mov	r3, r0
- 80008d2:	2b03      	cmp	r3, #3
- 80008d4:	d107      	bne.n	80008e6 <Fases_Auto+0x172>
+ 80008c8:	687b      	ldr	r3, [r7, #4]
+ 80008ca:	3306      	adds	r3, #6
+ 80008cc:	4619      	mov	r1, r3
+ 80008ce:	68b8      	ldr	r0, [r7, #8]
+ 80008d0:	f000 fbfb 	bl	80010ca <Verif_Tiempo>
+ 80008d4:	4603      	mov	r3, r0
+ 80008d6:	2b03      	cmp	r3, #3
+ 80008d8:	d107      	bne.n	80008ea <Fases_Auto+0x176>
 	{
 		BF.band2 = 0;
- 80008d6:	4a63      	ldr	r2, [pc, #396]	; (8000a64 <Fases_Auto+0x2f0>)
- 80008d8:	7813      	ldrb	r3, [r2, #0]
- 80008da:	f36f 1304 	bfc	r3, #4, #1
- 80008de:	7013      	strb	r3, [r2, #0]
+ 80008da:	4a63      	ldr	r2, [pc, #396]	; (8000a68 <Fases_Auto+0x2f4>)
+ 80008dc:	7813      	ldrb	r3, [r2, #0]
+ 80008de:	f36f 1304 	bfc	r3, #4, #1
+ 80008e2:	7013      	strb	r3, [r2, #0]
 		Apaga_Fase(2);
- 80008e0:	2002      	movs	r0, #2
- 80008e2:	f000 fccb 	bl	800127c <Apaga_Fase>
+ 80008e4:	2002      	movs	r0, #2
+ 80008e6:	f000 fcc9 	bl	800127c <Apaga_Fase>
 		/* Se debe apagar completamente esta fase.*/
 	}
 	if(BF.band2 == 1)
- 80008e6:	4b5f      	ldr	r3, [pc, #380]	; (8000a64 <Fases_Auto+0x2f0>)
- 80008e8:	781b      	ldrb	r3, [r3, #0]
- 80008ea:	f003 0310 	and.w	r3, r3, #16
- 80008ee:	b2db      	uxtb	r3, r3
- 80008f0:	2b00      	cmp	r3, #0
- 80008f2:	d068      	beq.n	80009c6 <Fases_Auto+0x252>
+ 80008ea:	4b5f      	ldr	r3, [pc, #380]	; (8000a68 <Fases_Auto+0x2f4>)
+ 80008ec:	781b      	ldrb	r3, [r3, #0]
+ 80008ee:	f003 0310 	and.w	r3, r3, #16
+ 80008f2:	b2db      	uxtb	r3, r3
+ 80008f4:	2b00      	cmp	r3, #0
+ 80008f6:	d068      	beq.n	80009ca <Fases_Auto+0x256>
 	{
 		switch(f2Actual)
- 80008f4:	4b60      	ldr	r3, [pc, #384]	; (8000a78 <Fases_Auto+0x304>)
- 80008f6:	781b      	ldrb	r3, [r3, #0]
- 80008f8:	b2db      	uxtb	r3, r3
- 80008fa:	2b02      	cmp	r3, #2
- 80008fc:	d01e      	beq.n	800093c <Fases_Auto+0x1c8>
- 80008fe:	2b03      	cmp	r3, #3
- 8000900:	d037      	beq.n	8000972 <Fases_Auto+0x1fe>
- 8000902:	2b01      	cmp	r3, #1
- 8000904:	d150      	bne.n	80009a8 <Fases_Auto+0x234>
+ 80008f8:	4b60      	ldr	r3, [pc, #384]	; (8000a7c <Fases_Auto+0x308>)
+ 80008fa:	781b      	ldrb	r3, [r3, #0]
+ 80008fc:	b2db      	uxtb	r3, r3
+ 80008fe:	2b02      	cmp	r3, #2
+ 8000900:	d01e      	beq.n	8000940 <Fases_Auto+0x1cc>
+ 8000902:	2b03      	cmp	r3, #3
+ 8000904:	d037      	beq.n	8000976 <Fases_Auto+0x202>
+ 8000906:	2b01      	cmp	r3, #1
+ 8000908:	d150      	bne.n	80009ac <Fases_Auto+0x238>
 		{
 		case 1:
 		{
 			HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin,GPIO_PIN_RESET);
- 8000906:	2200      	movs	r2, #0
- 8000908:	f44f 6180 	mov.w	r1, #1024	; 0x400
- 800090c:	4858      	ldr	r0, [pc, #352]	; (8000a70 <Fases_Auto+0x2fc>)
- 800090e:	f002 fe7b 	bl	8003608 <HAL_GPIO_WritePin>
+ 800090a:	2200      	movs	r2, #0
+ 800090c:	f44f 6180 	mov.w	r1, #1024	; 0x400
+ 8000910:	4858      	ldr	r0, [pc, #352]	; (8000a74 <Fases_Auto+0x300>)
+ 8000912:	f002 fe79 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c2Fase == tiempos[3])
- 8000912:	68fb      	ldr	r3, [r7, #12]
- 8000914:	3303      	adds	r3, #3
- 8000916:	781a      	ldrb	r2, [r3, #0]
- 8000918:	4b56      	ldr	r3, [pc, #344]	; (8000a74 <Fases_Auto+0x300>)
- 800091a:	781b      	ldrb	r3, [r3, #0]
- 800091c:	b2db      	uxtb	r3, r3
- 800091e:	429a      	cmp	r2, r3
- 8000920:	d145      	bne.n	80009ae <Fases_Auto+0x23a>
+ 8000916:	68fb      	ldr	r3, [r7, #12]
+ 8000918:	3303      	adds	r3, #3
+ 800091a:	781a      	ldrb	r2, [r3, #0]
+ 800091c:	4b56      	ldr	r3, [pc, #344]	; (8000a78 <Fases_Auto+0x304>)
+ 800091e:	781b      	ldrb	r3, [r3, #0]
+ 8000920:	b2db      	uxtb	r3, r3
+ 8000922:	429a      	cmp	r2, r3
+ 8000924:	d145      	bne.n	80009b2 <Fases_Auto+0x23e>
 			{
 				HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin,GPIO_PIN_SET);
- 8000922:	2201      	movs	r2, #1
- 8000924:	f44f 6180 	mov.w	r1, #1024	; 0x400
- 8000928:	4851      	ldr	r0, [pc, #324]	; (8000a70 <Fases_Auto+0x2fc>)
- 800092a:	f002 fe6d 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000926:	2201      	movs	r2, #1
+ 8000928:	f44f 6180 	mov.w	r1, #1024	; 0x400
+ 800092c:	4851      	ldr	r0, [pc, #324]	; (8000a74 <Fases_Auto+0x300>)
+ 800092e:	f002 fe6b 	bl	8003608 <HAL_GPIO_WritePin>
 				f2Actual = 2;
- 800092e:	4b52      	ldr	r3, [pc, #328]	; (8000a78 <Fases_Auto+0x304>)
- 8000930:	2202      	movs	r2, #2
- 8000932:	701a      	strb	r2, [r3, #0]
+ 8000932:	4b52      	ldr	r3, [pc, #328]	; (8000a7c <Fases_Auto+0x308>)
+ 8000934:	2202      	movs	r2, #2
+ 8000936:	701a      	strb	r2, [r3, #0]
 				c2Fase = 0;
- 8000934:	4b4f      	ldr	r3, [pc, #316]	; (8000a74 <Fases_Auto+0x300>)
- 8000936:	2200      	movs	r2, #0
- 8000938:	701a      	strb	r2, [r3, #0]
+ 8000938:	4b4f      	ldr	r3, [pc, #316]	; (8000a78 <Fases_Auto+0x304>)
+ 800093a:	2200      	movs	r2, #0
+ 800093c:	701a      	strb	r2, [r3, #0]
 				break;
- 800093a:	e03d      	b.n	80009b8 <Fases_Auto+0x244>
+ 800093e:	e03d      	b.n	80009bc <Fases_Auto+0x248>
 			}
 		}
 		break;
 		case 2:
 		{
 			HAL_GPIO_WritePin(GPIOA,FASE2_AMA_Pin,GPIO_PIN_RESET);
- 800093c:	2200      	movs	r2, #0
- 800093e:	f44f 6100 	mov.w	r1, #2048	; 0x800
- 8000942:	484b      	ldr	r0, [pc, #300]	; (8000a70 <Fases_Auto+0x2fc>)
- 8000944:	f002 fe60 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000940:	2200      	movs	r2, #0
+ 8000942:	f44f 6100 	mov.w	r1, #2048	; 0x800
+ 8000946:	484b      	ldr	r0, [pc, #300]	; (8000a74 <Fases_Auto+0x300>)
+ 8000948:	f002 fe5e 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c2Fase == tiempos[4])
- 8000948:	68fb      	ldr	r3, [r7, #12]
- 800094a:	3304      	adds	r3, #4
- 800094c:	781a      	ldrb	r2, [r3, #0]
- 800094e:	4b49      	ldr	r3, [pc, #292]	; (8000a74 <Fases_Auto+0x300>)
- 8000950:	781b      	ldrb	r3, [r3, #0]
- 8000952:	b2db      	uxtb	r3, r3
- 8000954:	429a      	cmp	r2, r3
- 8000956:	d12c      	bne.n	80009b2 <Fases_Auto+0x23e>
+ 800094c:	68fb      	ldr	r3, [r7, #12]
+ 800094e:	3304      	adds	r3, #4
+ 8000950:	781a      	ldrb	r2, [r3, #0]
+ 8000952:	4b49      	ldr	r3, [pc, #292]	; (8000a78 <Fases_Auto+0x304>)
+ 8000954:	781b      	ldrb	r3, [r3, #0]
+ 8000956:	b2db      	uxtb	r3, r3
+ 8000958:	429a      	cmp	r2, r3
+ 800095a:	d12c      	bne.n	80009b6 <Fases_Auto+0x242>
 			{
 				HAL_GPIO_WritePin(GPIOA,FASE2_AMA_Pin,GPIO_PIN_SET);
- 8000958:	2201      	movs	r2, #1
- 800095a:	f44f 6100 	mov.w	r1, #2048	; 0x800
- 800095e:	4844      	ldr	r0, [pc, #272]	; (8000a70 <Fases_Auto+0x2fc>)
- 8000960:	f002 fe52 	bl	8003608 <HAL_GPIO_WritePin>
+ 800095c:	2201      	movs	r2, #1
+ 800095e:	f44f 6100 	mov.w	r1, #2048	; 0x800
+ 8000962:	4844      	ldr	r0, [pc, #272]	; (8000a74 <Fases_Auto+0x300>)
+ 8000964:	f002 fe50 	bl	8003608 <HAL_GPIO_WritePin>
 				f2Actual = 3;
- 8000964:	4b44      	ldr	r3, [pc, #272]	; (8000a78 <Fases_Auto+0x304>)
- 8000966:	2203      	movs	r2, #3
- 8000968:	701a      	strb	r2, [r3, #0]
+ 8000968:	4b44      	ldr	r3, [pc, #272]	; (8000a7c <Fases_Auto+0x308>)
+ 800096a:	2203      	movs	r2, #3
+ 800096c:	701a      	strb	r2, [r3, #0]
 				c2Fase = 0;
- 800096a:	4b42      	ldr	r3, [pc, #264]	; (8000a74 <Fases_Auto+0x300>)
- 800096c:	2200      	movs	r2, #0
- 800096e:	701a      	strb	r2, [r3, #0]
+ 800096e:	4b42      	ldr	r3, [pc, #264]	; (8000a78 <Fases_Auto+0x304>)
+ 8000970:	2200      	movs	r2, #0
+ 8000972:	701a      	strb	r2, [r3, #0]
 				break;
- 8000970:	e022      	b.n	80009b8 <Fases_Auto+0x244>
+ 8000974:	e022      	b.n	80009bc <Fases_Auto+0x248>
 			}
 		}
 		break;
 		case 3:
 		{
 			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
- 8000972:	2200      	movs	r2, #0
- 8000974:	f44f 5180 	mov.w	r1, #4096	; 0x1000
- 8000978:	483d      	ldr	r0, [pc, #244]	; (8000a70 <Fases_Auto+0x2fc>)
- 800097a:	f002 fe45 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000976:	2200      	movs	r2, #0
+ 8000978:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+ 800097c:	483d      	ldr	r0, [pc, #244]	; (8000a74 <Fases_Auto+0x300>)
+ 800097e:	f002 fe43 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c2Fase == tiempos[5])
- 800097e:	68fb      	ldr	r3, [r7, #12]
- 8000980:	3305      	adds	r3, #5
- 8000982:	781a      	ldrb	r2, [r3, #0]
- 8000984:	4b3b      	ldr	r3, [pc, #236]	; (8000a74 <Fases_Auto+0x300>)
- 8000986:	781b      	ldrb	r3, [r3, #0]
- 8000988:	b2db      	uxtb	r3, r3
- 800098a:	429a      	cmp	r2, r3
- 800098c:	d113      	bne.n	80009b6 <Fases_Auto+0x242>
+ 8000982:	68fb      	ldr	r3, [r7, #12]
+ 8000984:	3305      	adds	r3, #5
+ 8000986:	781a      	ldrb	r2, [r3, #0]
+ 8000988:	4b3b      	ldr	r3, [pc, #236]	; (8000a78 <Fases_Auto+0x304>)
+ 800098a:	781b      	ldrb	r3, [r3, #0]
+ 800098c:	b2db      	uxtb	r3, r3
+ 800098e:	429a      	cmp	r2, r3
+ 8000990:	d113      	bne.n	80009ba <Fases_Auto+0x246>
 			{
 				HAL_GPIO_WritePin(GPIOA,FASE2_ROJO_Pin,GPIO_PIN_SET);
- 800098e:	2201      	movs	r2, #1
- 8000990:	f44f 5180 	mov.w	r1, #4096	; 0x1000
- 8000994:	4836      	ldr	r0, [pc, #216]	; (8000a70 <Fases_Auto+0x2fc>)
- 8000996:	f002 fe37 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000992:	2201      	movs	r2, #1
+ 8000994:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+ 8000998:	4836      	ldr	r0, [pc, #216]	; (8000a74 <Fases_Auto+0x300>)
+ 800099a:	f002 fe35 	bl	8003608 <HAL_GPIO_WritePin>
 				f2Actual = 1;
- 800099a:	4b37      	ldr	r3, [pc, #220]	; (8000a78 <Fases_Auto+0x304>)
- 800099c:	2201      	movs	r2, #1
- 800099e:	701a      	strb	r2, [r3, #0]
+ 800099e:	4b37      	ldr	r3, [pc, #220]	; (8000a7c <Fases_Auto+0x308>)
+ 80009a0:	2201      	movs	r2, #1
+ 80009a2:	701a      	strb	r2, [r3, #0]
 				c2Fase = 0;
- 80009a0:	4b34      	ldr	r3, [pc, #208]	; (8000a74 <Fases_Auto+0x300>)
- 80009a2:	2200      	movs	r2, #0
- 80009a4:	701a      	strb	r2, [r3, #0]
+ 80009a4:	4b34      	ldr	r3, [pc, #208]	; (8000a78 <Fases_Auto+0x304>)
+ 80009a6:	2200      	movs	r2, #0
+ 80009a8:	701a      	strb	r2, [r3, #0]
 				break;
- 80009a6:	e007      	b.n	80009b8 <Fases_Auto+0x244>
+ 80009aa:	e007      	b.n	80009bc <Fases_Auto+0x248>
 			}
 		}
 		break;
 		default:
 		{
 			Error_Handler();
- 80009a8:	f000 ff30 	bl	800180c <Error_Handler>
+ 80009ac:	f000 ff2e 	bl	800180c <Error_Handler>
 		}
 		break;
- 80009ac:	e004      	b.n	80009b8 <Fases_Auto+0x244>
-		break;
- 80009ae:	bf00      	nop
- 80009b0:	e002      	b.n	80009b8 <Fases_Auto+0x244>
+ 80009b0:	e004      	b.n	80009bc <Fases_Auto+0x248>
 		break;
  80009b2:	bf00      	nop
- 80009b4:	e000      	b.n	80009b8 <Fases_Auto+0x244>
+ 80009b4:	e002      	b.n	80009bc <Fases_Auto+0x248>
 		break;
  80009b6:	bf00      	nop
+ 80009b8:	e000      	b.n	80009bc <Fases_Auto+0x248>
+		break;
+ 80009ba:	bf00      	nop
 		}
 		c2Fase++;
- 80009b8:	4b2e      	ldr	r3, [pc, #184]	; (8000a74 <Fases_Auto+0x300>)
- 80009ba:	781b      	ldrb	r3, [r3, #0]
- 80009bc:	b2db      	uxtb	r3, r3
- 80009be:	3301      	adds	r3, #1
- 80009c0:	b2da      	uxtb	r2, r3
- 80009c2:	4b2c      	ldr	r3, [pc, #176]	; (8000a74 <Fases_Auto+0x300>)
- 80009c4:	701a      	strb	r2, [r3, #0]
+ 80009bc:	4b2e      	ldr	r3, [pc, #184]	; (8000a78 <Fases_Auto+0x304>)
+ 80009be:	781b      	ldrb	r3, [r3, #0]
+ 80009c0:	b2db      	uxtb	r3, r3
+ 80009c2:	3301      	adds	r3, #1
+ 80009c4:	b2da      	uxtb	r2, r3
+ 80009c6:	4b2c      	ldr	r3, [pc, #176]	; (8000a78 <Fases_Auto+0x304>)
+ 80009c8:	701a      	strb	r2, [r3, #0]
 	}
 
 /********************************* FASE 3*************************************/
 	if(Verif_Tiempo(aHora, &iHora->tFase3) == HAL_OK)
- 80009c6:	687b      	ldr	r3, [r7, #4]
- 80009c8:	3306      	adds	r3, #6
- 80009ca:	4619      	mov	r1, r3
- 80009cc:	68b8      	ldr	r0, [r7, #8]
- 80009ce:	f000 fb7c 	bl	80010ca <Verif_Tiempo>
- 80009d2:	4603      	mov	r3, r0
- 80009d4:	2b00      	cmp	r3, #0
- 80009d6:	d108      	bne.n	80009ea <Fases_Auto+0x276>
+ 80009ca:	687b      	ldr	r3, [r7, #4]
+ 80009cc:	3309      	adds	r3, #9
+ 80009ce:	4619      	mov	r1, r3
+ 80009d0:	68b8      	ldr	r0, [r7, #8]
+ 80009d2:	f000 fb7a 	bl	80010ca <Verif_Tiempo>
+ 80009d6:	4603      	mov	r3, r0
+ 80009d8:	2b00      	cmp	r3, #0
+ 80009da:	d108      	bne.n	80009ee <Fases_Auto+0x27a>
 	{
 		c3Fase = 0;
- 80009d8:	4b28      	ldr	r3, [pc, #160]	; (8000a7c <Fases_Auto+0x308>)
- 80009da:	2200      	movs	r2, #0
- 80009dc:	701a      	strb	r2, [r3, #0]
+ 80009dc:	4b28      	ldr	r3, [pc, #160]	; (8000a80 <Fases_Auto+0x30c>)
+ 80009de:	2200      	movs	r2, #0
+ 80009e0:	701a      	strb	r2, [r3, #0]
 		BF.band3 = 1;
- 80009de:	4a21      	ldr	r2, [pc, #132]	; (8000a64 <Fases_Auto+0x2f0>)
- 80009e0:	7813      	ldrb	r3, [r2, #0]
- 80009e2:	f043 0308 	orr.w	r3, r3, #8
- 80009e6:	7013      	strb	r3, [r2, #0]
- 80009e8:	e010      	b.n	8000a0c <Fases_Auto+0x298>
+ 80009e2:	4a21      	ldr	r2, [pc, #132]	; (8000a68 <Fases_Auto+0x2f4>)
+ 80009e4:	7813      	ldrb	r3, [r2, #0]
+ 80009e6:	f043 0308 	orr.w	r3, r3, #8
+ 80009ea:	7013      	strb	r3, [r2, #0]
+ 80009ec:	e010      	b.n	8000a10 <Fases_Auto+0x29c>
 	}
 	else if(Verif_Tiempo(aHora, &iHora->tFase3) == HAL_TIMEOUT)
- 80009ea:	687b      	ldr	r3, [r7, #4]
- 80009ec:	3306      	adds	r3, #6
- 80009ee:	4619      	mov	r1, r3
- 80009f0:	68b8      	ldr	r0, [r7, #8]
- 80009f2:	f000 fb6a 	bl	80010ca <Verif_Tiempo>
- 80009f6:	4603      	mov	r3, r0
- 80009f8:	2b03      	cmp	r3, #3
- 80009fa:	d107      	bne.n	8000a0c <Fases_Auto+0x298>
+ 80009ee:	687b      	ldr	r3, [r7, #4]
+ 80009f0:	3309      	adds	r3, #9
+ 80009f2:	4619      	mov	r1, r3
+ 80009f4:	68b8      	ldr	r0, [r7, #8]
+ 80009f6:	f000 fb68 	bl	80010ca <Verif_Tiempo>
+ 80009fa:	4603      	mov	r3, r0
+ 80009fc:	2b03      	cmp	r3, #3
+ 80009fe:	d107      	bne.n	8000a10 <Fases_Auto+0x29c>
 	{
 		BF.band3 = 0;
- 80009fc:	4a19      	ldr	r2, [pc, #100]	; (8000a64 <Fases_Auto+0x2f0>)
- 80009fe:	7813      	ldrb	r3, [r2, #0]
- 8000a00:	f36f 03c3 	bfc	r3, #3, #1
- 8000a04:	7013      	strb	r3, [r2, #0]
+ 8000a00:	4a19      	ldr	r2, [pc, #100]	; (8000a68 <Fases_Auto+0x2f4>)
+ 8000a02:	7813      	ldrb	r3, [r2, #0]
+ 8000a04:	f36f 03c3 	bfc	r3, #3, #1
+ 8000a08:	7013      	strb	r3, [r2, #0]
 		Apaga_Fase(3);
- 8000a06:	2003      	movs	r0, #3
- 8000a08:	f000 fc38 	bl	800127c <Apaga_Fase>
+ 8000a0a:	2003      	movs	r0, #3
+ 8000a0c:	f000 fc36 	bl	800127c <Apaga_Fase>
 		/* Se debe apagar completamente esta fase.*/
 	}
 	if(BF.band3 == 1)
- 8000a0c:	4b15      	ldr	r3, [pc, #84]	; (8000a64 <Fases_Auto+0x2f0>)
- 8000a0e:	781b      	ldrb	r3, [r3, #0]
- 8000a10:	f003 0308 	and.w	r3, r3, #8
- 8000a14:	b2db      	uxtb	r3, r3
- 8000a16:	2b00      	cmp	r3, #0
- 8000a18:	d079      	beq.n	8000b0e <Fases_Auto+0x39a>
+ 8000a10:	4b15      	ldr	r3, [pc, #84]	; (8000a68 <Fases_Auto+0x2f4>)
+ 8000a12:	781b      	ldrb	r3, [r3, #0]
+ 8000a14:	f003 0308 	and.w	r3, r3, #8
+ 8000a18:	b2db      	uxtb	r3, r3
+ 8000a1a:	2b00      	cmp	r3, #0
+ 8000a1c:	d079      	beq.n	8000b12 <Fases_Auto+0x39e>
 	{
 		switch(f3Actual)
- 8000a1a:	4b19      	ldr	r3, [pc, #100]	; (8000a80 <Fases_Auto+0x30c>)
- 8000a1c:	781b      	ldrb	r3, [r3, #0]
- 8000a1e:	b2db      	uxtb	r3, r3
- 8000a20:	2b02      	cmp	r3, #2
- 8000a22:	d02f      	beq.n	8000a84 <Fases_Auto+0x310>
- 8000a24:	2b03      	cmp	r3, #3
- 8000a26:	d048      	beq.n	8000aba <Fases_Auto+0x346>
- 8000a28:	2b01      	cmp	r3, #1
- 8000a2a:	d161      	bne.n	8000af0 <Fases_Auto+0x37c>
+ 8000a1e:	4b19      	ldr	r3, [pc, #100]	; (8000a84 <Fases_Auto+0x310>)
+ 8000a20:	781b      	ldrb	r3, [r3, #0]
+ 8000a22:	b2db      	uxtb	r3, r3
+ 8000a24:	2b02      	cmp	r3, #2
+ 8000a26:	d02f      	beq.n	8000a88 <Fases_Auto+0x314>
+ 8000a28:	2b03      	cmp	r3, #3
+ 8000a2a:	d048      	beq.n	8000abe <Fases_Auto+0x34a>
+ 8000a2c:	2b01      	cmp	r3, #1
+ 8000a2e:	d161      	bne.n	8000af4 <Fases_Auto+0x380>
 		{
 		case 1:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin,GPIO_PIN_RESET);
- 8000a2c:	2200      	movs	r2, #0
- 8000a2e:	2104      	movs	r1, #4
- 8000a30:	480e      	ldr	r0, [pc, #56]	; (8000a6c <Fases_Auto+0x2f8>)
- 8000a32:	f002 fde9 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000a30:	2200      	movs	r2, #0
+ 8000a32:	2104      	movs	r1, #4
+ 8000a34:	480e      	ldr	r0, [pc, #56]	; (8000a70 <Fases_Auto+0x2fc>)
+ 8000a36:	f002 fde7 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c3Fase == tiempos[6])
- 8000a36:	68fb      	ldr	r3, [r7, #12]
- 8000a38:	3306      	adds	r3, #6
- 8000a3a:	781a      	ldrb	r2, [r3, #0]
- 8000a3c:	4b0f      	ldr	r3, [pc, #60]	; (8000a7c <Fases_Auto+0x308>)
- 8000a3e:	781b      	ldrb	r3, [r3, #0]
- 8000a40:	b2db      	uxtb	r3, r3
- 8000a42:	429a      	cmp	r2, r3
- 8000a44:	d157      	bne.n	8000af6 <Fases_Auto+0x382>
+ 8000a3a:	68fb      	ldr	r3, [r7, #12]
+ 8000a3c:	3306      	adds	r3, #6
+ 8000a3e:	781a      	ldrb	r2, [r3, #0]
+ 8000a40:	4b0f      	ldr	r3, [pc, #60]	; (8000a80 <Fases_Auto+0x30c>)
+ 8000a42:	781b      	ldrb	r3, [r3, #0]
+ 8000a44:	b2db      	uxtb	r3, r3
+ 8000a46:	429a      	cmp	r2, r3
+ 8000a48:	d157      	bne.n	8000afa <Fases_Auto+0x386>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin,GPIO_PIN_SET);
- 8000a46:	2201      	movs	r2, #1
- 8000a48:	2104      	movs	r1, #4
- 8000a4a:	4808      	ldr	r0, [pc, #32]	; (8000a6c <Fases_Auto+0x2f8>)
- 8000a4c:	f002 fddc 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000a4a:	2201      	movs	r2, #1
+ 8000a4c:	2104      	movs	r1, #4
+ 8000a4e:	4808      	ldr	r0, [pc, #32]	; (8000a70 <Fases_Auto+0x2fc>)
+ 8000a50:	f002 fdda 	bl	8003608 <HAL_GPIO_WritePin>
 				f3Actual = 2;
- 8000a50:	4b0b      	ldr	r3, [pc, #44]	; (8000a80 <Fases_Auto+0x30c>)
- 8000a52:	2202      	movs	r2, #2
- 8000a54:	701a      	strb	r2, [r3, #0]
+ 8000a54:	4b0b      	ldr	r3, [pc, #44]	; (8000a84 <Fases_Auto+0x310>)
+ 8000a56:	2202      	movs	r2, #2
+ 8000a58:	701a      	strb	r2, [r3, #0]
 				c3Fase = 0;
- 8000a56:	4b09      	ldr	r3, [pc, #36]	; (8000a7c <Fases_Auto+0x308>)
- 8000a58:	2200      	movs	r2, #0
- 8000a5a:	701a      	strb	r2, [r3, #0]
+ 8000a5a:	4b09      	ldr	r3, [pc, #36]	; (8000a80 <Fases_Auto+0x30c>)
+ 8000a5c:	2200      	movs	r2, #0
+ 8000a5e:	701a      	strb	r2, [r3, #0]
 				break;
- 8000a5c:	e050      	b.n	8000b00 <Fases_Auto+0x38c>
- 8000a5e:	bf00      	nop
- 8000a60:	20000042 	.word	0x20000042
- 8000a64:	200000c4 	.word	0x200000c4
- 8000a68:	20000000 	.word	0x20000000
- 8000a6c:	40010c00 	.word	0x40010c00
- 8000a70:	40010800 	.word	0x40010800
- 8000a74:	20000043 	.word	0x20000043
- 8000a78:	20000001 	.word	0x20000001
- 8000a7c:	20000044 	.word	0x20000044
- 8000a80:	20000002 	.word	0x20000002
+ 8000a60:	e050      	b.n	8000b04 <Fases_Auto+0x390>
+ 8000a62:	bf00      	nop
+ 8000a64:	20000042 	.word	0x20000042
+ 8000a68:	200000c4 	.word	0x200000c4
+ 8000a6c:	20000000 	.word	0x20000000
+ 8000a70:	40010c00 	.word	0x40010c00
+ 8000a74:	40010800 	.word	0x40010800
+ 8000a78:	20000043 	.word	0x20000043
+ 8000a7c:	20000001 	.word	0x20000001
+ 8000a80:	20000044 	.word	0x20000044
+ 8000a84:	20000002 	.word	0x20000002
 			}
 		}
 		break;
 		case 2:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin,GPIO_PIN_RESET);
- 8000a84:	2200      	movs	r2, #0
- 8000a86:	f44f 5180 	mov.w	r1, #4096	; 0x1000
- 8000a8a:	48ad      	ldr	r0, [pc, #692]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000a8c:	f002 fdbc 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000a88:	2200      	movs	r2, #0
+ 8000a8a:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+ 8000a8e:	48ad      	ldr	r0, [pc, #692]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000a90:	f002 fdba 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c3Fase == tiempos[7])
- 8000a90:	68fb      	ldr	r3, [r7, #12]
- 8000a92:	3307      	adds	r3, #7
- 8000a94:	781a      	ldrb	r2, [r3, #0]
- 8000a96:	4bab      	ldr	r3, [pc, #684]	; (8000d44 <Fases_Auto+0x5d0>)
- 8000a98:	781b      	ldrb	r3, [r3, #0]
- 8000a9a:	b2db      	uxtb	r3, r3
- 8000a9c:	429a      	cmp	r2, r3
- 8000a9e:	d12c      	bne.n	8000afa <Fases_Auto+0x386>
+ 8000a94:	68fb      	ldr	r3, [r7, #12]
+ 8000a96:	3307      	adds	r3, #7
+ 8000a98:	781a      	ldrb	r2, [r3, #0]
+ 8000a9a:	4bab      	ldr	r3, [pc, #684]	; (8000d48 <Fases_Auto+0x5d4>)
+ 8000a9c:	781b      	ldrb	r3, [r3, #0]
+ 8000a9e:	b2db      	uxtb	r3, r3
+ 8000aa0:	429a      	cmp	r2, r3
+ 8000aa2:	d12c      	bne.n	8000afe <Fases_Auto+0x38a>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE3_AMA_Pin,GPIO_PIN_SET);
- 8000aa0:	2201      	movs	r2, #1
- 8000aa2:	f44f 5180 	mov.w	r1, #4096	; 0x1000
- 8000aa6:	48a6      	ldr	r0, [pc, #664]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000aa8:	f002 fdae 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000aa4:	2201      	movs	r2, #1
+ 8000aa6:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+ 8000aaa:	48a6      	ldr	r0, [pc, #664]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000aac:	f002 fdac 	bl	8003608 <HAL_GPIO_WritePin>
 				f3Actual = 3;
- 8000aac:	4ba6      	ldr	r3, [pc, #664]	; (8000d48 <Fases_Auto+0x5d4>)
- 8000aae:	2203      	movs	r2, #3
- 8000ab0:	701a      	strb	r2, [r3, #0]
+ 8000ab0:	4ba6      	ldr	r3, [pc, #664]	; (8000d4c <Fases_Auto+0x5d8>)
+ 8000ab2:	2203      	movs	r2, #3
+ 8000ab4:	701a      	strb	r2, [r3, #0]
 				c3Fase = 0;
- 8000ab2:	4ba4      	ldr	r3, [pc, #656]	; (8000d44 <Fases_Auto+0x5d0>)
- 8000ab4:	2200      	movs	r2, #0
- 8000ab6:	701a      	strb	r2, [r3, #0]
+ 8000ab6:	4ba4      	ldr	r3, [pc, #656]	; (8000d48 <Fases_Auto+0x5d4>)
+ 8000ab8:	2200      	movs	r2, #0
+ 8000aba:	701a      	strb	r2, [r3, #0]
 				break;
- 8000ab8:	e022      	b.n	8000b00 <Fases_Auto+0x38c>
+ 8000abc:	e022      	b.n	8000b04 <Fases_Auto+0x390>
 			}
 		}
 		break;
 		case 3:
 		{
 			HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin,GPIO_PIN_RESET);
- 8000aba:	2200      	movs	r2, #0
- 8000abc:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 8000ac0:	48a2      	ldr	r0, [pc, #648]	; (8000d4c <Fases_Auto+0x5d8>)
- 8000ac2:	f002 fda1 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000abe:	2200      	movs	r2, #0
+ 8000ac0:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8000ac4:	48a2      	ldr	r0, [pc, #648]	; (8000d50 <Fases_Auto+0x5dc>)
+ 8000ac6:	f002 fd9f 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c3Fase == tiempos[8])
- 8000ac6:	68fb      	ldr	r3, [r7, #12]
- 8000ac8:	3308      	adds	r3, #8
- 8000aca:	781a      	ldrb	r2, [r3, #0]
- 8000acc:	4b9d      	ldr	r3, [pc, #628]	; (8000d44 <Fases_Auto+0x5d0>)
- 8000ace:	781b      	ldrb	r3, [r3, #0]
- 8000ad0:	b2db      	uxtb	r3, r3
- 8000ad2:	429a      	cmp	r2, r3
- 8000ad4:	d113      	bne.n	8000afe <Fases_Auto+0x38a>
+ 8000aca:	68fb      	ldr	r3, [r7, #12]
+ 8000acc:	3308      	adds	r3, #8
+ 8000ace:	781a      	ldrb	r2, [r3, #0]
+ 8000ad0:	4b9d      	ldr	r3, [pc, #628]	; (8000d48 <Fases_Auto+0x5d4>)
+ 8000ad2:	781b      	ldrb	r3, [r3, #0]
+ 8000ad4:	b2db      	uxtb	r3, r3
+ 8000ad6:	429a      	cmp	r2, r3
+ 8000ad8:	d113      	bne.n	8000b02 <Fases_Auto+0x38e>
 			{
 				HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin,GPIO_PIN_SET);
- 8000ad6:	2201      	movs	r2, #1
- 8000ad8:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 8000adc:	489b      	ldr	r0, [pc, #620]	; (8000d4c <Fases_Auto+0x5d8>)
- 8000ade:	f002 fd93 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000ada:	2201      	movs	r2, #1
+ 8000adc:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8000ae0:	489b      	ldr	r0, [pc, #620]	; (8000d50 <Fases_Auto+0x5dc>)
+ 8000ae2:	f002 fd91 	bl	8003608 <HAL_GPIO_WritePin>
 				f3Actual = 1;
- 8000ae2:	4b99      	ldr	r3, [pc, #612]	; (8000d48 <Fases_Auto+0x5d4>)
- 8000ae4:	2201      	movs	r2, #1
- 8000ae6:	701a      	strb	r2, [r3, #0]
+ 8000ae6:	4b99      	ldr	r3, [pc, #612]	; (8000d4c <Fases_Auto+0x5d8>)
+ 8000ae8:	2201      	movs	r2, #1
+ 8000aea:	701a      	strb	r2, [r3, #0]
 				c3Fase = 0;
- 8000ae8:	4b96      	ldr	r3, [pc, #600]	; (8000d44 <Fases_Auto+0x5d0>)
- 8000aea:	2200      	movs	r2, #0
- 8000aec:	701a      	strb	r2, [r3, #0]
+ 8000aec:	4b96      	ldr	r3, [pc, #600]	; (8000d48 <Fases_Auto+0x5d4>)
+ 8000aee:	2200      	movs	r2, #0
+ 8000af0:	701a      	strb	r2, [r3, #0]
 				break;
- 8000aee:	e007      	b.n	8000b00 <Fases_Auto+0x38c>
+ 8000af2:	e007      	b.n	8000b04 <Fases_Auto+0x390>
 			}
 		}
 		break;
 		default:
 		{
 			Error_Handler();
- 8000af0:	f000 fe8c 	bl	800180c <Error_Handler>
+ 8000af4:	f000 fe8a 	bl	800180c <Error_Handler>
 		}
 		break;
- 8000af4:	e004      	b.n	8000b00 <Fases_Auto+0x38c>
-		break;
- 8000af6:	bf00      	nop
- 8000af8:	e002      	b.n	8000b00 <Fases_Auto+0x38c>
+ 8000af8:	e004      	b.n	8000b04 <Fases_Auto+0x390>
 		break;
  8000afa:	bf00      	nop
- 8000afc:	e000      	b.n	8000b00 <Fases_Auto+0x38c>
+ 8000afc:	e002      	b.n	8000b04 <Fases_Auto+0x390>
 		break;
  8000afe:	bf00      	nop
+ 8000b00:	e000      	b.n	8000b04 <Fases_Auto+0x390>
+		break;
+ 8000b02:	bf00      	nop
 		}
 		c3Fase++;
- 8000b00:	4b90      	ldr	r3, [pc, #576]	; (8000d44 <Fases_Auto+0x5d0>)
- 8000b02:	781b      	ldrb	r3, [r3, #0]
- 8000b04:	b2db      	uxtb	r3, r3
- 8000b06:	3301      	adds	r3, #1
- 8000b08:	b2da      	uxtb	r2, r3
- 8000b0a:	4b8e      	ldr	r3, [pc, #568]	; (8000d44 <Fases_Auto+0x5d0>)
- 8000b0c:	701a      	strb	r2, [r3, #0]
+ 8000b04:	4b90      	ldr	r3, [pc, #576]	; (8000d48 <Fases_Auto+0x5d4>)
+ 8000b06:	781b      	ldrb	r3, [r3, #0]
+ 8000b08:	b2db      	uxtb	r3, r3
+ 8000b0a:	3301      	adds	r3, #1
+ 8000b0c:	b2da      	uxtb	r2, r3
+ 8000b0e:	4b8e      	ldr	r3, [pc, #568]	; (8000d48 <Fases_Auto+0x5d4>)
+ 8000b10:	701a      	strb	r2, [r3, #0]
 	}
 
 /********************************* FASE 4*************************************/
 	if(Verif_Tiempo(aHora, &iHora->tFase4) == HAL_OK)
- 8000b0e:	687b      	ldr	r3, [r7, #4]
- 8000b10:	3309      	adds	r3, #9
- 8000b12:	4619      	mov	r1, r3
- 8000b14:	68b8      	ldr	r0, [r7, #8]
- 8000b16:	f000 fad8 	bl	80010ca <Verif_Tiempo>
- 8000b1a:	4603      	mov	r3, r0
- 8000b1c:	2b00      	cmp	r3, #0
- 8000b1e:	d108      	bne.n	8000b32 <Fases_Auto+0x3be>
+ 8000b12:	687b      	ldr	r3, [r7, #4]
+ 8000b14:	330c      	adds	r3, #12
+ 8000b16:	4619      	mov	r1, r3
+ 8000b18:	68b8      	ldr	r0, [r7, #8]
+ 8000b1a:	f000 fad6 	bl	80010ca <Verif_Tiempo>
+ 8000b1e:	4603      	mov	r3, r0
+ 8000b20:	2b00      	cmp	r3, #0
+ 8000b22:	d108      	bne.n	8000b36 <Fases_Auto+0x3c2>
 	{
 		c4Fase = 0;
- 8000b20:	4b8b      	ldr	r3, [pc, #556]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000b22:	2200      	movs	r2, #0
- 8000b24:	701a      	strb	r2, [r3, #0]
+ 8000b24:	4b8b      	ldr	r3, [pc, #556]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000b26:	2200      	movs	r2, #0
+ 8000b28:	701a      	strb	r2, [r3, #0]
 		BF.band4 = 1;
- 8000b26:	4a8b      	ldr	r2, [pc, #556]	; (8000d54 <Fases_Auto+0x5e0>)
- 8000b28:	7813      	ldrb	r3, [r2, #0]
- 8000b2a:	f043 0304 	orr.w	r3, r3, #4
- 8000b2e:	7013      	strb	r3, [r2, #0]
- 8000b30:	e010      	b.n	8000b54 <Fases_Auto+0x3e0>
+ 8000b2a:	4a8b      	ldr	r2, [pc, #556]	; (8000d58 <Fases_Auto+0x5e4>)
+ 8000b2c:	7813      	ldrb	r3, [r2, #0]
+ 8000b2e:	f043 0304 	orr.w	r3, r3, #4
+ 8000b32:	7013      	strb	r3, [r2, #0]
+ 8000b34:	e010      	b.n	8000b58 <Fases_Auto+0x3e4>
 	}
 	else if(Verif_Tiempo(aHora, &iHora->tFase4) == HAL_TIMEOUT)
- 8000b32:	687b      	ldr	r3, [r7, #4]
- 8000b34:	3309      	adds	r3, #9
- 8000b36:	4619      	mov	r1, r3
- 8000b38:	68b8      	ldr	r0, [r7, #8]
- 8000b3a:	f000 fac6 	bl	80010ca <Verif_Tiempo>
- 8000b3e:	4603      	mov	r3, r0
- 8000b40:	2b03      	cmp	r3, #3
- 8000b42:	d107      	bne.n	8000b54 <Fases_Auto+0x3e0>
+ 8000b36:	687b      	ldr	r3, [r7, #4]
+ 8000b38:	330c      	adds	r3, #12
+ 8000b3a:	4619      	mov	r1, r3
+ 8000b3c:	68b8      	ldr	r0, [r7, #8]
+ 8000b3e:	f000 fac4 	bl	80010ca <Verif_Tiempo>
+ 8000b42:	4603      	mov	r3, r0
+ 8000b44:	2b03      	cmp	r3, #3
+ 8000b46:	d107      	bne.n	8000b58 <Fases_Auto+0x3e4>
 	{
 		BF.band4 = 0;
- 8000b44:	4a83      	ldr	r2, [pc, #524]	; (8000d54 <Fases_Auto+0x5e0>)
- 8000b46:	7813      	ldrb	r3, [r2, #0]
- 8000b48:	f36f 0382 	bfc	r3, #2, #1
- 8000b4c:	7013      	strb	r3, [r2, #0]
+ 8000b48:	4a83      	ldr	r2, [pc, #524]	; (8000d58 <Fases_Auto+0x5e4>)
+ 8000b4a:	7813      	ldrb	r3, [r2, #0]
+ 8000b4c:	f36f 0382 	bfc	r3, #2, #1
+ 8000b50:	7013      	strb	r3, [r2, #0]
 		Apaga_Fase(4);
- 8000b4e:	2004      	movs	r0, #4
- 8000b50:	f000 fb94 	bl	800127c <Apaga_Fase>
+ 8000b52:	2004      	movs	r0, #4
+ 8000b54:	f000 fb92 	bl	800127c <Apaga_Fase>
 		/* Se debe apagar completamente esta fase.*/
 	}
 	if(BF.band4 == 1)
- 8000b54:	4b7f      	ldr	r3, [pc, #508]	; (8000d54 <Fases_Auto+0x5e0>)
- 8000b56:	781b      	ldrb	r3, [r3, #0]
- 8000b58:	f003 0304 	and.w	r3, r3, #4
- 8000b5c:	b2db      	uxtb	r3, r3
- 8000b5e:	2b00      	cmp	r3, #0
- 8000b60:	d062      	beq.n	8000c28 <Fases_Auto+0x4b4>
+ 8000b58:	4b7f      	ldr	r3, [pc, #508]	; (8000d58 <Fases_Auto+0x5e4>)
+ 8000b5a:	781b      	ldrb	r3, [r3, #0]
+ 8000b5c:	f003 0304 	and.w	r3, r3, #4
+ 8000b60:	b2db      	uxtb	r3, r3
+ 8000b62:	2b00      	cmp	r3, #0
+ 8000b64:	d062      	beq.n	8000c2c <Fases_Auto+0x4b8>
 	{
 		switch(f4Actual)
- 8000b62:	4b7d      	ldr	r3, [pc, #500]	; (8000d58 <Fases_Auto+0x5e4>)
- 8000b64:	781b      	ldrb	r3, [r3, #0]
- 8000b66:	b2db      	uxtb	r3, r3
- 8000b68:	2b02      	cmp	r3, #2
- 8000b6a:	d01c      	beq.n	8000ba6 <Fases_Auto+0x432>
- 8000b6c:	2b03      	cmp	r3, #3
- 8000b6e:	d033      	beq.n	8000bd8 <Fases_Auto+0x464>
- 8000b70:	2b01      	cmp	r3, #1
- 8000b72:	d14a      	bne.n	8000c0a <Fases_Auto+0x496>
+ 8000b66:	4b7d      	ldr	r3, [pc, #500]	; (8000d5c <Fases_Auto+0x5e8>)
+ 8000b68:	781b      	ldrb	r3, [r3, #0]
+ 8000b6a:	b2db      	uxtb	r3, r3
+ 8000b6c:	2b02      	cmp	r3, #2
+ 8000b6e:	d01c      	beq.n	8000baa <Fases_Auto+0x436>
+ 8000b70:	2b03      	cmp	r3, #3
+ 8000b72:	d033      	beq.n	8000bdc <Fases_Auto+0x468>
+ 8000b74:	2b01      	cmp	r3, #1
+ 8000b76:	d14a      	bne.n	8000c0e <Fases_Auto+0x49a>
 		{
 		case 1:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin,GPIO_PIN_RESET);
- 8000b74:	2200      	movs	r2, #0
- 8000b76:	2108      	movs	r1, #8
- 8000b78:	4871      	ldr	r0, [pc, #452]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000b7a:	f002 fd45 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000b78:	2200      	movs	r2, #0
+ 8000b7a:	2108      	movs	r1, #8
+ 8000b7c:	4871      	ldr	r0, [pc, #452]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000b7e:	f002 fd43 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c4Fase == tiempos[9])
- 8000b7e:	68fb      	ldr	r3, [r7, #12]
- 8000b80:	3309      	adds	r3, #9
- 8000b82:	781a      	ldrb	r2, [r3, #0]
- 8000b84:	4b72      	ldr	r3, [pc, #456]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000b86:	781b      	ldrb	r3, [r3, #0]
- 8000b88:	b2db      	uxtb	r3, r3
- 8000b8a:	429a      	cmp	r2, r3
- 8000b8c:	d140      	bne.n	8000c10 <Fases_Auto+0x49c>
+ 8000b82:	68fb      	ldr	r3, [r7, #12]
+ 8000b84:	3309      	adds	r3, #9
+ 8000b86:	781a      	ldrb	r2, [r3, #0]
+ 8000b88:	4b72      	ldr	r3, [pc, #456]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000b8a:	781b      	ldrb	r3, [r3, #0]
+ 8000b8c:	b2db      	uxtb	r3, r3
+ 8000b8e:	429a      	cmp	r2, r3
+ 8000b90:	d140      	bne.n	8000c14 <Fases_Auto+0x4a0>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin,GPIO_PIN_SET);
- 8000b8e:	2201      	movs	r2, #1
- 8000b90:	2108      	movs	r1, #8
- 8000b92:	486b      	ldr	r0, [pc, #428]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000b94:	f002 fd38 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000b92:	2201      	movs	r2, #1
+ 8000b94:	2108      	movs	r1, #8
+ 8000b96:	486b      	ldr	r0, [pc, #428]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000b98:	f002 fd36 	bl	8003608 <HAL_GPIO_WritePin>
 				f4Actual = 2;
- 8000b98:	4b6f      	ldr	r3, [pc, #444]	; (8000d58 <Fases_Auto+0x5e4>)
- 8000b9a:	2202      	movs	r2, #2
- 8000b9c:	701a      	strb	r2, [r3, #0]
+ 8000b9c:	4b6f      	ldr	r3, [pc, #444]	; (8000d5c <Fases_Auto+0x5e8>)
+ 8000b9e:	2202      	movs	r2, #2
+ 8000ba0:	701a      	strb	r2, [r3, #0]
 				c4Fase = 0;
- 8000b9e:	4b6c      	ldr	r3, [pc, #432]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000ba0:	2200      	movs	r2, #0
- 8000ba2:	701a      	strb	r2, [r3, #0]
+ 8000ba2:	4b6c      	ldr	r3, [pc, #432]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000ba4:	2200      	movs	r2, #0
+ 8000ba6:	701a      	strb	r2, [r3, #0]
 				break;
- 8000ba4:	e039      	b.n	8000c1a <Fases_Auto+0x4a6>
+ 8000ba8:	e039      	b.n	8000c1e <Fases_Auto+0x4aa>
 			}
 		}
 		break;
 		case 2:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin,GPIO_PIN_RESET);
- 8000ba6:	2200      	movs	r2, #0
- 8000ba8:	2110      	movs	r1, #16
- 8000baa:	4865      	ldr	r0, [pc, #404]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000bac:	f002 fd2c 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000baa:	2200      	movs	r2, #0
+ 8000bac:	2110      	movs	r1, #16
+ 8000bae:	4865      	ldr	r0, [pc, #404]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000bb0:	f002 fd2a 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c4Fase == tiempos[10])
- 8000bb0:	68fb      	ldr	r3, [r7, #12]
- 8000bb2:	330a      	adds	r3, #10
- 8000bb4:	781a      	ldrb	r2, [r3, #0]
- 8000bb6:	4b66      	ldr	r3, [pc, #408]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000bb8:	781b      	ldrb	r3, [r3, #0]
- 8000bba:	b2db      	uxtb	r3, r3
- 8000bbc:	429a      	cmp	r2, r3
- 8000bbe:	d129      	bne.n	8000c14 <Fases_Auto+0x4a0>
+ 8000bb4:	68fb      	ldr	r3, [r7, #12]
+ 8000bb6:	330a      	adds	r3, #10
+ 8000bb8:	781a      	ldrb	r2, [r3, #0]
+ 8000bba:	4b66      	ldr	r3, [pc, #408]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000bbc:	781b      	ldrb	r3, [r3, #0]
+ 8000bbe:	b2db      	uxtb	r3, r3
+ 8000bc0:	429a      	cmp	r2, r3
+ 8000bc2:	d129      	bne.n	8000c18 <Fases_Auto+0x4a4>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE4_AMA_Pin,GPIO_PIN_SET);
- 8000bc0:	2201      	movs	r2, #1
- 8000bc2:	2110      	movs	r1, #16
- 8000bc4:	485e      	ldr	r0, [pc, #376]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000bc6:	f002 fd1f 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000bc4:	2201      	movs	r2, #1
+ 8000bc6:	2110      	movs	r1, #16
+ 8000bc8:	485e      	ldr	r0, [pc, #376]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000bca:	f002 fd1d 	bl	8003608 <HAL_GPIO_WritePin>
 				f4Actual = 3;
- 8000bca:	4b63      	ldr	r3, [pc, #396]	; (8000d58 <Fases_Auto+0x5e4>)
- 8000bcc:	2203      	movs	r2, #3
- 8000bce:	701a      	strb	r2, [r3, #0]
+ 8000bce:	4b63      	ldr	r3, [pc, #396]	; (8000d5c <Fases_Auto+0x5e8>)
+ 8000bd0:	2203      	movs	r2, #3
+ 8000bd2:	701a      	strb	r2, [r3, #0]
 				c4Fase = 0;
- 8000bd0:	4b5f      	ldr	r3, [pc, #380]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000bd2:	2200      	movs	r2, #0
- 8000bd4:	701a      	strb	r2, [r3, #0]
+ 8000bd4:	4b5f      	ldr	r3, [pc, #380]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000bd6:	2200      	movs	r2, #0
+ 8000bd8:	701a      	strb	r2, [r3, #0]
 				break;
- 8000bd6:	e020      	b.n	8000c1a <Fases_Auto+0x4a6>
+ 8000bda:	e020      	b.n	8000c1e <Fases_Auto+0x4aa>
 			}
 		}
 		break;
 		case 3:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin,GPIO_PIN_RESET);
- 8000bd8:	2200      	movs	r2, #0
- 8000bda:	2120      	movs	r1, #32
- 8000bdc:	4858      	ldr	r0, [pc, #352]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000bde:	f002 fd13 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000bdc:	2200      	movs	r2, #0
+ 8000bde:	2120      	movs	r1, #32
+ 8000be0:	4858      	ldr	r0, [pc, #352]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000be2:	f002 fd11 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c4Fase == tiempos[11])
- 8000be2:	68fb      	ldr	r3, [r7, #12]
- 8000be4:	330b      	adds	r3, #11
- 8000be6:	781a      	ldrb	r2, [r3, #0]
- 8000be8:	4b59      	ldr	r3, [pc, #356]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000bea:	781b      	ldrb	r3, [r3, #0]
- 8000bec:	b2db      	uxtb	r3, r3
- 8000bee:	429a      	cmp	r2, r3
- 8000bf0:	d112      	bne.n	8000c18 <Fases_Auto+0x4a4>
+ 8000be6:	68fb      	ldr	r3, [r7, #12]
+ 8000be8:	330b      	adds	r3, #11
+ 8000bea:	781a      	ldrb	r2, [r3, #0]
+ 8000bec:	4b59      	ldr	r3, [pc, #356]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000bee:	781b      	ldrb	r3, [r3, #0]
+ 8000bf0:	b2db      	uxtb	r3, r3
+ 8000bf2:	429a      	cmp	r2, r3
+ 8000bf4:	d112      	bne.n	8000c1c <Fases_Auto+0x4a8>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE4_ROJO_Pin,GPIO_PIN_SET);
- 8000bf2:	2201      	movs	r2, #1
- 8000bf4:	2120      	movs	r1, #32
- 8000bf6:	4852      	ldr	r0, [pc, #328]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000bf8:	f002 fd06 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000bf6:	2201      	movs	r2, #1
+ 8000bf8:	2120      	movs	r1, #32
+ 8000bfa:	4852      	ldr	r0, [pc, #328]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000bfc:	f002 fd04 	bl	8003608 <HAL_GPIO_WritePin>
 				f4Actual = 1;
- 8000bfc:	4b56      	ldr	r3, [pc, #344]	; (8000d58 <Fases_Auto+0x5e4>)
- 8000bfe:	2201      	movs	r2, #1
- 8000c00:	701a      	strb	r2, [r3, #0]
+ 8000c00:	4b56      	ldr	r3, [pc, #344]	; (8000d5c <Fases_Auto+0x5e8>)
+ 8000c02:	2201      	movs	r2, #1
+ 8000c04:	701a      	strb	r2, [r3, #0]
 				c4Fase = 0;
- 8000c02:	4b53      	ldr	r3, [pc, #332]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000c04:	2200      	movs	r2, #0
- 8000c06:	701a      	strb	r2, [r3, #0]
+ 8000c06:	4b53      	ldr	r3, [pc, #332]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000c08:	2200      	movs	r2, #0
+ 8000c0a:	701a      	strb	r2, [r3, #0]
 				break;
- 8000c08:	e007      	b.n	8000c1a <Fases_Auto+0x4a6>
+ 8000c0c:	e007      	b.n	8000c1e <Fases_Auto+0x4aa>
 			}
 		}
 		break;
 		default:
 		{
 			Error_Handler();
- 8000c0a:	f000 fdff 	bl	800180c <Error_Handler>
+ 8000c0e:	f000 fdfd 	bl	800180c <Error_Handler>
 		}
 		break;
- 8000c0e:	e004      	b.n	8000c1a <Fases_Auto+0x4a6>
-		break;
- 8000c10:	bf00      	nop
- 8000c12:	e002      	b.n	8000c1a <Fases_Auto+0x4a6>
+ 8000c12:	e004      	b.n	8000c1e <Fases_Auto+0x4aa>
 		break;
  8000c14:	bf00      	nop
- 8000c16:	e000      	b.n	8000c1a <Fases_Auto+0x4a6>
+ 8000c16:	e002      	b.n	8000c1e <Fases_Auto+0x4aa>
 		break;
  8000c18:	bf00      	nop
+ 8000c1a:	e000      	b.n	8000c1e <Fases_Auto+0x4aa>
+		break;
+ 8000c1c:	bf00      	nop
 		}
 		c4Fase++;
- 8000c1a:	4b4d      	ldr	r3, [pc, #308]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000c1c:	781b      	ldrb	r3, [r3, #0]
- 8000c1e:	b2db      	uxtb	r3, r3
- 8000c20:	3301      	adds	r3, #1
- 8000c22:	b2da      	uxtb	r2, r3
- 8000c24:	4b4a      	ldr	r3, [pc, #296]	; (8000d50 <Fases_Auto+0x5dc>)
- 8000c26:	701a      	strb	r2, [r3, #0]
+ 8000c1e:	4b4d      	ldr	r3, [pc, #308]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000c20:	781b      	ldrb	r3, [r3, #0]
+ 8000c22:	b2db      	uxtb	r3, r3
+ 8000c24:	3301      	adds	r3, #1
+ 8000c26:	b2da      	uxtb	r2, r3
+ 8000c28:	4b4a      	ldr	r3, [pc, #296]	; (8000d54 <Fases_Auto+0x5e0>)
+ 8000c2a:	701a      	strb	r2, [r3, #0]
 	}
 
 /********************************* FASE 5*************************************/
 	if(Verif_Tiempo(aHora, &iHora->tFase5) == HAL_OK)
- 8000c28:	687b      	ldr	r3, [r7, #4]
- 8000c2a:	330c      	adds	r3, #12
- 8000c2c:	4619      	mov	r1, r3
- 8000c2e:	68b8      	ldr	r0, [r7, #8]
- 8000c30:	f000 fa4b 	bl	80010ca <Verif_Tiempo>
- 8000c34:	4603      	mov	r3, r0
- 8000c36:	2b00      	cmp	r3, #0
- 8000c38:	d108      	bne.n	8000c4c <Fases_Auto+0x4d8>
+ 8000c2c:	687b      	ldr	r3, [r7, #4]
+ 8000c2e:	330f      	adds	r3, #15
+ 8000c30:	4619      	mov	r1, r3
+ 8000c32:	68b8      	ldr	r0, [r7, #8]
+ 8000c34:	f000 fa49 	bl	80010ca <Verif_Tiempo>
+ 8000c38:	4603      	mov	r3, r0
+ 8000c3a:	2b00      	cmp	r3, #0
+ 8000c3c:	d108      	bne.n	8000c50 <Fases_Auto+0x4dc>
 	{
 		c5Fase = 0;
- 8000c3a:	4b48      	ldr	r3, [pc, #288]	; (8000d5c <Fases_Auto+0x5e8>)
- 8000c3c:	2200      	movs	r2, #0
- 8000c3e:	701a      	strb	r2, [r3, #0]
+ 8000c3e:	4b48      	ldr	r3, [pc, #288]	; (8000d60 <Fases_Auto+0x5ec>)
+ 8000c40:	2200      	movs	r2, #0
+ 8000c42:	701a      	strb	r2, [r3, #0]
 		BF.band5 = 1;
- 8000c40:	4a44      	ldr	r2, [pc, #272]	; (8000d54 <Fases_Auto+0x5e0>)
- 8000c42:	7813      	ldrb	r3, [r2, #0]
- 8000c44:	f043 0302 	orr.w	r3, r3, #2
- 8000c48:	7013      	strb	r3, [r2, #0]
- 8000c4a:	e010      	b.n	8000c6e <Fases_Auto+0x4fa>
+ 8000c44:	4a44      	ldr	r2, [pc, #272]	; (8000d58 <Fases_Auto+0x5e4>)
+ 8000c46:	7813      	ldrb	r3, [r2, #0]
+ 8000c48:	f043 0302 	orr.w	r3, r3, #2
+ 8000c4c:	7013      	strb	r3, [r2, #0]
+ 8000c4e:	e010      	b.n	8000c72 <Fases_Auto+0x4fe>
 	}
 	else if(Verif_Tiempo(aHora, &iHora->tFase5) == HAL_TIMEOUT)
- 8000c4c:	687b      	ldr	r3, [r7, #4]
- 8000c4e:	330c      	adds	r3, #12
- 8000c50:	4619      	mov	r1, r3
- 8000c52:	68b8      	ldr	r0, [r7, #8]
- 8000c54:	f000 fa39 	bl	80010ca <Verif_Tiempo>
- 8000c58:	4603      	mov	r3, r0
- 8000c5a:	2b03      	cmp	r3, #3
- 8000c5c:	d107      	bne.n	8000c6e <Fases_Auto+0x4fa>
+ 8000c50:	687b      	ldr	r3, [r7, #4]
+ 8000c52:	330f      	adds	r3, #15
+ 8000c54:	4619      	mov	r1, r3
+ 8000c56:	68b8      	ldr	r0, [r7, #8]
+ 8000c58:	f000 fa37 	bl	80010ca <Verif_Tiempo>
+ 8000c5c:	4603      	mov	r3, r0
+ 8000c5e:	2b03      	cmp	r3, #3
+ 8000c60:	d107      	bne.n	8000c72 <Fases_Auto+0x4fe>
 	{
 		BF.band5 = 0;
- 8000c5e:	4a3d      	ldr	r2, [pc, #244]	; (8000d54 <Fases_Auto+0x5e0>)
- 8000c60:	7813      	ldrb	r3, [r2, #0]
- 8000c62:	f36f 0341 	bfc	r3, #1, #1
- 8000c66:	7013      	strb	r3, [r2, #0]
+ 8000c62:	4a3d      	ldr	r2, [pc, #244]	; (8000d58 <Fases_Auto+0x5e4>)
+ 8000c64:	7813      	ldrb	r3, [r2, #0]
+ 8000c66:	f36f 0341 	bfc	r3, #1, #1
+ 8000c6a:	7013      	strb	r3, [r2, #0]
 		Apaga_Fase(5);
- 8000c68:	2005      	movs	r0, #5
- 8000c6a:	f000 fb07 	bl	800127c <Apaga_Fase>
+ 8000c6c:	2005      	movs	r0, #5
+ 8000c6e:	f000 fb05 	bl	800127c <Apaga_Fase>
 		/* Se debe apagar completamente esta fase.*/
 	}
 	if(BF.band5 == 1)
- 8000c6e:	4b39      	ldr	r3, [pc, #228]	; (8000d54 <Fases_Auto+0x5e0>)
- 8000c70:	781b      	ldrb	r3, [r3, #0]
- 8000c72:	f003 0302 	and.w	r3, r3, #2
- 8000c76:	b2db      	uxtb	r3, r3
- 8000c78:	2b00      	cmp	r3, #0
- 8000c7a:	d07b      	beq.n	8000d74 <Fases_Auto+0x600>
+ 8000c72:	4b39      	ldr	r3, [pc, #228]	; (8000d58 <Fases_Auto+0x5e4>)
+ 8000c74:	781b      	ldrb	r3, [r3, #0]
+ 8000c76:	f003 0302 	and.w	r3, r3, #2
+ 8000c7a:	b2db      	uxtb	r3, r3
+ 8000c7c:	2b00      	cmp	r3, #0
+ 8000c7e:	d07b      	beq.n	8000d78 <Fases_Auto+0x604>
 	{
 		switch(f5Actual)
- 8000c7c:	4b38      	ldr	r3, [pc, #224]	; (8000d60 <Fases_Auto+0x5ec>)
- 8000c7e:	781b      	ldrb	r3, [r3, #0]
- 8000c80:	b2db      	uxtb	r3, r3
- 8000c82:	2b02      	cmp	r3, #2
- 8000c84:	d01e      	beq.n	8000cc4 <Fases_Auto+0x550>
- 8000c86:	2b03      	cmp	r3, #3
- 8000c88:	d037      	beq.n	8000cfa <Fases_Auto+0x586>
- 8000c8a:	2b01      	cmp	r3, #1
- 8000c8c:	d150      	bne.n	8000d30 <Fases_Auto+0x5bc>
+ 8000c80:	4b38      	ldr	r3, [pc, #224]	; (8000d64 <Fases_Auto+0x5f0>)
+ 8000c82:	781b      	ldrb	r3, [r3, #0]
+ 8000c84:	b2db      	uxtb	r3, r3
+ 8000c86:	2b02      	cmp	r3, #2
+ 8000c88:	d01e      	beq.n	8000cc8 <Fases_Auto+0x554>
+ 8000c8a:	2b03      	cmp	r3, #3
+ 8000c8c:	d037      	beq.n	8000cfe <Fases_Auto+0x58a>
+ 8000c8e:	2b01      	cmp	r3, #1
+ 8000c90:	d150      	bne.n	8000d34 <Fases_Auto+0x5c0>
 		{
 		case 1:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin,GPIO_PIN_RESET);
- 8000c8e:	2200      	movs	r2, #0
- 8000c90:	f44f 7180 	mov.w	r1, #256	; 0x100
- 8000c94:	482a      	ldr	r0, [pc, #168]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000c96:	f002 fcb7 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000c92:	2200      	movs	r2, #0
+ 8000c94:	f44f 7180 	mov.w	r1, #256	; 0x100
+ 8000c98:	482a      	ldr	r0, [pc, #168]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000c9a:	f002 fcb5 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c5Fase == tiempos[12])
- 8000c9a:	68fb      	ldr	r3, [r7, #12]
- 8000c9c:	330c      	adds	r3, #12
- 8000c9e:	781a      	ldrb	r2, [r3, #0]
- 8000ca0:	4b2e      	ldr	r3, [pc, #184]	; (8000d5c <Fases_Auto+0x5e8>)
- 8000ca2:	781b      	ldrb	r3, [r3, #0]
- 8000ca4:	b2db      	uxtb	r3, r3
- 8000ca6:	429a      	cmp	r2, r3
- 8000ca8:	d145      	bne.n	8000d36 <Fases_Auto+0x5c2>
+ 8000c9e:	68fb      	ldr	r3, [r7, #12]
+ 8000ca0:	330c      	adds	r3, #12
+ 8000ca2:	781a      	ldrb	r2, [r3, #0]
+ 8000ca4:	4b2e      	ldr	r3, [pc, #184]	; (8000d60 <Fases_Auto+0x5ec>)
+ 8000ca6:	781b      	ldrb	r3, [r3, #0]
+ 8000ca8:	b2db      	uxtb	r3, r3
+ 8000caa:	429a      	cmp	r2, r3
+ 8000cac:	d145      	bne.n	8000d3a <Fases_Auto+0x5c6>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin,GPIO_PIN_SET);
- 8000caa:	2201      	movs	r2, #1
- 8000cac:	f44f 7180 	mov.w	r1, #256	; 0x100
- 8000cb0:	4823      	ldr	r0, [pc, #140]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000cb2:	f002 fca9 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000cae:	2201      	movs	r2, #1
+ 8000cb0:	f44f 7180 	mov.w	r1, #256	; 0x100
+ 8000cb4:	4823      	ldr	r0, [pc, #140]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000cb6:	f002 fca7 	bl	8003608 <HAL_GPIO_WritePin>
 				f5Actual = 2;
- 8000cb6:	4b2a      	ldr	r3, [pc, #168]	; (8000d60 <Fases_Auto+0x5ec>)
- 8000cb8:	2202      	movs	r2, #2
- 8000cba:	701a      	strb	r2, [r3, #0]
+ 8000cba:	4b2a      	ldr	r3, [pc, #168]	; (8000d64 <Fases_Auto+0x5f0>)
+ 8000cbc:	2202      	movs	r2, #2
+ 8000cbe:	701a      	strb	r2, [r3, #0]
 				c5Fase = 0;
- 8000cbc:	4b27      	ldr	r3, [pc, #156]	; (8000d5c <Fases_Auto+0x5e8>)
- 8000cbe:	2200      	movs	r2, #0
- 8000cc0:	701a      	strb	r2, [r3, #0]
+ 8000cc0:	4b27      	ldr	r3, [pc, #156]	; (8000d60 <Fases_Auto+0x5ec>)
+ 8000cc2:	2200      	movs	r2, #0
+ 8000cc4:	701a      	strb	r2, [r3, #0]
 				break;
- 8000cc2:	e050      	b.n	8000d66 <Fases_Auto+0x5f2>
+ 8000cc6:	e050      	b.n	8000d6a <Fases_Auto+0x5f6>
 			}
 		}
 		break;
 		case 2:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE5_AMA_Pin,GPIO_PIN_RESET);
- 8000cc4:	2200      	movs	r2, #0
- 8000cc6:	f44f 7100 	mov.w	r1, #512	; 0x200
- 8000cca:	481d      	ldr	r0, [pc, #116]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000ccc:	f002 fc9c 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000cc8:	2200      	movs	r2, #0
+ 8000cca:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 8000cce:	481d      	ldr	r0, [pc, #116]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000cd0:	f002 fc9a 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c5Fase == tiempos[13])
- 8000cd0:	68fb      	ldr	r3, [r7, #12]
- 8000cd2:	330d      	adds	r3, #13
- 8000cd4:	781a      	ldrb	r2, [r3, #0]
- 8000cd6:	4b21      	ldr	r3, [pc, #132]	; (8000d5c <Fases_Auto+0x5e8>)
- 8000cd8:	781b      	ldrb	r3, [r3, #0]
- 8000cda:	b2db      	uxtb	r3, r3
- 8000cdc:	429a      	cmp	r2, r3
- 8000cde:	d12c      	bne.n	8000d3a <Fases_Auto+0x5c6>
+ 8000cd4:	68fb      	ldr	r3, [r7, #12]
+ 8000cd6:	330d      	adds	r3, #13
+ 8000cd8:	781a      	ldrb	r2, [r3, #0]
+ 8000cda:	4b21      	ldr	r3, [pc, #132]	; (8000d60 <Fases_Auto+0x5ec>)
+ 8000cdc:	781b      	ldrb	r3, [r3, #0]
+ 8000cde:	b2db      	uxtb	r3, r3
+ 8000ce0:	429a      	cmp	r2, r3
+ 8000ce2:	d12c      	bne.n	8000d3e <Fases_Auto+0x5ca>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE5_AMA_Pin,GPIO_PIN_SET);
- 8000ce0:	2201      	movs	r2, #1
- 8000ce2:	f44f 7100 	mov.w	r1, #512	; 0x200
- 8000ce6:	4816      	ldr	r0, [pc, #88]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000ce8:	f002 fc8e 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000ce4:	2201      	movs	r2, #1
+ 8000ce6:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 8000cea:	4816      	ldr	r0, [pc, #88]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000cec:	f002 fc8c 	bl	8003608 <HAL_GPIO_WritePin>
 				f5Actual = 3;
- 8000cec:	4b1c      	ldr	r3, [pc, #112]	; (8000d60 <Fases_Auto+0x5ec>)
- 8000cee:	2203      	movs	r2, #3
- 8000cf0:	701a      	strb	r2, [r3, #0]
+ 8000cf0:	4b1c      	ldr	r3, [pc, #112]	; (8000d64 <Fases_Auto+0x5f0>)
+ 8000cf2:	2203      	movs	r2, #3
+ 8000cf4:	701a      	strb	r2, [r3, #0]
 				c5Fase = 0;
- 8000cf2:	4b1a      	ldr	r3, [pc, #104]	; (8000d5c <Fases_Auto+0x5e8>)
- 8000cf4:	2200      	movs	r2, #0
- 8000cf6:	701a      	strb	r2, [r3, #0]
+ 8000cf6:	4b1a      	ldr	r3, [pc, #104]	; (8000d60 <Fases_Auto+0x5ec>)
+ 8000cf8:	2200      	movs	r2, #0
+ 8000cfa:	701a      	strb	r2, [r3, #0]
 				break;
- 8000cf8:	e035      	b.n	8000d66 <Fases_Auto+0x5f2>
+ 8000cfc:	e035      	b.n	8000d6a <Fases_Auto+0x5f6>
 			}
 		}
 		break;
 		case 3:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE5_ROJO_Pin,GPIO_PIN_RESET);
- 8000cfa:	2200      	movs	r2, #0
- 8000cfc:	f44f 6180 	mov.w	r1, #1024	; 0x400
- 8000d00:	480f      	ldr	r0, [pc, #60]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000d02:	f002 fc81 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000cfe:	2200      	movs	r2, #0
+ 8000d00:	f44f 6180 	mov.w	r1, #1024	; 0x400
+ 8000d04:	480f      	ldr	r0, [pc, #60]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000d06:	f002 fc7f 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c5Fase == tiempos[14])
- 8000d06:	68fb      	ldr	r3, [r7, #12]
- 8000d08:	330e      	adds	r3, #14
- 8000d0a:	781a      	ldrb	r2, [r3, #0]
- 8000d0c:	4b13      	ldr	r3, [pc, #76]	; (8000d5c <Fases_Auto+0x5e8>)
- 8000d0e:	781b      	ldrb	r3, [r3, #0]
- 8000d10:	b2db      	uxtb	r3, r3
- 8000d12:	429a      	cmp	r2, r3
- 8000d14:	d126      	bne.n	8000d64 <Fases_Auto+0x5f0>
+ 8000d0a:	68fb      	ldr	r3, [r7, #12]
+ 8000d0c:	330e      	adds	r3, #14
+ 8000d0e:	781a      	ldrb	r2, [r3, #0]
+ 8000d10:	4b13      	ldr	r3, [pc, #76]	; (8000d60 <Fases_Auto+0x5ec>)
+ 8000d12:	781b      	ldrb	r3, [r3, #0]
+ 8000d14:	b2db      	uxtb	r3, r3
+ 8000d16:	429a      	cmp	r2, r3
+ 8000d18:	d126      	bne.n	8000d68 <Fases_Auto+0x5f4>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE5_ROJO_Pin,GPIO_PIN_SET);
- 8000d16:	2201      	movs	r2, #1
- 8000d18:	f44f 6180 	mov.w	r1, #1024	; 0x400
- 8000d1c:	4808      	ldr	r0, [pc, #32]	; (8000d40 <Fases_Auto+0x5cc>)
- 8000d1e:	f002 fc73 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000d1a:	2201      	movs	r2, #1
+ 8000d1c:	f44f 6180 	mov.w	r1, #1024	; 0x400
+ 8000d20:	4808      	ldr	r0, [pc, #32]	; (8000d44 <Fases_Auto+0x5d0>)
+ 8000d22:	f002 fc71 	bl	8003608 <HAL_GPIO_WritePin>
 				f5Actual = 1;
- 8000d22:	4b0f      	ldr	r3, [pc, #60]	; (8000d60 <Fases_Auto+0x5ec>)
- 8000d24:	2201      	movs	r2, #1
- 8000d26:	701a      	strb	r2, [r3, #0]
+ 8000d26:	4b0f      	ldr	r3, [pc, #60]	; (8000d64 <Fases_Auto+0x5f0>)
+ 8000d28:	2201      	movs	r2, #1
+ 8000d2a:	701a      	strb	r2, [r3, #0]
 				c5Fase = 0;
- 8000d28:	4b0c      	ldr	r3, [pc, #48]	; (8000d5c <Fases_Auto+0x5e8>)
- 8000d2a:	2200      	movs	r2, #0
- 8000d2c:	701a      	strb	r2, [r3, #0]
+ 8000d2c:	4b0c      	ldr	r3, [pc, #48]	; (8000d60 <Fases_Auto+0x5ec>)
+ 8000d2e:	2200      	movs	r2, #0
+ 8000d30:	701a      	strb	r2, [r3, #0]
 				break;
- 8000d2e:	e01a      	b.n	8000d66 <Fases_Auto+0x5f2>
+ 8000d32:	e01a      	b.n	8000d6a <Fases_Auto+0x5f6>
 			}
 		}
 		break;
 		default:
 		{
 			Error_Handler();
- 8000d30:	f000 fd6c 	bl	800180c <Error_Handler>
+ 8000d34:	f000 fd6a 	bl	800180c <Error_Handler>
 		}
 		break;
- 8000d34:	e017      	b.n	8000d66 <Fases_Auto+0x5f2>
-		break;
- 8000d36:	bf00      	nop
- 8000d38:	e015      	b.n	8000d66 <Fases_Auto+0x5f2>
+ 8000d38:	e017      	b.n	8000d6a <Fases_Auto+0x5f6>
 		break;
  8000d3a:	bf00      	nop
- 8000d3c:	e013      	b.n	8000d66 <Fases_Auto+0x5f2>
- 8000d3e:	bf00      	nop
- 8000d40:	40010c00 	.word	0x40010c00
- 8000d44:	20000044 	.word	0x20000044
- 8000d48:	20000002 	.word	0x20000002
- 8000d4c:	40010800 	.word	0x40010800
- 8000d50:	20000045 	.word	0x20000045
- 8000d54:	200000c4 	.word	0x200000c4
- 8000d58:	20000003 	.word	0x20000003
- 8000d5c:	20000046 	.word	0x20000046
- 8000d60:	20000004 	.word	0x20000004
+ 8000d3c:	e015      	b.n	8000d6a <Fases_Auto+0x5f6>
 		break;
- 8000d64:	bf00      	nop
+ 8000d3e:	bf00      	nop
+ 8000d40:	e013      	b.n	8000d6a <Fases_Auto+0x5f6>
+ 8000d42:	bf00      	nop
+ 8000d44:	40010c00 	.word	0x40010c00
+ 8000d48:	20000044 	.word	0x20000044
+ 8000d4c:	20000002 	.word	0x20000002
+ 8000d50:	40010800 	.word	0x40010800
+ 8000d54:	20000045 	.word	0x20000045
+ 8000d58:	200000c4 	.word	0x200000c4
+ 8000d5c:	20000003 	.word	0x20000003
+ 8000d60:	20000046 	.word	0x20000046
+ 8000d64:	20000004 	.word	0x20000004
+		break;
+ 8000d68:	bf00      	nop
 		}
 		c5Fase++;
- 8000d66:	4b4e      	ldr	r3, [pc, #312]	; (8000ea0 <Fases_Auto+0x72c>)
- 8000d68:	781b      	ldrb	r3, [r3, #0]
- 8000d6a:	b2db      	uxtb	r3, r3
- 8000d6c:	3301      	adds	r3, #1
- 8000d6e:	b2da      	uxtb	r2, r3
- 8000d70:	4b4b      	ldr	r3, [pc, #300]	; (8000ea0 <Fases_Auto+0x72c>)
- 8000d72:	701a      	strb	r2, [r3, #0]
+ 8000d6a:	4b4e      	ldr	r3, [pc, #312]	; (8000ea4 <Fases_Auto+0x730>)
+ 8000d6c:	781b      	ldrb	r3, [r3, #0]
+ 8000d6e:	b2db      	uxtb	r3, r3
+ 8000d70:	3301      	adds	r3, #1
+ 8000d72:	b2da      	uxtb	r2, r3
+ 8000d74:	4b4b      	ldr	r3, [pc, #300]	; (8000ea4 <Fases_Auto+0x730>)
+ 8000d76:	701a      	strb	r2, [r3, #0]
 	}
 
 /********************************* FASE 6*************************************/
 	if(Verif_Tiempo(aHora, &iHora->tFase6) == HAL_OK)
- 8000d74:	687b      	ldr	r3, [r7, #4]
- 8000d76:	330f      	adds	r3, #15
- 8000d78:	4619      	mov	r1, r3
- 8000d7a:	68b8      	ldr	r0, [r7, #8]
- 8000d7c:	f000 f9a5 	bl	80010ca <Verif_Tiempo>
- 8000d80:	4603      	mov	r3, r0
- 8000d82:	2b00      	cmp	r3, #0
- 8000d84:	d108      	bne.n	8000d98 <Fases_Auto+0x624>
+ 8000d78:	687b      	ldr	r3, [r7, #4]
+ 8000d7a:	3312      	adds	r3, #18
+ 8000d7c:	4619      	mov	r1, r3
+ 8000d7e:	68b8      	ldr	r0, [r7, #8]
+ 8000d80:	f000 f9a3 	bl	80010ca <Verif_Tiempo>
+ 8000d84:	4603      	mov	r3, r0
+ 8000d86:	2b00      	cmp	r3, #0
+ 8000d88:	d108      	bne.n	8000d9c <Fases_Auto+0x628>
 	{
 		c6Fase = 0;
- 8000d86:	4b47      	ldr	r3, [pc, #284]	; (8000ea4 <Fases_Auto+0x730>)
- 8000d88:	2200      	movs	r2, #0
- 8000d8a:	701a      	strb	r2, [r3, #0]
+ 8000d8a:	4b47      	ldr	r3, [pc, #284]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000d8c:	2200      	movs	r2, #0
+ 8000d8e:	701a      	strb	r2, [r3, #0]
 		BF.band6 = 1;
- 8000d8c:	4a46      	ldr	r2, [pc, #280]	; (8000ea8 <Fases_Auto+0x734>)
- 8000d8e:	7813      	ldrb	r3, [r2, #0]
- 8000d90:	f043 0301 	orr.w	r3, r3, #1
- 8000d94:	7013      	strb	r3, [r2, #0]
- 8000d96:	e010      	b.n	8000dba <Fases_Auto+0x646>
+ 8000d90:	4a46      	ldr	r2, [pc, #280]	; (8000eac <Fases_Auto+0x738>)
+ 8000d92:	7813      	ldrb	r3, [r2, #0]
+ 8000d94:	f043 0301 	orr.w	r3, r3, #1
+ 8000d98:	7013      	strb	r3, [r2, #0]
+ 8000d9a:	e010      	b.n	8000dbe <Fases_Auto+0x64a>
 	}
 	else if(Verif_Tiempo(aHora, &iHora->tFase6) == HAL_TIMEOUT)
- 8000d98:	687b      	ldr	r3, [r7, #4]
- 8000d9a:	330f      	adds	r3, #15
- 8000d9c:	4619      	mov	r1, r3
- 8000d9e:	68b8      	ldr	r0, [r7, #8]
- 8000da0:	f000 f993 	bl	80010ca <Verif_Tiempo>
- 8000da4:	4603      	mov	r3, r0
- 8000da6:	2b03      	cmp	r3, #3
- 8000da8:	d107      	bne.n	8000dba <Fases_Auto+0x646>
+ 8000d9c:	687b      	ldr	r3, [r7, #4]
+ 8000d9e:	3312      	adds	r3, #18
+ 8000da0:	4619      	mov	r1, r3
+ 8000da2:	68b8      	ldr	r0, [r7, #8]
+ 8000da4:	f000 f991 	bl	80010ca <Verif_Tiempo>
+ 8000da8:	4603      	mov	r3, r0
+ 8000daa:	2b03      	cmp	r3, #3
+ 8000dac:	d107      	bne.n	8000dbe <Fases_Auto+0x64a>
 	{
 		BF.band6 = 0;
- 8000daa:	4a3f      	ldr	r2, [pc, #252]	; (8000ea8 <Fases_Auto+0x734>)
- 8000dac:	7813      	ldrb	r3, [r2, #0]
- 8000dae:	f36f 0300 	bfc	r3, #0, #1
- 8000db2:	7013      	strb	r3, [r2, #0]
+ 8000dae:	4a3f      	ldr	r2, [pc, #252]	; (8000eac <Fases_Auto+0x738>)
+ 8000db0:	7813      	ldrb	r3, [r2, #0]
+ 8000db2:	f36f 0300 	bfc	r3, #0, #1
+ 8000db6:	7013      	strb	r3, [r2, #0]
 		Apaga_Fase(6);
- 8000db4:	2006      	movs	r0, #6
- 8000db6:	f000 fa61 	bl	800127c <Apaga_Fase>
+ 8000db8:	2006      	movs	r0, #6
+ 8000dba:	f000 fa5f 	bl	800127c <Apaga_Fase>
 		/* Se debe apagar completamente esta fase.*/
 	}
 	if(BF.band6 == 1)
- 8000dba:	4b3b      	ldr	r3, [pc, #236]	; (8000ea8 <Fases_Auto+0x734>)
- 8000dbc:	781b      	ldrb	r3, [r3, #0]
- 8000dbe:	f003 0301 	and.w	r3, r3, #1
- 8000dc2:	b2db      	uxtb	r3, r3
- 8000dc4:	2b00      	cmp	r3, #0
- 8000dc6:	d066      	beq.n	8000e96 <Fases_Auto+0x722>
+ 8000dbe:	4b3b      	ldr	r3, [pc, #236]	; (8000eac <Fases_Auto+0x738>)
+ 8000dc0:	781b      	ldrb	r3, [r3, #0]
+ 8000dc2:	f003 0301 	and.w	r3, r3, #1
+ 8000dc6:	b2db      	uxtb	r3, r3
+ 8000dc8:	2b00      	cmp	r3, #0
+ 8000dca:	d066      	beq.n	8000e9a <Fases_Auto+0x726>
 	{
 		switch(f6Actual)
- 8000dc8:	4b38      	ldr	r3, [pc, #224]	; (8000eac <Fases_Auto+0x738>)
- 8000dca:	781b      	ldrb	r3, [r3, #0]
- 8000dcc:	b2db      	uxtb	r3, r3
- 8000dce:	2b02      	cmp	r3, #2
- 8000dd0:	d01e      	beq.n	8000e10 <Fases_Auto+0x69c>
- 8000dd2:	2b03      	cmp	r3, #3
- 8000dd4:	d037      	beq.n	8000e46 <Fases_Auto+0x6d2>
- 8000dd6:	2b01      	cmp	r3, #1
- 8000dd8:	d14e      	bne.n	8000e78 <Fases_Auto+0x704>
+ 8000dcc:	4b38      	ldr	r3, [pc, #224]	; (8000eb0 <Fases_Auto+0x73c>)
+ 8000dce:	781b      	ldrb	r3, [r3, #0]
+ 8000dd0:	b2db      	uxtb	r3, r3
+ 8000dd2:	2b02      	cmp	r3, #2
+ 8000dd4:	d01e      	beq.n	8000e14 <Fases_Auto+0x6a0>
+ 8000dd6:	2b03      	cmp	r3, #3
+ 8000dd8:	d037      	beq.n	8000e4a <Fases_Auto+0x6d6>
+ 8000dda:	2b01      	cmp	r3, #1
+ 8000ddc:	d14e      	bne.n	8000e7c <Fases_Auto+0x708>
 		{
 		case 1:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin,GPIO_PIN_RESET);
- 8000dda:	2200      	movs	r2, #0
- 8000ddc:	f44f 5100 	mov.w	r1, #8192	; 0x2000
- 8000de0:	4833      	ldr	r0, [pc, #204]	; (8000eb0 <Fases_Auto+0x73c>)
- 8000de2:	f002 fc11 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000dde:	2200      	movs	r2, #0
+ 8000de0:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 8000de4:	4833      	ldr	r0, [pc, #204]	; (8000eb4 <Fases_Auto+0x740>)
+ 8000de6:	f002 fc0f 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c6Fase == tiempos[15])
- 8000de6:	68fb      	ldr	r3, [r7, #12]
- 8000de8:	330f      	adds	r3, #15
- 8000dea:	781a      	ldrb	r2, [r3, #0]
- 8000dec:	4b2d      	ldr	r3, [pc, #180]	; (8000ea4 <Fases_Auto+0x730>)
- 8000dee:	781b      	ldrb	r3, [r3, #0]
- 8000df0:	b2db      	uxtb	r3, r3
- 8000df2:	429a      	cmp	r2, r3
- 8000df4:	d143      	bne.n	8000e7e <Fases_Auto+0x70a>
+ 8000dea:	68fb      	ldr	r3, [r7, #12]
+ 8000dec:	330f      	adds	r3, #15
+ 8000dee:	781a      	ldrb	r2, [r3, #0]
+ 8000df0:	4b2d      	ldr	r3, [pc, #180]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000df2:	781b      	ldrb	r3, [r3, #0]
+ 8000df4:	b2db      	uxtb	r3, r3
+ 8000df6:	429a      	cmp	r2, r3
+ 8000df8:	d143      	bne.n	8000e82 <Fases_Auto+0x70e>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin,GPIO_PIN_SET);
- 8000df6:	2201      	movs	r2, #1
- 8000df8:	f44f 5100 	mov.w	r1, #8192	; 0x2000
- 8000dfc:	482c      	ldr	r0, [pc, #176]	; (8000eb0 <Fases_Auto+0x73c>)
- 8000dfe:	f002 fc03 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000dfa:	2201      	movs	r2, #1
+ 8000dfc:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 8000e00:	482c      	ldr	r0, [pc, #176]	; (8000eb4 <Fases_Auto+0x740>)
+ 8000e02:	f002 fc01 	bl	8003608 <HAL_GPIO_WritePin>
 				f6Actual = 2;
- 8000e02:	4b2a      	ldr	r3, [pc, #168]	; (8000eac <Fases_Auto+0x738>)
- 8000e04:	2202      	movs	r2, #2
- 8000e06:	701a      	strb	r2, [r3, #0]
+ 8000e06:	4b2a      	ldr	r3, [pc, #168]	; (8000eb0 <Fases_Auto+0x73c>)
+ 8000e08:	2202      	movs	r2, #2
+ 8000e0a:	701a      	strb	r2, [r3, #0]
 				c6Fase = 0;
- 8000e08:	4b26      	ldr	r3, [pc, #152]	; (8000ea4 <Fases_Auto+0x730>)
- 8000e0a:	2200      	movs	r2, #0
- 8000e0c:	701a      	strb	r2, [r3, #0]
+ 8000e0c:	4b26      	ldr	r3, [pc, #152]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000e0e:	2200      	movs	r2, #0
+ 8000e10:	701a      	strb	r2, [r3, #0]
 				break;
- 8000e0e:	e03b      	b.n	8000e88 <Fases_Auto+0x714>
+ 8000e12:	e03b      	b.n	8000e8c <Fases_Auto+0x718>
 			}
 		}
 		break;
 		case 2:
 		{
 			HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin,GPIO_PIN_RESET);
- 8000e10:	2200      	movs	r2, #0
- 8000e12:	f44f 4180 	mov.w	r1, #16384	; 0x4000
- 8000e16:	4826      	ldr	r0, [pc, #152]	; (8000eb0 <Fases_Auto+0x73c>)
- 8000e18:	f002 fbf6 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000e14:	2200      	movs	r2, #0
+ 8000e16:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+ 8000e1a:	4826      	ldr	r0, [pc, #152]	; (8000eb4 <Fases_Auto+0x740>)
+ 8000e1c:	f002 fbf4 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c6Fase == tiempos[16])
- 8000e1c:	68fb      	ldr	r3, [r7, #12]
- 8000e1e:	3310      	adds	r3, #16
- 8000e20:	781a      	ldrb	r2, [r3, #0]
- 8000e22:	4b20      	ldr	r3, [pc, #128]	; (8000ea4 <Fases_Auto+0x730>)
- 8000e24:	781b      	ldrb	r3, [r3, #0]
- 8000e26:	b2db      	uxtb	r3, r3
- 8000e28:	429a      	cmp	r2, r3
- 8000e2a:	d12a      	bne.n	8000e82 <Fases_Auto+0x70e>
+ 8000e20:	68fb      	ldr	r3, [r7, #12]
+ 8000e22:	3310      	adds	r3, #16
+ 8000e24:	781a      	ldrb	r2, [r3, #0]
+ 8000e26:	4b20      	ldr	r3, [pc, #128]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000e28:	781b      	ldrb	r3, [r3, #0]
+ 8000e2a:	b2db      	uxtb	r3, r3
+ 8000e2c:	429a      	cmp	r2, r3
+ 8000e2e:	d12a      	bne.n	8000e86 <Fases_Auto+0x712>
 			{
 				HAL_GPIO_WritePin(GPIOB,FASE6_AMA_Pin,GPIO_PIN_SET);
- 8000e2c:	2201      	movs	r2, #1
- 8000e2e:	f44f 4180 	mov.w	r1, #16384	; 0x4000
- 8000e32:	481f      	ldr	r0, [pc, #124]	; (8000eb0 <Fases_Auto+0x73c>)
- 8000e34:	f002 fbe8 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000e30:	2201      	movs	r2, #1
+ 8000e32:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+ 8000e36:	481f      	ldr	r0, [pc, #124]	; (8000eb4 <Fases_Auto+0x740>)
+ 8000e38:	f002 fbe6 	bl	8003608 <HAL_GPIO_WritePin>
 				f6Actual = 3;
- 8000e38:	4b1c      	ldr	r3, [pc, #112]	; (8000eac <Fases_Auto+0x738>)
- 8000e3a:	2203      	movs	r2, #3
- 8000e3c:	701a      	strb	r2, [r3, #0]
+ 8000e3c:	4b1c      	ldr	r3, [pc, #112]	; (8000eb0 <Fases_Auto+0x73c>)
+ 8000e3e:	2203      	movs	r2, #3
+ 8000e40:	701a      	strb	r2, [r3, #0]
 				c6Fase = 0;
- 8000e3e:	4b19      	ldr	r3, [pc, #100]	; (8000ea4 <Fases_Auto+0x730>)
- 8000e40:	2200      	movs	r2, #0
- 8000e42:	701a      	strb	r2, [r3, #0]
+ 8000e42:	4b19      	ldr	r3, [pc, #100]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000e44:	2200      	movs	r2, #0
+ 8000e46:	701a      	strb	r2, [r3, #0]
 				break;
- 8000e44:	e020      	b.n	8000e88 <Fases_Auto+0x714>
+ 8000e48:	e020      	b.n	8000e8c <Fases_Auto+0x718>
 			}
 		}
 		break;
 		case 3:
 		{
 			HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_RESET);
- 8000e46:	2200      	movs	r2, #0
- 8000e48:	2180      	movs	r1, #128	; 0x80
- 8000e4a:	481a      	ldr	r0, [pc, #104]	; (8000eb4 <Fases_Auto+0x740>)
- 8000e4c:	f002 fbdc 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000e4a:	2200      	movs	r2, #0
+ 8000e4c:	2180      	movs	r1, #128	; 0x80
+ 8000e4e:	481a      	ldr	r0, [pc, #104]	; (8000eb8 <Fases_Auto+0x744>)
+ 8000e50:	f002 fbda 	bl	8003608 <HAL_GPIO_WritePin>
 			if(c6Fase == tiempos[17])
- 8000e50:	68fb      	ldr	r3, [r7, #12]
- 8000e52:	3311      	adds	r3, #17
- 8000e54:	781a      	ldrb	r2, [r3, #0]
- 8000e56:	4b13      	ldr	r3, [pc, #76]	; (8000ea4 <Fases_Auto+0x730>)
- 8000e58:	781b      	ldrb	r3, [r3, #0]
- 8000e5a:	b2db      	uxtb	r3, r3
- 8000e5c:	429a      	cmp	r2, r3
- 8000e5e:	d112      	bne.n	8000e86 <Fases_Auto+0x712>
+ 8000e54:	68fb      	ldr	r3, [r7, #12]
+ 8000e56:	3311      	adds	r3, #17
+ 8000e58:	781a      	ldrb	r2, [r3, #0]
+ 8000e5a:	4b13      	ldr	r3, [pc, #76]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000e5c:	781b      	ldrb	r3, [r3, #0]
+ 8000e5e:	b2db      	uxtb	r3, r3
+ 8000e60:	429a      	cmp	r2, r3
+ 8000e62:	d112      	bne.n	8000e8a <Fases_Auto+0x716>
 			{
 				HAL_GPIO_WritePin(GPIOA,FASE6_ROJO_Pin,GPIO_PIN_SET);
- 8000e60:	2201      	movs	r2, #1
- 8000e62:	2180      	movs	r1, #128	; 0x80
- 8000e64:	4813      	ldr	r0, [pc, #76]	; (8000eb4 <Fases_Auto+0x740>)
- 8000e66:	f002 fbcf 	bl	8003608 <HAL_GPIO_WritePin>
+ 8000e64:	2201      	movs	r2, #1
+ 8000e66:	2180      	movs	r1, #128	; 0x80
+ 8000e68:	4813      	ldr	r0, [pc, #76]	; (8000eb8 <Fases_Auto+0x744>)
+ 8000e6a:	f002 fbcd 	bl	8003608 <HAL_GPIO_WritePin>
 				f6Actual = 1;
- 8000e6a:	4b10      	ldr	r3, [pc, #64]	; (8000eac <Fases_Auto+0x738>)
- 8000e6c:	2201      	movs	r2, #1
- 8000e6e:	701a      	strb	r2, [r3, #0]
+ 8000e6e:	4b10      	ldr	r3, [pc, #64]	; (8000eb0 <Fases_Auto+0x73c>)
+ 8000e70:	2201      	movs	r2, #1
+ 8000e72:	701a      	strb	r2, [r3, #0]
 				c6Fase = 0;
- 8000e70:	4b0c      	ldr	r3, [pc, #48]	; (8000ea4 <Fases_Auto+0x730>)
- 8000e72:	2200      	movs	r2, #0
- 8000e74:	701a      	strb	r2, [r3, #0]
+ 8000e74:	4b0c      	ldr	r3, [pc, #48]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000e76:	2200      	movs	r2, #0
+ 8000e78:	701a      	strb	r2, [r3, #0]
 				break;
- 8000e76:	e007      	b.n	8000e88 <Fases_Auto+0x714>
+ 8000e7a:	e007      	b.n	8000e8c <Fases_Auto+0x718>
 			}
 		}
 		break;
 		default:
 		{
 			Error_Handler();
- 8000e78:	f000 fcc8 	bl	800180c <Error_Handler>
+ 8000e7c:	f000 fcc6 	bl	800180c <Error_Handler>
 		}
 		break;
- 8000e7c:	e004      	b.n	8000e88 <Fases_Auto+0x714>
-		break;
- 8000e7e:	bf00      	nop
- 8000e80:	e002      	b.n	8000e88 <Fases_Auto+0x714>
+ 8000e80:	e004      	b.n	8000e8c <Fases_Auto+0x718>
 		break;
  8000e82:	bf00      	nop
- 8000e84:	e000      	b.n	8000e88 <Fases_Auto+0x714>
+ 8000e84:	e002      	b.n	8000e8c <Fases_Auto+0x718>
 		break;
  8000e86:	bf00      	nop
+ 8000e88:	e000      	b.n	8000e8c <Fases_Auto+0x718>
+		break;
+ 8000e8a:	bf00      	nop
 		}
 		c6Fase++;
- 8000e88:	4b06      	ldr	r3, [pc, #24]	; (8000ea4 <Fases_Auto+0x730>)
- 8000e8a:	781b      	ldrb	r3, [r3, #0]
- 8000e8c:	b2db      	uxtb	r3, r3
- 8000e8e:	3301      	adds	r3, #1
- 8000e90:	b2da      	uxtb	r2, r3
- 8000e92:	4b04      	ldr	r3, [pc, #16]	; (8000ea4 <Fases_Auto+0x730>)
- 8000e94:	701a      	strb	r2, [r3, #0]
+ 8000e8c:	4b06      	ldr	r3, [pc, #24]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000e8e:	781b      	ldrb	r3, [r3, #0]
+ 8000e90:	b2db      	uxtb	r3, r3
+ 8000e92:	3301      	adds	r3, #1
+ 8000e94:	b2da      	uxtb	r2, r3
+ 8000e96:	4b04      	ldr	r3, [pc, #16]	; (8000ea8 <Fases_Auto+0x734>)
+ 8000e98:	701a      	strb	r2, [r3, #0]
 	}
 }
- 8000e96:	bf00      	nop
- 8000e98:	3710      	adds	r7, #16
- 8000e9a:	46bd      	mov	sp, r7
- 8000e9c:	bd80      	pop	{r7, pc}
- 8000e9e:	bf00      	nop
- 8000ea0:	20000046 	.word	0x20000046
- 8000ea4:	20000047 	.word	0x20000047
- 8000ea8:	200000c4 	.word	0x200000c4
- 8000eac:	20000005 	.word	0x20000005
- 8000eb0:	40010c00 	.word	0x40010c00
- 8000eb4:	40010800 	.word	0x40010800
+ 8000e9a:	bf00      	nop
+ 8000e9c:	3710      	adds	r7, #16
+ 8000e9e:	46bd      	mov	sp, r7
+ 8000ea0:	bd80      	pop	{r7, pc}
+ 8000ea2:	bf00      	nop
+ 8000ea4:	20000046 	.word	0x20000046
+ 8000ea8:	20000047 	.word	0x20000047
+ 8000eac:	200000c4 	.word	0x200000c4
+ 8000eb0:	20000005 	.word	0x20000005
+ 8000eb4:	40010c00 	.word	0x40010c00
+ 8000eb8:	40010800 	.word	0x40010800
 
-08000eb8 <Corrige_Med16>:
+08000ebc <Corrige_Med16>:
 
 }
 
 
 void Corrige_Med16(uint32_t *arreglo, uint32_t tamano)/* Función para        */
  {									/* eliminar los 16 bits altos de la      */
- 8000eb8:	b480      	push	{r7}
- 8000eba:	b085      	sub	sp, #20
- 8000ebc:	af00      	add	r7, sp, #0
- 8000ebe:	6078      	str	r0, [r7, #4]
- 8000ec0:	6039      	str	r1, [r7, #0]
+ 8000ebc:	b480      	push	{r7}
+ 8000ebe:	b085      	sub	sp, #20
+ 8000ec0:	af00      	add	r7, sp, #0
+ 8000ec2:	6078      	str	r0, [r7, #4]
+ 8000ec4:	6039      	str	r1, [r7, #0]
 	for(uint8_t indice = 0; indice <= BUFFER_ADC; indice++)/* medición del   */
- 8000ec2:	2300      	movs	r3, #0
- 8000ec4:	73fb      	strb	r3, [r7, #15]
- 8000ec6:	e00d      	b.n	8000ee4 <Corrige_Med16+0x2c>
+ 8000ec6:	2300      	movs	r3, #0
+ 8000ec8:	73fb      	strb	r3, [r7, #15]
+ 8000eca:	e00d      	b.n	8000ee8 <Corrige_Med16+0x2c>
 	{								/* ADC. 								 */
 		arreglo[indice] &= 0x0000ffff;/* Borra los 16 bits más altos del
- 8000ec8:	7bfb      	ldrb	r3, [r7, #15]
- 8000eca:	009b      	lsls	r3, r3, #2
- 8000ecc:	687a      	ldr	r2, [r7, #4]
- 8000ece:	4413      	add	r3, r2
- 8000ed0:	6819      	ldr	r1, [r3, #0]
- 8000ed2:	7bfb      	ldrb	r3, [r7, #15]
- 8000ed4:	009b      	lsls	r3, r3, #2
- 8000ed6:	687a      	ldr	r2, [r7, #4]
- 8000ed8:	4413      	add	r3, r2
- 8000eda:	b28a      	uxth	r2, r1
- 8000edc:	601a      	str	r2, [r3, #0]
+ 8000ecc:	7bfb      	ldrb	r3, [r7, #15]
+ 8000ece:	009b      	lsls	r3, r3, #2
+ 8000ed0:	687a      	ldr	r2, [r7, #4]
+ 8000ed2:	4413      	add	r3, r2
+ 8000ed4:	6819      	ldr	r1, [r3, #0]
+ 8000ed6:	7bfb      	ldrb	r3, [r7, #15]
+ 8000ed8:	009b      	lsls	r3, r3, #2
+ 8000eda:	687a      	ldr	r2, [r7, #4]
+ 8000edc:	4413      	add	r3, r2
+ 8000ede:	b28a      	uxth	r2, r1
+ 8000ee0:	601a      	str	r2, [r3, #0]
 	for(uint8_t indice = 0; indice <= BUFFER_ADC; indice++)/* medición del   */
- 8000ede:	7bfb      	ldrb	r3, [r7, #15]
- 8000ee0:	3301      	adds	r3, #1
- 8000ee2:	73fb      	strb	r3, [r7, #15]
- 8000ee4:	7bfb      	ldrb	r3, [r7, #15]
- 8000ee6:	2b0d      	cmp	r3, #13
- 8000ee8:	d9ee      	bls.n	8000ec8 <Corrige_Med16+0x10>
+ 8000ee2:	7bfb      	ldrb	r3, [r7, #15]
+ 8000ee4:	3301      	adds	r3, #1
+ 8000ee6:	73fb      	strb	r3, [r7, #15]
+ 8000ee8:	7bfb      	ldrb	r3, [r7, #15]
+ 8000eea:	2b0d      	cmp	r3, #13
+ 8000eec:	d9ee      	bls.n	8000ecc <Corrige_Med16+0x10>
 									 * registro ya que tienen el dato
 									 * repetido.							 */
 	}
  }
- 8000eea:	bf00      	nop
- 8000eec:	3714      	adds	r7, #20
- 8000eee:	46bd      	mov	sp, r7
- 8000ef0:	bc80      	pop	{r7}
- 8000ef2:	4770      	bx	lr
+ 8000eee:	bf00      	nop
+ 8000ef0:	3714      	adds	r7, #20
+ 8000ef2:	46bd      	mov	sp, r7
+ 8000ef4:	bc80      	pop	{r7}
+ 8000ef6:	4770      	bx	lr
 
-08000ef4 <Valor_Max>:
+08000ef8 <Valor_Max>:
 
 uint16_t Valor_Max(uint32_t *arreglo, uint8_t tamano)/* Función para calcular el valor máximo*/
 {									 /* de cualquier arreglo.                */
- 8000ef4:	b480      	push	{r7}
- 8000ef6:	b085      	sub	sp, #20
- 8000ef8:	af00      	add	r7, sp, #0
- 8000efa:	6078      	str	r0, [r7, #4]
- 8000efc:	460b      	mov	r3, r1
- 8000efe:	70fb      	strb	r3, [r7, #3]
+ 8000ef8:	b480      	push	{r7}
+ 8000efa:	b085      	sub	sp, #20
+ 8000efc:	af00      	add	r7, sp, #0
+ 8000efe:	6078      	str	r0, [r7, #4]
+ 8000f00:	460b      	mov	r3, r1
+ 8000f02:	70fb      	strb	r3, [r7, #3]
 	uint16_t max = 0;
- 8000f00:	2300      	movs	r3, #0
- 8000f02:	81fb      	strh	r3, [r7, #14]
-	for(uint8_t cont = 0; cont < tamano; cont++)
  8000f04:	2300      	movs	r3, #0
- 8000f06:	737b      	strb	r3, [r7, #13]
- 8000f08:	e010      	b.n	8000f2c <Valor_Max+0x38>
+ 8000f06:	81fb      	strh	r3, [r7, #14]
+	for(uint8_t cont = 0; cont < tamano; cont++)
+ 8000f08:	2300      	movs	r3, #0
+ 8000f0a:	737b      	strb	r3, [r7, #13]
+ 8000f0c:	e010      	b.n	8000f30 <Valor_Max+0x38>
 	{
 		if(max < arreglo[cont])
- 8000f0a:	89fa      	ldrh	r2, [r7, #14]
- 8000f0c:	7b7b      	ldrb	r3, [r7, #13]
- 8000f0e:	009b      	lsls	r3, r3, #2
- 8000f10:	6879      	ldr	r1, [r7, #4]
- 8000f12:	440b      	add	r3, r1
- 8000f14:	681b      	ldr	r3, [r3, #0]
- 8000f16:	429a      	cmp	r2, r3
- 8000f18:	d205      	bcs.n	8000f26 <Valor_Max+0x32>
+ 8000f0e:	89fa      	ldrh	r2, [r7, #14]
+ 8000f10:	7b7b      	ldrb	r3, [r7, #13]
+ 8000f12:	009b      	lsls	r3, r3, #2
+ 8000f14:	6879      	ldr	r1, [r7, #4]
+ 8000f16:	440b      	add	r3, r1
+ 8000f18:	681b      	ldr	r3, [r3, #0]
+ 8000f1a:	429a      	cmp	r2, r3
+ 8000f1c:	d205      	bcs.n	8000f2a <Valor_Max+0x32>
 		{
 			max = arreglo[cont];
- 8000f1a:	7b7b      	ldrb	r3, [r7, #13]
- 8000f1c:	009b      	lsls	r3, r3, #2
- 8000f1e:	687a      	ldr	r2, [r7, #4]
- 8000f20:	4413      	add	r3, r2
- 8000f22:	681b      	ldr	r3, [r3, #0]
- 8000f24:	81fb      	strh	r3, [r7, #14]
+ 8000f1e:	7b7b      	ldrb	r3, [r7, #13]
+ 8000f20:	009b      	lsls	r3, r3, #2
+ 8000f22:	687a      	ldr	r2, [r7, #4]
+ 8000f24:	4413      	add	r3, r2
+ 8000f26:	681b      	ldr	r3, [r3, #0]
+ 8000f28:	81fb      	strh	r3, [r7, #14]
 	for(uint8_t cont = 0; cont < tamano; cont++)
- 8000f26:	7b7b      	ldrb	r3, [r7, #13]
- 8000f28:	3301      	adds	r3, #1
- 8000f2a:	737b      	strb	r3, [r7, #13]
- 8000f2c:	7b7a      	ldrb	r2, [r7, #13]
- 8000f2e:	78fb      	ldrb	r3, [r7, #3]
- 8000f30:	429a      	cmp	r2, r3
- 8000f32:	d3ea      	bcc.n	8000f0a <Valor_Max+0x16>
+ 8000f2a:	7b7b      	ldrb	r3, [r7, #13]
+ 8000f2c:	3301      	adds	r3, #1
+ 8000f2e:	737b      	strb	r3, [r7, #13]
+ 8000f30:	7b7a      	ldrb	r2, [r7, #13]
+ 8000f32:	78fb      	ldrb	r3, [r7, #3]
+ 8000f34:	429a      	cmp	r2, r3
+ 8000f36:	d3ea      	bcc.n	8000f0e <Valor_Max+0x16>
 		}
 	}
 	return max;
- 8000f34:	89fb      	ldrh	r3, [r7, #14]
+ 8000f38:	89fb      	ldrh	r3, [r7, #14]
 }
- 8000f36:	4618      	mov	r0, r3
- 8000f38:	3714      	adds	r7, #20
- 8000f3a:	46bd      	mov	sp, r7
- 8000f3c:	bc80      	pop	{r7}
- 8000f3e:	4770      	bx	lr
+ 8000f3a:	4618      	mov	r0, r3
+ 8000f3c:	3714      	adds	r7, #20
+ 8000f3e:	46bd      	mov	sp, r7
+ 8000f40:	bc80      	pop	{r7}
+ 8000f42:	4770      	bx	lr
 
-08000f40 <Valor_Min>:
+08000f44 <Valor_Min>:
 
 uint32_t Valor_Min(uint32_t *arreglo, uint8_t tamano)/* Función para calcular*/
 {									 /* el valor mínimo de cualquier arreglo.*/
- 8000f40:	b480      	push	{r7}
- 8000f42:	b085      	sub	sp, #20
- 8000f44:	af00      	add	r7, sp, #0
- 8000f46:	6078      	str	r0, [r7, #4]
- 8000f48:	460b      	mov	r3, r1
- 8000f4a:	70fb      	strb	r3, [r7, #3]
+ 8000f44:	b480      	push	{r7}
+ 8000f46:	b085      	sub	sp, #20
+ 8000f48:	af00      	add	r7, sp, #0
+ 8000f4a:	6078      	str	r0, [r7, #4]
+ 8000f4c:	460b      	mov	r3, r1
+ 8000f4e:	70fb      	strb	r3, [r7, #3]
 	uint32_t min = arreglo[0];
- 8000f4c:	687b      	ldr	r3, [r7, #4]
- 8000f4e:	681b      	ldr	r3, [r3, #0]
- 8000f50:	60fb      	str	r3, [r7, #12]
+ 8000f50:	687b      	ldr	r3, [r7, #4]
+ 8000f52:	681b      	ldr	r3, [r3, #0]
+ 8000f54:	60fb      	str	r3, [r7, #12]
 	for(uint8_t cont = 0; cont < tamano; cont++)
- 8000f52:	2300      	movs	r3, #0
- 8000f54:	72fb      	strb	r3, [r7, #11]
- 8000f56:	e010      	b.n	8000f7a <Valor_Min+0x3a>
+ 8000f56:	2300      	movs	r3, #0
+ 8000f58:	72fb      	strb	r3, [r7, #11]
+ 8000f5a:	e010      	b.n	8000f7e <Valor_Min+0x3a>
 	{
 		if( arreglo[cont] < min)
- 8000f58:	7afb      	ldrb	r3, [r7, #11]
- 8000f5a:	009b      	lsls	r3, r3, #2
- 8000f5c:	687a      	ldr	r2, [r7, #4]
- 8000f5e:	4413      	add	r3, r2
- 8000f60:	681b      	ldr	r3, [r3, #0]
- 8000f62:	68fa      	ldr	r2, [r7, #12]
- 8000f64:	429a      	cmp	r2, r3
- 8000f66:	d905      	bls.n	8000f74 <Valor_Min+0x34>
+ 8000f5c:	7afb      	ldrb	r3, [r7, #11]
+ 8000f5e:	009b      	lsls	r3, r3, #2
+ 8000f60:	687a      	ldr	r2, [r7, #4]
+ 8000f62:	4413      	add	r3, r2
+ 8000f64:	681b      	ldr	r3, [r3, #0]
+ 8000f66:	68fa      	ldr	r2, [r7, #12]
+ 8000f68:	429a      	cmp	r2, r3
+ 8000f6a:	d905      	bls.n	8000f78 <Valor_Min+0x34>
 		{
 			min = arreglo[cont];
- 8000f68:	7afb      	ldrb	r3, [r7, #11]
- 8000f6a:	009b      	lsls	r3, r3, #2
- 8000f6c:	687a      	ldr	r2, [r7, #4]
- 8000f6e:	4413      	add	r3, r2
- 8000f70:	681b      	ldr	r3, [r3, #0]
- 8000f72:	60fb      	str	r3, [r7, #12]
+ 8000f6c:	7afb      	ldrb	r3, [r7, #11]
+ 8000f6e:	009b      	lsls	r3, r3, #2
+ 8000f70:	687a      	ldr	r2, [r7, #4]
+ 8000f72:	4413      	add	r3, r2
+ 8000f74:	681b      	ldr	r3, [r3, #0]
+ 8000f76:	60fb      	str	r3, [r7, #12]
 	for(uint8_t cont = 0; cont < tamano; cont++)
- 8000f74:	7afb      	ldrb	r3, [r7, #11]
- 8000f76:	3301      	adds	r3, #1
- 8000f78:	72fb      	strb	r3, [r7, #11]
- 8000f7a:	7afa      	ldrb	r2, [r7, #11]
- 8000f7c:	78fb      	ldrb	r3, [r7, #3]
- 8000f7e:	429a      	cmp	r2, r3
- 8000f80:	d3ea      	bcc.n	8000f58 <Valor_Min+0x18>
+ 8000f78:	7afb      	ldrb	r3, [r7, #11]
+ 8000f7a:	3301      	adds	r3, #1
+ 8000f7c:	72fb      	strb	r3, [r7, #11]
+ 8000f7e:	7afa      	ldrb	r2, [r7, #11]
+ 8000f80:	78fb      	ldrb	r3, [r7, #3]
+ 8000f82:	429a      	cmp	r2, r3
+ 8000f84:	d3ea      	bcc.n	8000f5c <Valor_Min+0x18>
 		}
 	}
 	return min;
- 8000f82:	68fb      	ldr	r3, [r7, #12]
+ 8000f86:	68fb      	ldr	r3, [r7, #12]
 }
- 8000f84:	4618      	mov	r0, r3
- 8000f86:	3714      	adds	r7, #20
- 8000f88:	46bd      	mov	sp, r7
- 8000f8a:	bc80      	pop	{r7}
- 8000f8c:	4770      	bx	lr
+ 8000f88:	4618      	mov	r0, r3
+ 8000f8a:	3714      	adds	r7, #20
+ 8000f8c:	46bd      	mov	sp, r7
+ 8000f8e:	bc80      	pop	{r7}
+ 8000f90:	4770      	bx	lr
 
-08000f8e <Valor_Prom>:
+08000f92 <Valor_Prom>:
 
 uint32_t Valor_Prom(uint32_t *arreglo, uint8_t tamano)/* Función para		 */
 {									/* calcular el valor promedio de cualquier arreglo.		 */
- 8000f8e:	b480      	push	{r7}
- 8000f90:	b085      	sub	sp, #20
- 8000f92:	af00      	add	r7, sp, #0
- 8000f94:	6078      	str	r0, [r7, #4]
- 8000f96:	460b      	mov	r3, r1
- 8000f98:	70fb      	strb	r3, [r7, #3]
+ 8000f92:	b480      	push	{r7}
+ 8000f94:	b085      	sub	sp, #20
+ 8000f96:	af00      	add	r7, sp, #0
+ 8000f98:	6078      	str	r0, [r7, #4]
+ 8000f9a:	460b      	mov	r3, r1
+ 8000f9c:	70fb      	strb	r3, [r7, #3]
 	uint32_t promedio = 0;
- 8000f9a:	2300      	movs	r3, #0
- 8000f9c:	60fb      	str	r3, [r7, #12]
-	for(uint8_t cont = 0; cont < tamano; cont++)
  8000f9e:	2300      	movs	r3, #0
- 8000fa0:	72fb      	strb	r3, [r7, #11]
- 8000fa2:	e00a      	b.n	8000fba <Valor_Prom+0x2c>
+ 8000fa0:	60fb      	str	r3, [r7, #12]
+	for(uint8_t cont = 0; cont < tamano; cont++)
+ 8000fa2:	2300      	movs	r3, #0
+ 8000fa4:	72fb      	strb	r3, [r7, #11]
+ 8000fa6:	e00a      	b.n	8000fbe <Valor_Prom+0x2c>
 	{
 		promedio += arreglo[cont];
- 8000fa4:	7afb      	ldrb	r3, [r7, #11]
- 8000fa6:	009b      	lsls	r3, r3, #2
- 8000fa8:	687a      	ldr	r2, [r7, #4]
- 8000faa:	4413      	add	r3, r2
- 8000fac:	681b      	ldr	r3, [r3, #0]
- 8000fae:	68fa      	ldr	r2, [r7, #12]
- 8000fb0:	4413      	add	r3, r2
- 8000fb2:	60fb      	str	r3, [r7, #12]
+ 8000fa8:	7afb      	ldrb	r3, [r7, #11]
+ 8000faa:	009b      	lsls	r3, r3, #2
+ 8000fac:	687a      	ldr	r2, [r7, #4]
+ 8000fae:	4413      	add	r3, r2
+ 8000fb0:	681b      	ldr	r3, [r3, #0]
+ 8000fb2:	68fa      	ldr	r2, [r7, #12]
+ 8000fb4:	4413      	add	r3, r2
+ 8000fb6:	60fb      	str	r3, [r7, #12]
 	for(uint8_t cont = 0; cont < tamano; cont++)
- 8000fb4:	7afb      	ldrb	r3, [r7, #11]
- 8000fb6:	3301      	adds	r3, #1
- 8000fb8:	72fb      	strb	r3, [r7, #11]
- 8000fba:	7afa      	ldrb	r2, [r7, #11]
- 8000fbc:	78fb      	ldrb	r3, [r7, #3]
- 8000fbe:	429a      	cmp	r2, r3
- 8000fc0:	d3f0      	bcc.n	8000fa4 <Valor_Prom+0x16>
+ 8000fb8:	7afb      	ldrb	r3, [r7, #11]
+ 8000fba:	3301      	adds	r3, #1
+ 8000fbc:	72fb      	strb	r3, [r7, #11]
+ 8000fbe:	7afa      	ldrb	r2, [r7, #11]
+ 8000fc0:	78fb      	ldrb	r3, [r7, #3]
+ 8000fc2:	429a      	cmp	r2, r3
+ 8000fc4:	d3f0      	bcc.n	8000fa8 <Valor_Prom+0x16>
 	}
 	return promedio/tamano;
- 8000fc2:	78fb      	ldrb	r3, [r7, #3]
- 8000fc4:	68fa      	ldr	r2, [r7, #12]
- 8000fc6:	fbb2 f3f3 	udiv	r3, r2, r3
+ 8000fc6:	78fb      	ldrb	r3, [r7, #3]
+ 8000fc8:	68fa      	ldr	r2, [r7, #12]
+ 8000fca:	fbb2 f3f3 	udiv	r3, r2, r3
 }
- 8000fca:	4618      	mov	r0, r3
- 8000fcc:	3714      	adds	r7, #20
- 8000fce:	46bd      	mov	sp, r7
- 8000fd0:	bc80      	pop	{r7}
- 8000fd2:	4770      	bx	lr
- 8000fd4:	0000      	movs	r0, r0
-	...
+ 8000fce:	4618      	mov	r0, r3
+ 8000fd0:	3714      	adds	r7, #20
+ 8000fd2:	46bd      	mov	sp, r7
+ 8000fd4:	bc80      	pop	{r7}
+ 8000fd6:	4770      	bx	lr
 
 08000fd8 <Verif_Ten>:
 
@@ -2189,7 +2189,7 @@ uint32_t Verif_Ten(uint32_t *arreglo, uint8_t tamano)/* Función para         */
  8000fe4:	78fb      	ldrb	r3, [r7, #3]
  8000fe6:	4619      	mov	r1, r3
  8000fe8:	6878      	ldr	r0, [r7, #4]
- 8000fea:	f7ff ff83 	bl	8000ef4 <Valor_Max>
+ 8000fea:	f7ff ff85 	bl	8000ef8 <Valor_Max>
  8000fee:	4603      	mov	r3, r0
  8000ff0:	461a      	mov	r2, r3
  8000ff2:	f640 03b6 	movw	r3, #2230	; 0x8b6
@@ -2199,7 +2199,7 @@ uint32_t Verif_Ten(uint32_t *arreglo, uint8_t tamano)/* Función para         */
  8000ffa:	78fb      	ldrb	r3, [r7, #3]
  8000ffc:	4619      	mov	r1, r3
  8000ffe:	6878      	ldr	r0, [r7, #4]
- 8001000:	f7ff ff9e 	bl	8000f40 <Valor_Min>
+ 8001000:	f7ff ffa0 	bl	8000f44 <Valor_Min>
  8001004:	4602      	mov	r2, r0
 	if ((Valor_Max(arreglo, tamano)) > VIMAX ||
  8001006:	f240 7343 	movw	r3, #1859	; 0x743
@@ -2209,7 +2209,7 @@ uint32_t Verif_Ten(uint32_t *arreglo, uint8_t tamano)/* Función para         */
  800100e:	78fb      	ldrb	r3, [r7, #3]
  8001010:	4619      	mov	r1, r3
  8001012:	6878      	ldr	r0, [r7, #4]
- 8001014:	f7ff ffbb 	bl	8000f8e <Valor_Prom>
+ 8001014:	f7ff ffbd 	bl	8000f92 <Valor_Prom>
  8001018:	4603      	mov	r3, r0
  800101a:	4618      	mov	r0, r3
  800101c:	f7ff f9da 	bl	80003d4 <__aeabi_ui2d>
@@ -2224,7 +2224,7 @@ uint32_t Verif_Ten(uint32_t *arreglo, uint8_t tamano)/* Función para         */
  8001030:	78fb      	ldrb	r3, [r7, #3]
  8001032:	4619      	mov	r1, r3
  8001034:	6878      	ldr	r0, [r7, #4]
- 8001036:	f7ff ffaa 	bl	8000f8e <Valor_Prom>
+ 8001036:	f7ff ffac 	bl	8000f92 <Valor_Prom>
  800103a:	4603      	mov	r3, r0
  800103c:	4618      	mov	r0, r3
  800103e:	f7ff f9c9 	bl	80003d4 <__aeabi_ui2d>
@@ -2965,80 +2965,80 @@ int main(void)
 	fases.tFase1.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
  80014a0:	4b31      	ldr	r3, [pc, #196]	; (8001568 <main+0x138>)
  80014a2:	2202      	movs	r2, #2
- 80014a4:	701a      	strb	r2, [r3, #0]
+ 80014a4:	70da      	strb	r2, [r3, #3]
 	fases.tFase1.Minutes = 0x20;	/* a correr el programa específico para  */
  80014a6:	4b30      	ldr	r3, [pc, #192]	; (8001568 <main+0x138>)
  80014a8:	2220      	movs	r2, #32
- 80014aa:	705a      	strb	r2, [r3, #1]
+ 80014aa:	711a      	strb	r2, [r3, #4]
 	fases.tFase1.Seconds = 0x05;	/* la fase 1.							 */
  80014ac:	4b2e      	ldr	r3, [pc, #184]	; (8001568 <main+0x138>)
  80014ae:	2205      	movs	r2, #5
- 80014b0:	709a      	strb	r2, [r3, #2]
+ 80014b0:	715a      	strb	r2, [r3, #5]
 
 	fases.tFase2.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
  80014b2:	4b2d      	ldr	r3, [pc, #180]	; (8001568 <main+0x138>)
  80014b4:	2202      	movs	r2, #2
- 80014b6:	70da      	strb	r2, [r3, #3]
+ 80014b6:	719a      	strb	r2, [r3, #6]
 	fases.tFase2.Minutes = 0x20;	/* a correr el programa específico para  */
  80014b8:	4b2b      	ldr	r3, [pc, #172]	; (8001568 <main+0x138>)
  80014ba:	2220      	movs	r2, #32
- 80014bc:	711a      	strb	r2, [r3, #4]
+ 80014bc:	71da      	strb	r2, [r3, #7]
 	fases.tFase2.Seconds = 0x06;	/* la fase 2.							 */
  80014be:	4b2a      	ldr	r3, [pc, #168]	; (8001568 <main+0x138>)
  80014c0:	2206      	movs	r2, #6
- 80014c2:	715a      	strb	r2, [r3, #5]
+ 80014c2:	721a      	strb	r2, [r3, #8]
 
 	fases.tFase3.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
  80014c4:	4b28      	ldr	r3, [pc, #160]	; (8001568 <main+0x138>)
  80014c6:	2202      	movs	r2, #2
- 80014c8:	719a      	strb	r2, [r3, #6]
+ 80014c8:	725a      	strb	r2, [r3, #9]
 	fases.tFase3.Minutes = 0x20;	/* a correr el programa específico para  */
  80014ca:	4b27      	ldr	r3, [pc, #156]	; (8001568 <main+0x138>)
  80014cc:	2220      	movs	r2, #32
- 80014ce:	71da      	strb	r2, [r3, #7]
+ 80014ce:	729a      	strb	r2, [r3, #10]
 	fases.tFase3.Seconds = 0x07;	/* la fase 3.							 */
  80014d0:	4b25      	ldr	r3, [pc, #148]	; (8001568 <main+0x138>)
  80014d2:	2207      	movs	r2, #7
- 80014d4:	721a      	strb	r2, [r3, #8]
+ 80014d4:	72da      	strb	r2, [r3, #11]
 
 	fases.tFase4.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
  80014d6:	4b24      	ldr	r3, [pc, #144]	; (8001568 <main+0x138>)
  80014d8:	2202      	movs	r2, #2
- 80014da:	725a      	strb	r2, [r3, #9]
+ 80014da:	731a      	strb	r2, [r3, #12]
 	fases.tFase4.Minutes = 0x20;	/* a correr el programa específico para  */
  80014dc:	4b22      	ldr	r3, [pc, #136]	; (8001568 <main+0x138>)
  80014de:	2220      	movs	r2, #32
- 80014e0:	729a      	strb	r2, [r3, #10]
+ 80014e0:	735a      	strb	r2, [r3, #13]
 	fases.tFase4.Seconds = 0x08;	/* la fase 4.							 */
  80014e2:	4b21      	ldr	r3, [pc, #132]	; (8001568 <main+0x138>)
  80014e4:	2208      	movs	r2, #8
- 80014e6:	72da      	strb	r2, [r3, #11]
+ 80014e6:	739a      	strb	r2, [r3, #14]
 
 	fases.tFase5.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
  80014e8:	4b1f      	ldr	r3, [pc, #124]	; (8001568 <main+0x138>)
  80014ea:	2202      	movs	r2, #2
- 80014ec:	731a      	strb	r2, [r3, #12]
+ 80014ec:	73da      	strb	r2, [r3, #15]
 	fases.tFase5.Minutes = 0x20;	/* a correr el programa específico para  */
  80014ee:	4b1e      	ldr	r3, [pc, #120]	; (8001568 <main+0x138>)
  80014f0:	2220      	movs	r2, #32
- 80014f2:	735a      	strb	r2, [r3, #13]
+ 80014f2:	741a      	strb	r2, [r3, #16]
 	fases.tFase5.Seconds = 0x09;	/* la fase 5.							 */
  80014f4:	4b1c      	ldr	r3, [pc, #112]	; (8001568 <main+0x138>)
  80014f6:	2209      	movs	r2, #9
- 80014f8:	739a      	strb	r2, [r3, #14]
+ 80014f8:	745a      	strb	r2, [r3, #17]
 
 	fases.tFase6.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
  80014fa:	4b1b      	ldr	r3, [pc, #108]	; (8001568 <main+0x138>)
  80014fc:	2202      	movs	r2, #2
- 80014fe:	73da      	strb	r2, [r3, #15]
+ 80014fe:	749a      	strb	r2, [r3, #18]
 	fases.tFase6.Minutes = 0x20;	/* a correr el programa específico para  */
  8001500:	4b19      	ldr	r3, [pc, #100]	; (8001568 <main+0x138>)
  8001502:	2220      	movs	r2, #32
- 8001504:	741a      	strb	r2, [r3, #16]
+ 8001504:	74da      	strb	r2, [r3, #19]
 	fases.tFase6.Seconds = 0x10;	/* la fase 6.							 */
  8001506:	4b18      	ldr	r3, [pc, #96]	; (8001568 <main+0x138>)
  8001508:	2210      	movs	r2, #16
- 800150a:	745a      	strb	r2, [r3, #17]
+ 800150a:	751a      	strb	r2, [r3, #20]
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -3118,7 +3118,7 @@ int main(void)
  8001568:	20000160 	.word	0x20000160
  800156c:	40010800 	.word	0x40010800
  8001570:	40010c00 	.word	0x40010c00
- 8001574:	20000180 	.word	0x20000180
+ 8001574:	20000184 	.word	0x20000184
  8001578:	40002800 	.word	0x40002800
 
 0800157c <SystemClock_Config>:
@@ -3305,7 +3305,7 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
  8001678:	bd80      	pop	{r7, pc}
  800167a:	bf00      	nop
  800167c:	20000120 	.word	0x20000120
- 8001680:	2000017c 	.word	0x2000017c
+ 8001680:	20000180 	.word	0x20000180
  8001684:	20000160 	.word	0x20000160
  8001688:	20000030 	.word	0x20000030
  800168c:	20000124 	.word	0x20000124
@@ -3346,7 +3346,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
  80016c0:	7dfb      	ldrb	r3, [r7, #23]
  80016c2:	4619      	mov	r1, r3
  80016c4:	484d      	ldr	r0, [pc, #308]	; (80017fc <HAL_ADC_ConvCpltCallback+0x160>)
- 80016c6:	f7ff fbf7 	bl	8000eb8 <Corrige_Med16>
+ 80016c6:	f7ff fbf9 	bl	8000ebc <Corrige_Med16>
 	if(canalADC < 7)				/* Verifica si la señal está entre los   */
  80016ca:	4b4b      	ldr	r3, [pc, #300]	; (80017f8 <HAL_ADC_ConvCpltCallback+0x15c>)
  80016cc:	781b      	ldrb	r3, [r3, #0]
@@ -3727,7 +3727,7 @@ void MX_RTC_Init(void)
  80018be:	46bd      	mov	sp, r7
  80018c0:	bd80      	pop	{r7, pc}
  80018c2:	bf00      	nop
- 80018c4:	20000180 	.word	0x20000180
+ 80018c4:	20000184 	.word	0x20000184
  80018c8:	40002800 	.word	0x40002800
 
 080018cc <HAL_RTC_MspInit>:
@@ -4080,7 +4080,7 @@ void RTC_IRQHandler(void)
  8001a2a:	bf00      	nop
  8001a2c:	bd80      	pop	{r7, pc}
  8001a2e:	bf00      	nop
- 8001a30:	20000180 	.word	0x20000180
+ 8001a30:	20000184 	.word	0x20000184
  8001a34:	40002800 	.word	0x40002800
 
 08001a38 <RCC_IRQHandler>:
@@ -4258,9 +4258,9 @@ void RTC_Alarm_IRQHandler(void)
 }
  8001ae4:	bf00      	nop
  8001ae6:	bd80      	pop	{r7, pc}
- 8001ae8:	20000180 	.word	0x20000180
+ 8001ae8:	20000184 	.word	0x20000184
  8001aec:	20000120 	.word	0x20000120
- 8001af0:	2000017c 	.word	0x2000017c
+ 8001af0:	20000180 	.word	0x20000180
  8001af4:	20000158 	.word	0x20000158
 
 08001af8 <SystemInit>:
@@ -4425,7 +4425,7 @@ LoopFillZerobss:
   ldr r2, =_sbss
  8001ba0:	20000014 	.word	0x20000014
   ldr r3, = _ebss
- 8001ba4:	20000198 	.word	0x20000198
+ 8001ba4:	2000019c 	.word	0x2000019c
 
 08001ba8 <CAN1_RX1_IRQHandler>:
  * @retval : None
@@ -4573,7 +4573,7 @@ __weak void HAL_IncTick(void)
  8001c50:	bc80      	pop	{r7}
  8001c52:	4770      	bx	lr
  8001c54:	20000010 	.word	0x20000010
- 8001c58:	20000194 	.word	0x20000194
+ 8001c58:	20000198 	.word	0x20000198
 
 08001c5c <HAL_GetTick>:
   * @note  This function is declared as __weak to be overwritten in case of other
@@ -4592,7 +4592,7 @@ __weak uint32_t HAL_GetTick(void)
  8001c66:	46bd      	mov	sp, r7
  8001c68:	bc80      	pop	{r7}
  8001c6a:	4770      	bx	lr
- 8001c6c:	20000194 	.word	0x20000194
+ 8001c6c:	20000198 	.word	0x20000198
 
 08001c70 <HAL_Delay>:
   *       implementations in user file.
