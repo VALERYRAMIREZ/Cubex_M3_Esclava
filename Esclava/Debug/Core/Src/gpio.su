@@ -1,1 +1,2 @@
 gpio.c:42:6:MX_GPIO_Init	48	static
+gpio.c:111:6:Apaga_Fase	16	static

@@ -108,7 +108,45 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-
+void Apaga_Fase(uint8_t numero)		/* Función para apagar completamente una */
+{									/* fase.								 */
+	switch(numero)
+	{
+	case 1:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin | FASE1_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 2:
+	{
+		HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin | FASE2_AMA_Pin | FASE2_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 3:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE3_AMA_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 4:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin | FASE4_AMA_Pin | FASE4_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 5:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin | FASE5_AMA_Pin | FASE5_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 6:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_AMA_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin | FASE6_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	}
+}
 /* USER CODE END 2 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

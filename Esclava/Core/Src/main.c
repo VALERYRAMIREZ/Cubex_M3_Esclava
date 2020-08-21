@@ -38,6 +38,8 @@ RTC_TimeTypeDef horaLeida;
 RTC_DateTypeDef fechaLeida;
 RTC_AlarmTypeDef intAlarma;
 RTC_AlarmTypeDef alarmaLeida;
+Fases fases;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -93,35 +95,59 @@ int main(void)
   /* USER CODE BEGIN 1 */
 //	reg_Esp();
 
-	fasesTiempo[0] = 2;				/* Tiempos de encendido de la fase 1, se */
-	fasesTiempo[1] = 2;				/* debe eliminar esta asignación y tomar */
-	fasesTiempo[2] = 2;				/* los valores del comando recibido una  */
+	fasesTiempo[0] = 6;				/* Tiempos de encendido de la fase 1, se */
+	fasesTiempo[1] = 3;				/* debe eliminar esta asignación y tomar */
+	fasesTiempo[2] = 4;				/* los valores del comando recibido una  */
 									/* vez se reciban por I2C.               */
 
-	fasesTiempo[3] = 2;				/* Tiempos de encendido de la fase 2, se */
-	fasesTiempo[4] = 2;				/* debe eliminar esta asignación y tomar */
-	fasesTiempo[5] = 2;				/* los valores del comando recibido una  */
+	fasesTiempo[3] = 6;				/* Tiempos de encendido de la fase 2, se */
+	fasesTiempo[4] = 3;				/* debe eliminar esta asignación y tomar */
+	fasesTiempo[5] = 4;				/* los valores del comando recibido una  */
 									/* vez se reciban por I2C.               */
 
-	fasesTiempo[6] = 2;				/* Tiempos de encendido de la fase 3, se */
-	fasesTiempo[7] = 2;				/* debe eliminar esta asignación y tomar */
-	fasesTiempo[8] = 2;				/* los valores del comando recibido una  */
+	fasesTiempo[6] = 6;				/* Tiempos de encendido de la fase 3, se */
+	fasesTiempo[7] = 3;				/* debe eliminar esta asignación y tomar */
+	fasesTiempo[8] = 4;				/* los valores del comando recibido una  */
 									/* vez se reciban por I2C.               */
 
-	fasesTiempo[9] = 2;				/* Tiempos de encendido de la fase 4, se */
-	fasesTiempo[10] = 2;			/* debe eliminar esta asignación y tomar */
-	fasesTiempo[11] = 2;			/* los valores del comando recibido una  */
+	fasesTiempo[9] = 6;				/* Tiempos de encendido de la fase 4, se */
+	fasesTiempo[10] = 3;			/* debe eliminar esta asignación y tomar */
+	fasesTiempo[11] = 4;			/* los valores del comando recibido una  */
 									/* vez se reciban por I2C.               */
 
-	fasesTiempo[12] = 2;			/* Tiempos de encendido de la fase 5, se */
-	fasesTiempo[13] = 2;			/* debe eliminar esta asignación y tomar */
-	fasesTiempo[14] = 2;			/* los valores del comando recibido una  */
+	fasesTiempo[12] = 6;			/* Tiempos de encendido de la fase 5, se */
+	fasesTiempo[13] = 3;			/* debe eliminar esta asignación y tomar */
+	fasesTiempo[14] = 4;			/* los valores del comando recibido una  */
 									/* vez se reciban por I2C.               */
 
-	fasesTiempo[15] = 2;			/* Tiempos de encendido de la fase 6, se */
-	fasesTiempo[16] = 2;			/* debe eliminar esta asignación y tomar */
-	fasesTiempo[17] = 2;			/* los valores del comando recibido una  */
+	fasesTiempo[15] = 6;			/* Tiempos de encendido de la fase 6, se */
+	fasesTiempo[16] = 3;			/* debe eliminar esta asignación y tomar */
+	fasesTiempo[17] = 4;			/* los valores del comando recibido una  */
 									/* vez se reciban por I2C.               */
+
+	fases.tFase1.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+	fases.tFase1.Minutes = 0x20;	/* a correr el programa específico para  */
+	fases.tFase1.Seconds = 0x05;	/* la fase 1.							 */
+
+	fases.tFase2.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+	fases.tFase2.Minutes = 0x20;	/* a correr el programa específico para  */
+	fases.tFase2.Seconds = 0x06;	/* la fase 2.							 */
+
+	fases.tFase3.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+	fases.tFase3.Minutes = 0x20;	/* a correr el programa específico para  */
+	fases.tFase3.Seconds = 0x07;	/* la fase 3.							 */
+
+	fases.tFase4.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+	fases.tFase4.Minutes = 0x20;	/* a correr el programa específico para  */
+	fases.tFase4.Seconds = 0x08;	/* la fase 4.							 */
+
+	fases.tFase5.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+	fases.tFase5.Minutes = 0x20;	/* a correr el programa específico para  */
+	fases.tFase5.Seconds = 0x09;	/* la fase 5.							 */
+
+	fases.tFase6.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+	fases.tFase6.Minutes = 0x20;	/* a correr el programa específico para  */
+	fases.tFase6.Seconds = 0x10;	/* la fase 6.							 */
 
 
   /* USER CODE END 1 */
@@ -243,28 +269,29 @@ void SystemClock_Config(void)
 
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 {									/* una interrupción por evento de segundo*/
-	HAL_RTC_WaitForSynchro(hrtc);	/* lee la hora y la fecha.               */
+	//HAL_RTC_WaitForSynchro(hrtc);	/* lee la hora y la fecha.               */
 	HAL_RTC_GetTime(hrtc,&horaLeida, RTC_FORMAT_BCD);
 	HAL_RTC_GetDate(hrtc,&fechaLeida, RTC_FORMAT_BCD);
 
 	//HAL_ADC_Stop_DMA(&hadc1);		/* Se asegura que el ADC no esté midiendo*/
 									/* los sensores antes de hacer un cambio */
 									/* de estados de fase.					 */
-	Fases_Auto(fasesTiempo);		/* Manejo de fases en automático, usará  */
-									/* el tiempo enviado por mensaje para    */
-									/* iniciar el manejo de las fases.       */
-  	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC-1) != HAL_OK)
-  	{
-  	    codigoError = 1;			/* Se inicia la conversión de los sensores*/
-  		Error_Handler();	  		/* por DMA para poder almacenar los       */
-  	}						 		/* valores convertidos. La cantidad de    */
-	canalADC = 0;   				/* veces que se van a enviar datos es     */
-									/* igual al doble del tamaño del buffer   */
-									/* debido a que como el ADC no soporta la
-									 * lectura/escritura de 32 bits, entonces
-									 * el DMA duplica el dato enviado en la
-									 * parte alta del registro de destino y lo
-									 * cuenta.                                */
+	Fases_Auto(fasesTiempo, &horaLeida, &fases);/* Manejo de fases en
+									 * automático, usará el tiempo enviado por
+									 * mensaje para iniciar el manejo de las
+									 * fases.       						 */
+//  	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC-1) != HAL_OK)
+//  	{
+//  	    codigoError = 1;			/* Se inicia la conversión de los sensores*/
+//  		Error_Handler();	  		/* por DMA para poder almacenar los       */
+//  	}						 		/* valores convertidos. La cantidad de    */
+//	canalADC = 0;   				/* veces que se van a enviar datos es     */
+//									/* igual al doble del tamaño del buffer   */
+//									/* debido a que como el ADC no soporta la
+//									 * lectura/escritura de 32 bits, entonces
+//									 * el DMA duplica el dato enviado en la
+//									 * parte alta del registro de destino y lo
+//									 * cuenta.                                */
 }
 /**
 * @brief Rutina de transferencia completa por del ACD por DMA
