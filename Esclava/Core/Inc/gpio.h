@@ -39,6 +39,8 @@ void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+void Apaga_Fase(uint8_t numero);	/* Función para apagar completamente una
+									 * fase.								 */
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

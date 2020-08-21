@@ -27,7 +27,10 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
+extern RTC_TimeTypeDef horaLeida;
+extern RTC_DateTypeDef fechaLeida;
+extern RTC_AlarmTypeDef intAlarma;
+extern RTC_AlarmTypeDef alarmaLeida;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -47,7 +50,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
+extern void reg_Esp(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -56,6 +59,8 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern DMA_HandleTypeDef hdma_adc1;
+extern ADC_HandleTypeDef hadc1;
 extern I2C_HandleTypeDef hi2c1;
 extern RTC_HandleTypeDef hrtc;
 /* USER CODE BEGIN EV */
@@ -84,35 +89,24 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-	volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
-	volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
-	volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
-	volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
-	volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
-	volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
-	__asm("bkpt #0");
-	__asm volatile ("movs r0,#4");	/* Carga el número 4 a r0.  			 */
-	__asm volatile ("movs r1, lr");	/* Carga el link register a r1.          */
-	__asm volatile ("tst r0, r1");	/* Prueba el valor de r0 contra r1 y     */
-									/* descarta el resultado pero actualiza  */
-									/* las banderas.                         */
-	__asm volatile ("beq _MSP");	/* Salta a la etiqueta _MSP si Z está en */
-									/* 1, es decir, salta si el resultado de */
-									/* la operación anterior es cero.        */
-	__asm volatile ("mrs r0, psp");	/* Mueve el contenido del registo        */
-									/* especial PSP a r0.                    */
-	__asm volatile ("b _HALT");		/* Salta inmediatamente a la etiqueta    */
-	__asm volatile ("_MSP:");		/* _HALT.								 */
-	__asm volatile ("mrs r0, msp");	/* Mueve el contenido del registro 		 */
-									/* especial MSP a r0.               	 */
-	__asm volatile ("_HALT:");		/* Etiqueta _HALT. 						 */
-	__asm volatile ("ldr r1,[r0,#24]");/* Se carga a r1 con la dirección     */
-									/* contenida en r0 desplazada en 20.	 */
-	__asm volatile ("bkpt #0");		/* Es un breakpoint.					 */
+//	reg_Esp();
+//		volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
+//		volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
+//		volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
+//		volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
+//		volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
+//		volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
+//		volatile unsigned long _IPSR = __get_IPSR();
+//		volatile unsigned long _BASEPRI = __get_BASEPRI();
+//		volatile unsigned long _PRIMASK = __get_PRIMASK();
+//		volatile unsigned long _FAULTMASK = __get_FAULTMASK();
+//		volatile unsigned long _ISPR0 = __get_IPSR();
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+	  HAL_GPIO_TogglePin(GPIOB, LED_STATUS_Pin);/* El led de estado se queda */
+	  HAL_Delay(200);				/* titilando si hay una hard fault.      */
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
@@ -232,7 +226,8 @@ void RTC_IRQHandler(void)
   /* USER CODE END RTC_IRQn 0 */
   HAL_RTCEx_RTCIRQHandler(&hrtc);
   /* USER CODE BEGIN RTC_IRQn 1 */
-
+  CLEAR_BIT(RTC->CRL,RTC_CRL_CNF);	/* Para salir del modo de configuración  */
+  	  	  	  	  	  	  	  	  	/* del RTC.								 */
   /* USER CODE END RTC_IRQn 1 */
 }
 
@@ -247,6 +242,34 @@ void RCC_IRQHandler(void)
   /* USER CODE BEGIN RCC_IRQn 1 */
 
   /* USER CODE END RCC_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 channel1 global interrupt.
+  */
+void DMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc1);
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles ADC1 and ADC2 global interrupts.
+  */
+void ADC1_2_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_2_IRQn 0 */
+
+  /* USER CODE END ADC1_2_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_2_IRQn 1 */
+
+  /* USER CODE END ADC1_2_IRQn 1 */
 }
 
 /**
@@ -275,6 +298,28 @@ void I2C1_ER_IRQHandler(void)
   /* USER CODE BEGIN I2C1_ER_IRQn 1 */
 
   /* USER CODE END I2C1_ER_IRQn 1 */
+}
+
+/**
+  * @brief This function handles RTC alarm interrupt through EXTI line 17.
+  */
+void RTC_Alarm_IRQHandler(void)
+{
+  /* USER CODE BEGIN RTC_Alarm_IRQn 0 */
+
+  /* USER CODE END RTC_Alarm_IRQn 0 */
+  HAL_RTC_AlarmIRQHandler(&hrtc);
+  /* USER CODE BEGIN RTC_Alarm_IRQn 1 */
+    HAL_RTC_AlarmIRQHandler(&hrtc);
+    HAL_RTC_WaitForSynchro(&hrtc);
+	  HAL_RTC_GetTime(&hrtc,&horaLeida, RTC_FORMAT_BCD);
+	  HAL_RTC_GetDate(&hrtc,&fechaLeida, RTC_FORMAT_BCD);
+    intAlarma.AlarmTime.Hours = horaLeida.Hours;
+    intAlarma.AlarmTime.Minutes = horaLeida.Minutes;
+    intAlarma.AlarmTime.Seconds = horaLeida.Seconds + 2;
+    HAL_RTC_SetAlarm_IT(&hrtc, &intAlarma, RTC_FORMAT_BCD);
+    //HAL_RTC_GetAlarm(&hrtc,&alarmaLeida,RTC_ALARM_A, RTC_FORMAT_BCD);
+  /* USER CODE END RTC_Alarm_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
