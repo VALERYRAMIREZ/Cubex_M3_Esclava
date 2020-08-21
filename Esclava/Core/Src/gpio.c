@@ -52,7 +52,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, FASE6_ROJO_Pin|FASE1_AMA_Pin|FASE1_ROJO_Pin|FASE2_VERDE_Pin 
-                          |FASE2_AMA_Pin|FASE2_ROJO_Pin, GPIO_PIN_RESET);
+                          |FASE2_AMA_Pin|FASE2_ROJO_Pin|FASE3_ROJO_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED_STATUS_Pin|LED_FALLA_Pin|FASE3_VERDE_Pin|FASE5_ROJO_Pin 
@@ -70,15 +70,15 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA6 PA13 PA14 PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+  /*Configure GPIO pin : PA6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin 
-                           PAPin PAPin */
+                           PAPin PAPin PAPin */
   GPIO_InitStruct.Pin = FASE6_ROJO_Pin|FASE1_AMA_Pin|FASE1_ROJO_Pin|FASE2_VERDE_Pin 
-                          |FASE2_AMA_Pin|FASE2_ROJO_Pin;
+                          |FASE2_AMA_Pin|FASE2_ROJO_Pin|FASE3_ROJO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -108,7 +108,45 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-
+void Apaga_Fase(uint8_t numero)		/* Función para apagar completamente una */
+{									/* fase.								 */
+	switch(numero)
+	{
+	case 1:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE1_VERDE_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin | FASE1_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 2:
+	{
+		HAL_GPIO_WritePin(GPIOA,FASE2_VERDE_Pin | FASE2_AMA_Pin | FASE2_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 3:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE3_VERDE_Pin | FASE3_AMA_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA,FASE3_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 4:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE4_VERDE_Pin | FASE4_AMA_Pin | FASE4_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 5:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE5_VERDE_Pin | FASE5_AMA_Pin | FASE5_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	case 6:
+	{
+		HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_AMA_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin | FASE6_ROJO_Pin, GPIO_PIN_SET);
+	}
+	break;
+	}
+}
 /* USER CODE END 2 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -58,10 +58,6 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define OSC32_IN_Pin GPIO_PIN_14
-#define OSC32_IN_GPIO_Port GPIOC
-#define OSC32_OUT_Pin GPIO_PIN_15
-#define OSC32_OUT_GPIO_Port GPIOC
 #define FASE1_SENSOR_Pin GPIO_PIN_0
 #define FASE1_SENSOR_GPIO_Port GPIOA
 #define FASE2_SENSOR_Pin GPIO_PIN_1
@@ -102,16 +98,14 @@ void Error_Handler(void);
 #define FASE2_AMA_GPIO_Port GPIOA
 #define FASE2_ROJO_Pin GPIO_PIN_12
 #define FASE2_ROJO_GPIO_Port GPIOA
+#define FASE3_ROJO_Pin GPIO_PIN_15
+#define FASE3_ROJO_GPIO_Port GPIOA
 #define FASE4_VERDE_Pin GPIO_PIN_3
 #define FASE4_VERDE_GPIO_Port GPIOB
 #define FASE4_AMA_Pin GPIO_PIN_4
 #define FASE4_AMA_GPIO_Port GPIOB
 #define FASE4_ROJO_Pin GPIO_PIN_5
 #define FASE4_ROJO_GPIO_Port GPIOB
-#define SCL_Pin GPIO_PIN_6
-#define SCL_GPIO_Port GPIOB
-#define SDA_Pin GPIO_PIN_7
-#define SDA_GPIO_Port GPIOB
 #define FASE5_VERDE_Pin GPIO_PIN_8
 #define FASE5_VERDE_GPIO_Port GPIOB
 #define FASE5_AMA_Pin GPIO_PIN_9

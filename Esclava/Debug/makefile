@@ -43,8 +43,8 @@ Esclava.bin \
 all: Esclava.elf secondary-outputs
 
 # Tool invocations
-Esclava.elf: $(OBJS) $(USER_OBJS) C:\Users\valery\STM32CubeIDE\workspace_1.3.0\Esclava\STM32F103C6TX_FLASH.ld
-	arm-none-eabi-gcc -o "Esclava.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\valery\STM32CubeIDE\workspace_1.3.0\Esclava\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Esclava.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Esclava.elf: $(OBJS) $(USER_OBJS) C:\Users\valery\Desktop\Cube\Cubex2\Esclava\STM32F103C6TX_FLASH.ld
+	arm-none-eabi-gcc -o "Esclava.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\valery\Desktop\Cube\Cubex2\Esclava\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Esclava.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
