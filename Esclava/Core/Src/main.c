@@ -39,6 +39,7 @@ RTC_DateTypeDef fechaLeida;
 RTC_AlarmTypeDef intAlarma;
 RTC_AlarmTypeDef alarmaLeida;
 Fases fases;
+extern uint8_t bFases[6];
 
 /* USER CODE END PTD */
 
@@ -318,10 +319,23 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 	if(canalADC < 7)				/* Verifica si la señal está entre los   */
 	{								/* valores AC permitidos si no se está   */
 									/* midiendo el sensor de temperatura.    */
-		if(Verif_Ten(sensorLeido, tam) != HAL_OK)/* Si está midiendo los     */
-		{							/* sensores de fase, esta es la condición*/
-			codigoError = 2;		/* de error.							 */
-			Error_Handler();
+		if(bFases[canalADC - 1] == 1)/* Solo si hay fases encendidas se		 */
+		{							/* verifica si la corriente de la fase 	 */
+									/* está entre los valores permitidos.    */
+			if(Verif_Ten(sensorLeido, tam, 1) != HAL_OK)/* Si está midiendo  */
+			{						/* los sensores de fase, esta es la		 */
+				codigoError = 2;	/* condición de error.				 	 */
+				Error_Handler();
+			}
+		}
+		else if(bFases[canalADC - 1] == 0)/* Solo si hay fases apagadas se   */
+		{							/* verifica que la corriente de fase sea */
+									/* igual a cero.						 */
+			if(Verif_Ten(sensorLeido, tam, 0) != HAL_OK)/* Si está midiendo  */
+					{				/* los sensores de fase, esta es la		 */
+						codigoError = 2;/* condición de error.				 */
+						Error_Handler();
+					}
 		}
 	}
 	else if(canalADC == 7)			/* Si se está midiendo el sensor de      */
