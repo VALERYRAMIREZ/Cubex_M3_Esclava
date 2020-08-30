@@ -27,7 +27,7 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "fases.h"
 /* USER CODE END Includes */
 
 extern RTC_HandleTypeDef hrtc;
@@ -39,7 +39,8 @@ extern RTC_HandleTypeDef hrtc;
 void MX_RTC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void SEC_RTC_Init(tFases sTiempo, dFases sFecha);/* Función para inicio
+									 * secundario del RTC.			          */
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

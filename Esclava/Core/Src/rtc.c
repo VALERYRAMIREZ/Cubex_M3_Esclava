@@ -114,7 +114,30 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 } 
 
 /* USER CODE BEGIN 1 */
-
+void SEC_RTC_Init(tFases sTiempo, dFases sFecha)
+{									/* Función para inicio secundario del    */
+									/* RTC.									 */
+	  /** Inicializa solo el RTC. */
+	   hrtc.Instance = RTC;			/* Instancia el manejador del RTC. 		 */
+	   hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
+	   hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
+	   if (HAL_RTC_Init(&hrtc) != HAL_OK)
+	   {
+	     Error_Handler();
+	   }
+	   /** Configura la hora con los parámetros obtenidos del puntero
+	    *  sTiempo. */
+	   if (HAL_RTC_SetTime(&hrtc, &sTiempo.hSistema, RTC_FORMAT_BCD) != HAL_OK)
+	   {
+	     Error_Handler();
+	   }
+	   /** Configura la fecha con los parámetros obtenidos del puntero
+	    *  sFecha. */
+	   if (HAL_RTC_SetDate(&hrtc, &sFecha.dSistema, RTC_FORMAT_BCD) != HAL_OK)
+	   {
+	     Error_Handler();
+	   }
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

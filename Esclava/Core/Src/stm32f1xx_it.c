@@ -23,6 +23,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "mensaje.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,7 +36,6 @@ extern RTC_AlarmTypeDef alarmaLeida;
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
- 
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -61,6 +61,7 @@ extern void reg_Esp(void);
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
 extern ADC_HandleTypeDef hadc1;
+extern DMA_HandleTypeDef hdma_i2c1_rx;
 extern I2C_HandleTypeDef hi2c1;
 extern RTC_HandleTypeDef hrtc;
 /* USER CODE BEGIN EV */
@@ -89,18 +90,18 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-//	reg_Esp();
-//		volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
-//		volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
-//		volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
-//		volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
-//		volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
-//		volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
-//		volatile unsigned long _IPSR = __get_IPSR();
-//		volatile unsigned long _BASEPRI = __get_BASEPRI();
-//		volatile unsigned long _PRIMASK = __get_PRIMASK();
-//		volatile unsigned long _FAULTMASK = __get_FAULTMASK();
-//		volatile unsigned long _ISPR0 = __get_IPSR();
+	reg_Esp();
+		volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
+		volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
+		volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
+		volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
+		volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
+		volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
+		volatile unsigned long _IPSR = __get_IPSR();
+		volatile unsigned long _BASEPRI = __get_BASEPRI();
+		volatile unsigned long _PRIMASK = __get_PRIMASK();
+		volatile unsigned long _FAULTMASK = __get_FAULTMASK();
+		volatile unsigned long _ISPR0 = __get_IPSR();
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
@@ -256,6 +257,21 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
   /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 channel7 global interrupt.
+  */
+void DMA1_Channel7_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel7_IRQn 0 */
+//	uint8_t prueba;
+
+  /* USER CODE END DMA1_Channel7_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_i2c1_rx);
+  /* USER CODE BEGIN DMA1_Channel7_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel7_IRQn 1 */
 }
 
 /**

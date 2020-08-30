@@ -29,6 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "fases.h"
+#include "mensaje.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,7 +39,8 @@ RTC_TimeTypeDef horaLeida;
 RTC_DateTypeDef fechaLeida;
 RTC_AlarmTypeDef intAlarma;
 RTC_AlarmTypeDef alarmaLeida;
-Fases fases;
+tFases fTiempo;
+dFases fFecha;
 extern uint8_t bFases[6];
 
 /* USER CODE END PTD */
@@ -56,17 +58,17 @@ extern uint8_t bFases[6];
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-//volatile unsigned long _CFSR;
-//volatile unsigned long _HFSR;
-//volatile unsigned long _DFSR;
-//volatile unsigned long _AFSR;
-//volatile unsigned long _MMAR;
-//volatile unsigned long _BFAR;
-//volatile unsigned long _IPSR;
-//volatile unsigned long _BASEPRI;
-//volatile unsigned long _PRIMASK;
-//volatile unsigned long _FAULTMASK;
-//volatile unsigned long _ISPR0;
+volatile unsigned long _CFSR;
+volatile unsigned long _HFSR;
+volatile unsigned long _DFSR;
+volatile unsigned long _AFSR;
+volatile unsigned long _MMAR;
+volatile unsigned long _BFAR;
+volatile unsigned long _IPSR;
+volatile unsigned long _BASEPRI;
+volatile unsigned long _PRIMASK;
+volatile unsigned long _FAULTMASK;
+volatile unsigned long _ISPR0;
 extern uint8_t fasesTiempo[18];
 uint32_t sensorLeido[BUFFER_ADC];
 uint8_t canalADC = 0;
@@ -77,14 +79,15 @@ uint32_t codigoError = 0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-//void reg_Esp(void);
+void reg_Esp(void);
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc);
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
+void HAL_ADC_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c1);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+char tramaEntrada[] = "iRTC 12 34 56 29 08 20 35";
 /* USER CODE END 0 */
 
 /**
@@ -94,7 +97,9 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//	reg_Esp();
+	Selec_Opera((char *) tramaEntrada);
+
+	reg_Esp();
 
 	fasesTiempo[0] = 6;				/* Tiempos de encendido de la fase 1, se */
 	fasesTiempo[1] = 3;				/* debe eliminar esta asignación y tomar */
@@ -126,29 +131,29 @@ int main(void)
 	fasesTiempo[17] = 4;			/* los valores del comando recibido una  */
 									/* vez se reciban por I2C.               */
 
-	fases.tFase1.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
-	fases.tFase1.Minutes = 0x20;	/* a correr el programa específico para  */
-	fases.tFase1.Seconds = 0x05;	/* la fase 1.							 */
-
-	fases.tFase2.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
-	fases.tFase2.Minutes = 0x20;	/* a correr el programa específico para  */
-	fases.tFase2.Seconds = 0x06;	/* la fase 2.							 */
-
-	fases.tFase3.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
-	fases.tFase3.Minutes = 0x20;	/* a correr el programa específico para  */
-	fases.tFase3.Seconds = 0x07;	/* la fase 3.							 */
-
-	fases.tFase4.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
-	fases.tFase4.Minutes = 0x20;	/* a correr el programa específico para  */
-	fases.tFase4.Seconds = 0x08;	/* la fase 4.							 */
-
-	fases.tFase5.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
-	fases.tFase5.Minutes = 0x20;	/* a correr el programa específico para  */
-	fases.tFase5.Seconds = 0x09;	/* la fase 5.							 */
-
-	fases.tFase6.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
-	fases.tFase6.Minutes = 0x20;	/* a correr el programa específico para  */
-	fases.tFase6.Seconds = 0x10;	/* la fase 6.							 */
+//	fTiempo->tFase1.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+//	fTiempo->tFase1.Minutes = 0x20;	/* a correr el programa específico para  */
+//	fTiempo->tFase1.Seconds = 0x05;	/* la fase 1.							 */
+//
+//	fTiempo->tFase2.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+//	fTiempo->tFase2.Minutes = 0x20;	/* a correr el programa específico para  */
+//	fTiempo->tFase2.Seconds = 0x06;	/* la fase 2.							 */
+//
+//	fTiempo->tFase3.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+//	fTiempo->tFase3.Minutes = 0x20;	/* a correr el programa específico para  */
+//	fTiempo->tFase3.Seconds = 0x07;	/* la fase 3.							 */
+//
+//	fTiempo->tFase4.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+//	fTiempo->tFase4.Minutes = 0x20;	/* a correr el programa específico para  */
+//	fTiempo->tFase4.Seconds = 0x08;	/* la fase 4.							 */
+//
+//	fTiempo->tFase5.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+//	fTiempo->tFase5.Minutes = 0x20;	/* a correr el programa específico para  */
+//	fTiempo->tFase5.Seconds = 0x09;	/* la fase 5.							 */
+//
+//	fTiempo->tFase6.Hours = 0x02;		/* Instante de tiempo en el que comenzará*/
+//	fTiempo->tFase6.Minutes = 0x20;	/* a correr el programa específico para  */
+//	fTiempo->tFase6.Seconds = 0x10;	/* la fase 6.							 */
 
 
   /* USER CODE END 1 */
@@ -183,8 +188,9 @@ int main(void)
 		  FASE4_VERDE_Pin | FASE4_AMA_Pin | FASE4_ROJO_Pin | FASE5_VERDE_Pin |
 		  FASE5_AMA_Pin | FASE5_ROJO_Pin | FASE3_AMA_Pin | FASE6_VERDE_Pin |
 		  FASE6_AMA_Pin | FASE1_VERDE_Pin,GPIO_PIN_SET);
-  //HAL_I2C_MspInit(&hi2c1);			/* Inicializando el modo I2C.            */
+
   HAL_RTC_MspInit(&hrtc);			/* Inicializando el RTC.                 */
+  HAL_I2C_MspInit(&hi2c1);			/* Inicializando el modo I2C.            */
   //HAL_ADC_MspInit(&hadc1);			/* Inicializando el ADC1.                */
 //    if(HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK)/*Intenta calibrar el ADC */
 //    {									/* y en caso de haber un error de        */
@@ -195,13 +201,32 @@ int main(void)
   	  	  	  	  	  	  	  	  	/* realiza la salida forzada del modo de */
   	  	  	  	  	  	  	  	    /* configuración.                        */
 
+//  if(HAL_I2C_Slave_Receive_IT(&hi2c1, tramaEntrada, T_COMANDO) != HAL_OK)
+//  {
+//	  codigoError = 20;
+//	  Error_Handler();
+//  }
+//  if(HAL_I2C_Slave_Receive_DMA(&hi2c1, eComando, T_COMANDO) != HAL_OK)
+//  {
+//	  codigoError = 20;
+//	  Error_Handler();
+//  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+	  if(HAL_I2C_Slave_Receive(&hi2c1, (uint8_t *) tramaEntrada, T_TRAMA, HAL_MAX_DELAY)
+			  != HAL_OK)
+	  {
+		  codigoError = 20;
+		  Error_Handler();
+	  }
+	  else
+	  {
+		  Selec_Opera((char *) tramaEntrada);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -253,20 +278,20 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-//void reg_Esp(void)
-//{
-//	_CFSR = (*((volatile unsigned long *)(0xE000ED28)));
-//	_HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
-//	_DFSR = (*((volatile unsigned long *)(0xE000ED30)));
-//	_AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
-//	_MMAR = (*((volatile unsigned long *)(0xE000ED34)));
-//	_BFAR = (*((volatile unsigned long *)(0xE000ED38)));
-//	_IPSR = __get_IPSR();
-//	_BASEPRI = __get_BASEPRI();
-//	_PRIMASK = __get_PRIMASK();
-//	_FAULTMASK = __get_FAULTMASK();
-//	_ISPR0 = __get_IPSR();
-//}
+void reg_Esp(void)
+{
+	_CFSR = (*((volatile unsigned long *)(0xE000ED28)));
+	_HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
+	_DFSR = (*((volatile unsigned long *)(0xE000ED30)));
+	_AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
+	_MMAR = (*((volatile unsigned long *)(0xE000ED34)));
+	_BFAR = (*((volatile unsigned long *)(0xE000ED38)));
+	_IPSR = __get_IPSR();
+	_BASEPRI = __get_BASEPRI();
+	_PRIMASK = __get_PRIMASK();
+	_FAULTMASK = __get_FAULTMASK();
+	_ISPR0 = __get_IPSR();
+}
 
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 {									/* una interrupción por evento de segundo*/
@@ -277,7 +302,7 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 	//HAL_ADC_Stop_DMA(&hadc1);		/* Se asegura que el ADC no esté midiendo*/
 									/* los sensores antes de hacer un cambio */
 									/* de estados de fase.					 */
-	Fases_Auto(fasesTiempo, &horaLeida, &fases);/* Manejo de fases en
+	Fases_Auto(fasesTiempo, &horaLeida, &fTiempo);/* Manejo de fases en
 									 * automático, usará el tiempo enviado por
 									 * mensaje para iniciar el manejo de las
 									 * fases.       						 */
@@ -424,6 +449,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 			Error_Handler();
 		}
 	}
+}
+
+void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c1)
+{
+	__asm("nop");
 }
 
 

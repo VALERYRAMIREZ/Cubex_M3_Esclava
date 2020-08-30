@@ -26,7 +26,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/dma.h ../Core/Inc/i2c.h \
- ../Core/Inc/rtc.h ../Core/Inc/gpio.h ../Core/Inc/fases.h
+ ../Core/Inc/rtc.h ../Core/Inc/fases.h ../Core/Inc/gpio.h \
+ ../Core/Inc/fases.h ../Core/Inc/mensaje.h
 
 ../Core/Inc/main.h:
 
@@ -92,6 +93,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Core/Inc/rtc.h:
 
+../Core/Inc/fases.h:
+
 ../Core/Inc/gpio.h:
 
 ../Core/Inc/fases.h:
+
+../Core/Inc/mensaje.h:
