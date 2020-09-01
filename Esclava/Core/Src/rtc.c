@@ -21,7 +21,8 @@
 #include "rtc.h"
 
 /* USER CODE BEGIN 0 */
-
+extern tFases fTiempo;
+extern dFases fFecha;
 /* USER CODE END 0 */
 
 RTC_HandleTypeDef hrtc;
@@ -48,16 +49,16 @@ void MX_RTC_Init(void)
 
   /** Initialize RTC and set the Time and Date 
   */
-  sTime.Hours = 0x2;
-  sTime.Minutes = 0x20;
+  sTime.Hours = 0x0;
+  sTime.Minutes = 0x0;
   sTime.Seconds = 0x0;
 
   if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
   {
     Error_Handler();
   }
-  DateToUpdate.WeekDay = RTC_WEEKDAY_SATURDAY;
-  DateToUpdate.Month = RTC_MONTH_AUGUST;
+  DateToUpdate.WeekDay = RTC_WEEKDAY_WEDNESDAY;
+  DateToUpdate.Month = RTC_MONTH_JANUARY;
   DateToUpdate.Date = 0x1;
   DateToUpdate.Year = 0x20;
 
@@ -114,30 +115,32 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 } 
 
 /* USER CODE BEGIN 1 */
-void SEC_RTC_Init(tFases sTiempo, dFases sFecha)
-{									/* Función para inicio secundario del    */
-									/* RTC.									 */
-	  /** Inicializa solo el RTC. */
-	   hrtc.Instance = RTC;			/* Instancia el manejador del RTC. 		 */
-	   hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
-	   hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
-	   if (HAL_RTC_Init(&hrtc) != HAL_OK)
-	   {
-	     Error_Handler();
-	   }
-	   /** Configura la hora con los parámetros obtenidos del puntero
-	    *  sTiempo. */
-	   if (HAL_RTC_SetTime(&hrtc, &sTiempo.hSistema, RTC_FORMAT_BCD) != HAL_OK)
-	   {
-	     Error_Handler();
-	   }
-	   /** Configura la fecha con los parámetros obtenidos del puntero
-	    *  sFecha. */
-	   if (HAL_RTC_SetDate(&hrtc, &sFecha.dSistema, RTC_FORMAT_BCD) != HAL_OK)
-	   {
-	     Error_Handler();
-	   }
-}
+//void SEC_RTC_Init(tFases *sTiempo, dFases *sFecha)
+//{									/* Función para inicio secundario del    */
+//									/* RTC.									 */
+//	  RTC_TimeTypeDef sTime = sTiempo->hSistema;
+//	  RTC_DateTypeDef DateToUpdate = sFecha->dSistema;
+//	  /** Inicializa solo el RTC. */
+//	   hrtc.Instance = RTC;			/* Instancia el manejador del RTC. 		 */
+//	   hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
+//	   hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
+//	   if (HAL_RTC_Init(&hrtc) != HAL_OK)
+//	   {
+//	     Error_Handler();
+//	   }
+//	   /** Configura la hora con los parámetros obtenidos del puntero
+//	    *  sTiempo. */
+//	   if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
+//	   {
+//	     Error_Handler();
+//	   }
+//	   /** Configura la fecha con los parámetros obtenidos del puntero
+//	    *  sFecha. */
+//	   if (HAL_RTC_SetDate(&hrtc, &DateToUpdate, RTC_FORMAT_BCD) != HAL_OK)
+//	   {
+//	     Error_Handler();
+//	   }
+//}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

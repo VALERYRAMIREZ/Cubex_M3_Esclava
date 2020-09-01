@@ -74,6 +74,10 @@ uint32_t sensorLeido[BUFFER_ADC];
 uint8_t canalADC = 0;
 uint32_t codigoError = 0;
 
+volatile uint8_t pos = 0;
+uint8_t eComando[T_COMANDO + 1] = {0};
+int hora = 0, minuto = 0, segundo = 0, dia = 0, mes = 0, semana = 0, ano = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,7 +91,9 @@ void HAL_ADC_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c1);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-char tramaEntrada[] = "iRTC 12 34 56 29 08 20 35";
+//char tramaEntrada[] = "iRTC 23 59 58 31 09 20 02";/* 23:59:58, 31/09/20
+//									 * día 2 de la semana.					  */
+char tramaEntrada[40] = {0};
 /* USER CODE END 0 */
 
 /**
@@ -97,7 +103,6 @@ char tramaEntrada[] = "iRTC 12 34 56 29 08 20 35";
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	Selec_Opera((char *) tramaEntrada);
 
 	reg_Esp();
 
@@ -189,9 +194,7 @@ int main(void)
 		  FASE5_AMA_Pin | FASE5_ROJO_Pin | FASE3_AMA_Pin | FASE6_VERDE_Pin |
 		  FASE6_AMA_Pin | FASE1_VERDE_Pin,GPIO_PIN_SET);
 
-  HAL_RTC_MspInit(&hrtc);			/* Inicializando el RTC.                 */
   HAL_I2C_MspInit(&hi2c1);			/* Inicializando el modo I2C.            */
-  //HAL_ADC_MspInit(&hadc1);			/* Inicializando el ADC1.                */
 //    if(HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK)/*Intenta calibrar el ADC */
 //    {									/* y en caso de haber un error de        */
 //  	  Error_Handler();				/* calibración, llama a la función de    */
@@ -201,20 +204,11 @@ int main(void)
   	  	  	  	  	  	  	  	  	/* realiza la salida forzada del modo de */
   	  	  	  	  	  	  	  	    /* configuración.                        */
 
-//  if(HAL_I2C_Slave_Receive_IT(&hi2c1, tramaEntrada, T_COMANDO) != HAL_OK)
-//  {
-//	  codigoError = 20;
-//	  Error_Handler();
-//  }
-//  if(HAL_I2C_Slave_Receive_DMA(&hi2c1, eComando, T_COMANDO) != HAL_OK)
-//  {
-//	  codigoError = 20;
-//	  Error_Handler();
-//  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+//	Selec_Opera((char *) tramaEntrada);
   while (1)
   {
 	  if(HAL_I2C_Slave_Receive(&hi2c1, (uint8_t *) tramaEntrada, T_TRAMA, HAL_MAX_DELAY)
