@@ -40,8 +40,9 @@ extern RTC_HandleTypeDef hrtc;
 void MX_RTC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-//void SEC_RTC_Init(tFases *sTiempo, dFases *sFecha);/* Función para inicio
-//									 * secundario del RTC.			          */
+void USU_RTC_Init(RTC_TimeTypeDef *sTime, RTC_DateTypeDef *DateToUpdate);
+									/* Función para inicio secundario del
+									 * RTC.								     */
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

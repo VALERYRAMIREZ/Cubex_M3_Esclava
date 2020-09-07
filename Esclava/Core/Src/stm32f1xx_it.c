@@ -50,7 +50,7 @@ extern RTC_AlarmTypeDef alarmaLeida;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-extern void reg_Esp(void);
+//extern void reg_Esp(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -90,18 +90,18 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-	reg_Esp();
-		volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
-		volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
-		volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
-		volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
-		volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
-		volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
-		volatile unsigned long _IPSR = __get_IPSR();
-		volatile unsigned long _BASEPRI = __get_BASEPRI();
-		volatile unsigned long _PRIMASK = __get_PRIMASK();
-		volatile unsigned long _FAULTMASK = __get_FAULTMASK();
-		volatile unsigned long _ISPR0 = __get_IPSR();
+//	reg_Esp();
+//		volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
+//		volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
+//		volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
+//		volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
+//		volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
+//		volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
+//		volatile unsigned long _IPSR = __get_IPSR();
+//		volatile unsigned long _BASEPRI = __get_BASEPRI();
+//		volatile unsigned long _PRIMASK = __get_PRIMASK();
+//		volatile unsigned long _FAULTMASK = __get_FAULTMASK();
+//		volatile unsigned long _ISPR0 = __get_IPSR();
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
@@ -327,14 +327,6 @@ void RTC_Alarm_IRQHandler(void)
   HAL_RTC_AlarmIRQHandler(&hrtc);
   /* USER CODE BEGIN RTC_Alarm_IRQn 1 */
     HAL_RTC_AlarmIRQHandler(&hrtc);
-    HAL_RTC_WaitForSynchro(&hrtc);
-	  HAL_RTC_GetTime(&hrtc,&horaLeida, RTC_FORMAT_BCD);
-	  HAL_RTC_GetDate(&hrtc,&fechaLeida, RTC_FORMAT_BCD);
-    intAlarma.AlarmTime.Hours = horaLeida.Hours;
-    intAlarma.AlarmTime.Minutes = horaLeida.Minutes;
-    intAlarma.AlarmTime.Seconds = horaLeida.Seconds + 2;
-    HAL_RTC_SetAlarm_IT(&hrtc, &intAlarma, RTC_FORMAT_BCD);
-    //HAL_RTC_GetAlarm(&hrtc,&alarmaLeida,RTC_ALARM_A, RTC_FORMAT_BCD);
   /* USER CODE END RTC_Alarm_IRQn 1 */
 }
 

@@ -115,32 +115,47 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 } 
 
 /* USER CODE BEGIN 1 */
-//void SEC_RTC_Init(tFases *sTiempo, dFases *sFecha)
-//{									/* Función para inicio secundario del    */
-//									/* RTC.									 */
-//	  RTC_TimeTypeDef sTime = sTiempo->hSistema;
-//	  RTC_DateTypeDef DateToUpdate = sFecha->dSistema;
-//	  /** Inicializa solo el RTC. */
-//	   hrtc.Instance = RTC;			/* Instancia el manejador del RTC. 		 */
-//	   hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
-//	   hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
-//	   if (HAL_RTC_Init(&hrtc) != HAL_OK)
-//	   {
-//	     Error_Handler();
-//	   }
-//	   /** Configura la hora con los parámetros obtenidos del puntero
-//	    *  sTiempo. */
-//	   if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
-//	   {
-//	     Error_Handler();
-//	   }
-//	   /** Configura la fecha con los parámetros obtenidos del puntero
-//	    *  sFecha. */
-//	   if (HAL_RTC_SetDate(&hrtc, &DateToUpdate, RTC_FORMAT_BCD) != HAL_OK)
-//	   {
-//	     Error_Handler();
-//	   }
-//}
+
+/**
+* @brief Rutina para inicio secundario del RTC
+*
+* Esta rutina asigna la hora y fecha al RTC, además de inicializarlo. La hora
+* a asignarle al RTC se maneja mediante el puntero "*sTime" mientras la fecha
+* se maneja mediante el puntero "*DateToUpdate".
+*
+* @param vector: *sTime, *DateToUpdate.
+* @retval None */
+
+void USU_RTC_Init(RTC_TimeTypeDef *sTime, RTC_DateTypeDef *DateToUpdate)
+{
+  /** Initialize RTC Only
+  */
+  hrtc.Instance = RTC;
+  hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
+  hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /* USER CODE BEGIN Check_RTC_BKUP */
+
+  /* USER CODE END Check_RTC_BKUP */
+
+  /** Initialize RTC and set the Time and Date
+  */
+
+  if (HAL_RTC_SetTime(&hrtc, sTime, RTC_FORMAT_BCD) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  if (HAL_RTC_SetDate(&hrtc, DateToUpdate, RTC_FORMAT_BCD) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
