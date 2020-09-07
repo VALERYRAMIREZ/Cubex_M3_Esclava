@@ -23,6 +23,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "mensaje.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,7 +36,6 @@ extern RTC_AlarmTypeDef alarmaLeida;
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
- 
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,7 +50,7 @@ extern RTC_AlarmTypeDef alarmaLeida;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-extern void reg_Esp(void);
+//extern void reg_Esp(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -61,6 +61,7 @@ extern void reg_Esp(void);
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
 extern ADC_HandleTypeDef hadc1;
+extern DMA_HandleTypeDef hdma_i2c1_rx;
 extern I2C_HandleTypeDef hi2c1;
 extern RTC_HandleTypeDef hrtc;
 /* USER CODE BEGIN EV */
@@ -259,6 +260,21 @@ void DMA1_Channel1_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMA1 channel7 global interrupt.
+  */
+void DMA1_Channel7_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel7_IRQn 0 */
+//	uint8_t prueba;
+
+  /* USER CODE END DMA1_Channel7_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_i2c1_rx);
+  /* USER CODE BEGIN DMA1_Channel7_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel7_IRQn 1 */
+}
+
+/**
   * @brief This function handles ADC1 and ADC2 global interrupts.
   */
 void ADC1_2_IRQHandler(void)
@@ -311,14 +327,6 @@ void RTC_Alarm_IRQHandler(void)
   HAL_RTC_AlarmIRQHandler(&hrtc);
   /* USER CODE BEGIN RTC_Alarm_IRQn 1 */
     HAL_RTC_AlarmIRQHandler(&hrtc);
-    HAL_RTC_WaitForSynchro(&hrtc);
-	  HAL_RTC_GetTime(&hrtc,&horaLeida, RTC_FORMAT_BCD);
-	  HAL_RTC_GetDate(&hrtc,&fechaLeida, RTC_FORMAT_BCD);
-    intAlarma.AlarmTime.Hours = horaLeida.Hours;
-    intAlarma.AlarmTime.Minutes = horaLeida.Minutes;
-    intAlarma.AlarmTime.Seconds = horaLeida.Seconds + 2;
-    HAL_RTC_SetAlarm_IT(&hrtc, &intAlarma, RTC_FORMAT_BCD);
-    //HAL_RTC_GetAlarm(&hrtc,&alarmaLeida,RTC_ALARM_A, RTC_FORMAT_BCD);
   /* USER CODE END RTC_Alarm_IRQn 1 */
 }
 

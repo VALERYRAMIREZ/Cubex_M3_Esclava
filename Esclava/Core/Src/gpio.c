@@ -108,6 +108,15 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
+
+/**
+* @brief Función para apagar completamente una fase.
+*
+* Cuando es llamada, apaga la fase con el número pasado como argumento de
+* inmediato.
+
+* @param: numero
+* @retval: ninguno. */
 void Apaga_Fase(uint8_t numero)		/* Función para apagar completamente una */
 {									/* fase.								 */
 	switch(numero)

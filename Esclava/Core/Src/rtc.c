@@ -21,7 +21,8 @@
 #include "rtc.h"
 
 /* USER CODE BEGIN 0 */
-
+extern tFases fTiempo;
+extern dFases fFecha;
 /* USER CODE END 0 */
 
 RTC_HandleTypeDef hrtc;
@@ -48,16 +49,16 @@ void MX_RTC_Init(void)
 
   /** Initialize RTC and set the Time and Date 
   */
-  sTime.Hours = 0x2;
-  sTime.Minutes = 0x20;
+  sTime.Hours = 0x0;
+  sTime.Minutes = 0x0;
   sTime.Seconds = 0x0;
 
   if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
   {
     Error_Handler();
   }
-  DateToUpdate.WeekDay = RTC_WEEKDAY_SATURDAY;
-  DateToUpdate.Month = RTC_MONTH_AUGUST;
+  DateToUpdate.WeekDay = RTC_WEEKDAY_WEDNESDAY;
+  DateToUpdate.Month = RTC_MONTH_JANUARY;
   DateToUpdate.Date = 0x1;
   DateToUpdate.Year = 0x20;
 
@@ -115,6 +116,46 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 
 /* USER CODE BEGIN 1 */
 
+/**
+* @brief Rutina para inicio secundario del RTC
+*
+* Esta rutina asigna la hora y fecha al RTC, además de inicializarlo. La hora
+* a asignarle al RTC se maneja mediante el puntero "*sTime" mientras la fecha
+* se maneja mediante el puntero "*DateToUpdate".
+*
+* @param vector: *sTime, *DateToUpdate.
+* @retval None */
+
+void USU_RTC_Init(RTC_TimeTypeDef *sTime, RTC_DateTypeDef *DateToUpdate)
+{
+  /** Initialize RTC Only
+  */
+  hrtc.Instance = RTC;
+  hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
+  hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /* USER CODE BEGIN Check_RTC_BKUP */
+
+  /* USER CODE END Check_RTC_BKUP */
+
+  /** Initialize RTC and set the Time and Date
+  */
+
+  if (HAL_RTC_SetTime(&hrtc, sTime, RTC_FORMAT_BCD) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  if (HAL_RTC_SetDate(&hrtc, DateToUpdate, RTC_FORMAT_BCD) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
