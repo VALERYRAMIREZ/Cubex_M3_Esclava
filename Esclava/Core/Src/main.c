@@ -135,12 +135,14 @@ int main(void)
  * debe tener en cuenta que si se le asigna a la fase una hora de inicio que
  * ya pasó en el día, la fase encenderá a la hora indicada del día siguiente.
  *
- * Método 2: en el caso de las fases en modo manual, vasta con colocar en "1"
+ * Método 2: en el caso de las fases en modo manual, basta con colocar en "1"
  * los elementos correspondientes a la fase que se desee apagar en el vector
  * manualTiempo[] y se debe recordar que no se debe actualizar esa fase
  * mientras se resuelve el error.
  *
- * La función
+ *		La función Apaga_Fase(...) lo que hace es poner a "1" todas las salidas
+ * de una fase, luego cuando se da una hora de activación las vuelve a encender
+ * en la secuencia que se le programe.
  *
  * NOTA 1: 	Puedes simular cualquier trama mensaje recibido asignando la trama
  * 		   	al vector tramaEntrada[] más arriba.
