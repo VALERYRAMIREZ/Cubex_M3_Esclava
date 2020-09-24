@@ -50,7 +50,7 @@ extern RTC_AlarmTypeDef alarmaLeida;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-//extern void reg_Esp(void);
+extern void reg_Esp(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -90,18 +90,20 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-//	reg_Esp();
-//		volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
-//		volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
-//		volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
-//		volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
-//		volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
-//		volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
-//		volatile unsigned long _IPSR = __get_IPSR();
-//		volatile unsigned long _BASEPRI = __get_BASEPRI();
-//		volatile unsigned long _PRIMASK = __get_PRIMASK();
-//		volatile unsigned long _FAULTMASK = __get_FAULTMASK();
-//		volatile unsigned long _ISPR0 = __get_IPSR();
+#ifdef deBug_hardFault
+	reg_Esp();
+		volatile unsigned long _CFSR = (*((volatile unsigned long *)(0xE000ED28)));
+		volatile unsigned long _HFSR = (*((volatile unsigned long *)(0xE000ED2C)));
+		volatile unsigned long _DFSR = (*((volatile unsigned long *)(0xE000ED30)));
+		volatile unsigned long _AFSR = (*((volatile unsigned long *)(0xE000ED3C)));
+		volatile unsigned long _MMAR = (*((volatile unsigned long *)(0xE000ED34)));
+		volatile unsigned long _BFAR = (*((volatile unsigned long *)(0xE000ED38)));
+		volatile unsigned long _IPSR = __get_IPSR();
+		volatile unsigned long _BASEPRI = __get_BASEPRI();
+		volatile unsigned long _PRIMASK = __get_PRIMASK();
+		volatile unsigned long _FAULTMASK = __get_FAULTMASK();
+		volatile unsigned long _ISPR0 = __get_IPSR();
+#endif
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {

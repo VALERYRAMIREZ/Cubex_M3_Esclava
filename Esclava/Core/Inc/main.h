@@ -111,7 +111,27 @@ void Error_Handler(void);
 #define FASE5_AMA_Pin GPIO_PIN_9
 #define FASE5_AMA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
+#define			HAB_RTC				/* Activar si se quiere habilitar la
+									 * funcionalidad del RTC.				 */
 
+//#define		deBug_hardFault			/* Activar si se quiere medir los
+//									 * registros del sistema en caso de una
+//									 * falla por hard fault.				 */
+/* USER CODE END PTD */
+
+//#define		pruebaFunc				/* Activar si se quiere probar el
+//									 * funcionamiento de las fases sin
+//									 * utilizar comandos. Comentar si se
+//									 * quiere que el comportamiento inicial sea
+//									 * definido por los comandos.			 */
+
+//#define respComando					/* Activar si se quiere respuesta del
+//									 * sistema mediante comandos ante la
+//									 * ejecución de comandos enviados desde
+//									 * el dispositivo maestro.				 */
+
+//#define		Proteus					/* Activar ara imprimir mensajes en la
+//									 * consola de Protus.					 */
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
