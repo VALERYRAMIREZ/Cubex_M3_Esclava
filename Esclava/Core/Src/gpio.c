@@ -151,7 +151,7 @@ void Apaga_Fase(uint8_t numero)		/* Función para apagar completamente una */
 	case 6:
 	{
 		HAL_GPIO_WritePin(GPIOB,FASE6_VERDE_Pin | FASE6_AMA_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOA,FASE1_AMA_Pin | FASE6_ROJO_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, FASE6_ROJO_Pin, GPIO_PIN_SET);
 	}
 	break;
 	}

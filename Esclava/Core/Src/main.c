@@ -533,7 +533,7 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 	}
 	else if(MODO_FASE == true)				/* Si MODO_FASE es igual a cero, se		 */
 	{								/* manejan las fases en modo manual. 	 */
-		Fases_Sec((_Bool *) manualTiempo);	/* Función para el manejo de las fases en*/
+		Fases_Sec();				/* Función para el manejo de las fases en*/
 	}								/* modo manual.							 */
 
   	if(HAL_ADC_Start_DMA(&hadc1,sensorLeido,2*BUFFER_ADC) != HAL_OK)
