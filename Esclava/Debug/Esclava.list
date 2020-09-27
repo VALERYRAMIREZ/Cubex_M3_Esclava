@@ -2739,7 +2739,7 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
  8001416:	490b      	ldr	r1, [pc, #44]	; (8001444 <HAL_RTCEx_RTCEventCallback+0x4c>)
  8001418:	480e      	ldr	r0, [pc, #56]	; (8001454 <HAL_RTCEx_RTCEventCallback+0x5c>)
  800141a:	f7ff fabd 	bl	8000998 <Fases_Auto>
-	else if(MODO_FASE == true)				/* Si MODO_FASE es igual a cero, se		 */
+	else if(MODO_FASE == true)		/* Si MODO_FASE es igual a cero, se		 */
 	{								/* manejan las fases en modo manual. 	 */
 		Fases_Sec();				/* Función para el manejo de las fases en*/
 	}								/* modo manual.							 */
@@ -2768,7 +2768,7 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 									 * cuenta.                                */
 }
  8001436:	bd10      	pop	{r4, pc}
-	else if(MODO_FASE == true)				/* Si MODO_FASE es igual a cero, se		 */
+	else if(MODO_FASE == true)		/* Si MODO_FASE es igual a cero, se		 */
  8001438:	2b01      	cmp	r3, #1
  800143a:	d1f0      	bne.n	800141e <HAL_RTCEx_RTCEventCallback+0x26>
 		Fases_Sec();				/* Función para el manejo de las fases en*/

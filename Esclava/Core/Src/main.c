@@ -531,7 +531,7 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)/* Cada vez que hay  */
 									 * mensaje para iniciar el manejo de las
 									 * fases.       						 */
 	}
-	else if(MODO_FASE == true)				/* Si MODO_FASE es igual a cero, se		 */
+	else if(MODO_FASE == true)		/* Si MODO_FASE es igual a cero, se		 */
 	{								/* manejan las fases en modo manual. 	 */
 		Fases_Sec();				/* Función para el manejo de las fases en*/
 	}								/* modo manual.							 */
